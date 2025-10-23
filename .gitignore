@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Personal settings
+CLAUDE.local.md
+.claude/local/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Logs
+*.log
