@@ -168,38 +168,39 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 
 ## 開発状況
 
-### 現在のフェーズ: 要件定義・設計
+### 現在のフェーズ: 実装フェーズ
 
-- ✅ 要件定義完了
-- ✅ Claude Skills/MCP調査完了
-- ✅ TDD vs Spec駆動開発の比較完了
-- ✅ インストール戦略決定
-- 📝 テンプレート実装準備中
+- [完了] 要件定義完了
+- [完了] Claude Skills/MCP調査完了
+- [完了] TDD vs Spec駆動開発の比較完了
+- [完了] インストール戦略決定
+- [完了] tdd-plan Skill実装完了
+- [進行中] 他のSkills実装準備中
 
 ### ロードマップ
 
 #### Phase 1: コアフレームワーク（現在）
-- [ ] Laravel用テンプレート作成
-  - [ ] tdd-plan Skill実装
-  - [ ] 全フェーズのSkills実装
-  - [ ] install.sh実装
-- [ ] 既存Laravelプロジェクトでテスト
+- [進行中] Laravel用テンプレート作成
+  - [完了] tdd-plan Skill実装
+  - [未] 全フェーズのSkills実装
+  - [未] install.sh実装
+- [未] 既存Laravelプロジェクトでテスト
 
 #### Phase 2: 他フレームワーク対応
-- [ ] Django用テンプレート
-- [ ] Flask用テンプレート
-- [ ] WordPress用テンプレート
+- [未] Django用テンプレート
+- [未] Flask用テンプレート
+- [未] WordPress用テンプレート
 
 #### Phase 3: MCP統合
-- [ ] PHPStan MCP
-- [ ] PHPUnit/Pest MCP
-- [ ] pytest MCP
-- [ ] mypy MCP
+- [未] PHPStan MCP
+- [未] PHPUnit/Pest MCP
+- [未] pytest MCP
+- [未] mypy MCP
 
 #### Phase 4: 公開
-- [ ] ドキュメント整備
-- [ ] サンプルプロジェクト作成
-- [ ] 公開リポジトリ化
+- [未] ドキュメント整備
+- [未] サンプルプロジェクト作成
+- [未] 公開リポジトリ化
 
 ## ドキュメント
 
@@ -214,6 +215,8 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [SkillsMCP調査](docs/20251022_1443_SkillsMCP調査.md) - Claude SkillsとMCPの調査結果
 - [TDDとSpec駆動比較](docs/20251022_1609_TDDとSpec駆動比較.md) - TDDとBDD/Spec駆動開発の比較
 - [インストール戦略比較](docs/20251023_1124_インストール戦略比較.md) - グローバル vs プロジェクト固有インストールの比較
+- [tdd-plan実装計画](docs/20251023_1432_tdd-plan実装計画.md) - tdd-plan Skillの実装計画
+- [tdd-planテストケース](docs/20251023_1627_tdd-planテストケース.md) - tdd-plan Skillの手動テストケース
 
 ## 技術スタック
 
@@ -254,5 +257,5 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 
 ---
 
-*最終更新: 2025-10-23*
-*開発状況: 要件定義・設計フェーズ*
+*最終更新: 2025-10-24*
+*開発状況: 実装フェーズ - tdd-plan Skill完了*
