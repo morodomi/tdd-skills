@@ -221,6 +221,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [tdd-planテストケース](docs/20251023_1627_tdd-planテストケース.md) - tdd-plan Skillの手動テストケース
 - [tdd-red実装計画](docs/20251024_1641_tdd-red実装計画.md) - tdd-red Skillの実装計画
 - [tdd-redテストケース](docs/20251024_1700_tdd-redテストケース.md) - tdd-red Skillの手動テストケース
+- [品質基準追加実装計画](docs/20251026_0000_品質基準追加実装計画.md) - 諸富氏の判断基準に基づく品質基準の追加
 
 ## 技術スタック
 

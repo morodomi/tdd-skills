@@ -114,6 +114,30 @@ COMMIT
 
 ## Development Guidelines
 
+### 品質基準
+
+このプロジェクトは以下の品質基準を遵守します（諸富氏の判断基準に基づく）：
+
+#### テストカバレッジ
+- 目標: **90%以上**
+- 最低ライン: 80%
+- 測定: `php artisan test --coverage`
+
+#### 静的解析
+- **PHPStan Level 8**（最高レベル）必須
+- エラー許容: 0件
+- 実行: `vendor/bin/phpstan analyse`
+
+#### TDD実践
+- すべての機能でテスト駆動開発を徹底
+- RED → GREEN → REFACTOR サイクルを厳守
+- テストなしの実装は認めない
+
+#### コード規約
+- Laravel Pint（PSR-12）準拠
+- #[Test]属性形式でテストを記述
+- Given/When/Then/Andコメントで意図を明確化
+
 ### このプロジェクト自体の開発
 
 このプロジェクト（ClaudeSkills）の開発も、将来的にTDDワークフローで進める予定。

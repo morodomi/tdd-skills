@@ -164,6 +164,23 @@ class XXX extends Model
 **影響**: レスポンスが遅くなる
 **対策**: ページネーション、インデックス追加、キャッシュ導入
 
+## 品質基準
+
+### テストカバレッジ
+- 目標: 90%以上
+- 測定方法: `php artisan test --coverage`
+- 最低ライン: 80%
+
+### 静的解析
+- PHPStan: Level 8（最高レベル）
+- 実行コマンド: `vendor/bin/phpstan analyse`
+- エラー許容: 0件
+
+### コード品質
+- TDD徹底: すべての機能にテスト必須
+- Given/When/Thenコメントで意図を明確化
+- #[Test]属性形式の使用（Laravel 11 / PHPUnit 10-11）
+
 ---
 
 *作成日時: YYYY-MM-DD HH:MM*
