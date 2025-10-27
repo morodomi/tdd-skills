@@ -176,6 +176,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [完了] インストール戦略決定
 - [完了] tdd-plan Skill実装完了
 - [完了] tdd-red Skill実装完了
+- [完了] tdd-green Skill実装完了
 - [進行中] 他のSkills実装準備中
 
 ### ロードマップ
@@ -184,6 +185,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [進行中] Laravel用テンプレート作成
   - [完了] tdd-plan Skill実装
   - [完了] tdd-red Skill実装
+  - [完了] tdd-green Skill実装
   - [未] 全フェーズのSkills実装
   - [未] install.sh実装
 - [未] 既存Laravelプロジェクトでテスト
@@ -222,6 +224,8 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [tdd-red実装計画](docs/20251024_1641_tdd-red実装計画.md) - tdd-red Skillの実装計画
 - [tdd-redテストケース](docs/20251024_1700_tdd-redテストケース.md) - tdd-red Skillの手動テストケース
 - [品質基準追加実装計画](docs/20251026_0000_品質基準追加実装計画.md) - 諸富氏の判断基準に基づく品質基準の追加
+- [tdd-green実装計画](docs/20251027_0000_tdd-green実装計画.md) - tdd-green Skillの実装計画
+- [tdd-greenテストケース](docs/20251027_0015_tdd-greenテストケース.md) - tdd-green Skillの手動テストケース
 
 ## 技術スタック
 
@@ -262,5 +266,5 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 
 ---
 
-*最終更新: 2025-10-24*
-*開発状況: 実装フェーズ - tdd-red Skill完了*
+*最終更新: 2025-10-27*
+*開発状況: 実装フェーズ - tdd-green Skill完了*
