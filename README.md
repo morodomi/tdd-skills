@@ -179,18 +179,19 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [完了] tdd-green Skill実装完了
 - [完了] tdd-refactor Skill実装完了
 - [完了] tdd-review Skill実装完了
-- [進行中] 他のSkills実装準備中
+- [完了] tdd-init Skill実装完了
+- [完了] Laravel用TDD Skills全て実装完了
 
 ### ロードマップ
 
 #### Phase 1: コアフレームワーク（現在）
 - [進行中] Laravel用テンプレート作成
+  - [完了] tdd-init Skill実装
   - [完了] tdd-plan Skill実装
   - [完了] tdd-red Skill実装
   - [完了] tdd-green Skill実装
   - [完了] tdd-refactor Skill実装
   - [完了] tdd-review Skill実装
-  - [未] tdd-init Skill実装
   - [未] install.sh実装
 - [未] 既存Laravelプロジェクトでテスト
 
@@ -234,6 +235,8 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [tdd-refactorテストケース](docs/20251027_0045_tdd-refactorテストケース.md) - tdd-refactor Skillの手動テストケース
 - [tdd-review実装計画](docs/20251027_0100_tdd-review実装計画.md) - tdd-review Skillの実装計画
 - [tdd-reviewテストケース](docs/20251027_0115_tdd-reviewテストケース.md) - tdd-review Skillの手動テストケース
+- [tdd-init実装計画](docs/20251027_0130_tdd-init実装計画.md) - tdd-init Skillの実装計画
+- [tdd-initテストケース](docs/20251027_0145_tdd-initテストケース.md) - tdd-init Skillの手動テストケース
 
 ## 技術スタック
 
@@ -275,4 +278,4 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 ---
 
 *最終更新: 2025-10-27*
-*開発状況: 実装フェーズ - tdd-review Skill完了*
+*開発状況: 実装フェーズ - Laravel用TDD Skills全て完了（6/6: tdd-init, tdd-plan, tdd-red, tdd-green, tdd-refactor, tdd-review）*
