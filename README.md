@@ -79,21 +79,37 @@ ClaudeSkills/
 
 ## クイックスタート
 
-### インストール（予定）
+### インストール
 
 既存のプロジェクトにTDD環境を導入:
 
-```bash
-# Laravelプロジェクトの場合
-cd your-laravel-project
-curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/install.sh | bash -s laravel
+#### Laravelプロジェクト
 
-# Django プロジェクトの場合
-cd your-django-project
-curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/install.sh | bash -s django
+**ローカルインストール（開発中）**:
+```bash
+cd /path/to/your-laravel-project
+bash /path/to/ClaudeSkills/templates/laravel/install.sh
 ```
 
-### 使い方（予定）
+**リモートインストール（公開後）**:
+```bash
+cd your-laravel-project
+curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/templates/laravel/install.sh | bash
+```
+
+#### その他のフレームワーク（未実装）
+
+```bash
+# Django プロジェクトの場合（未実装）
+cd your-django-project
+curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/templates/django/install.sh | bash
+
+# Flask プロジェクトの場合（未実装）
+cd your-flask-project
+curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/templates/flask/install.sh | bash
+```
+
+### 使い方
 
 ```bash
 # 新機能の開発開始
@@ -181,19 +197,21 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [完了] tdd-review Skill実装完了
 - [完了] tdd-init Skill実装完了
 - [完了] Laravel用TDD Skills全て実装完了
+- [完了] install.sh実装完了
+- [完了] Phase 1: コアフレームワーク完了
 
 ### ロードマップ
 
-#### Phase 1: コアフレームワーク（現在）
-- [進行中] Laravel用テンプレート作成
+#### Phase 1: コアフレームワーク ✅ **完了**
+- [完了] Laravel用テンプレート作成
   - [完了] tdd-init Skill実装
   - [完了] tdd-plan Skill実装
   - [完了] tdd-red Skill実装
   - [完了] tdd-green Skill実装
   - [完了] tdd-refactor Skill実装
   - [完了] tdd-review Skill実装
-  - [未] install.sh実装
-- [未] 既存Laravelプロジェクトでテスト
+  - [完了] install.sh実装
+- [次] 既存Laravelプロジェクトでテスト
 
 #### Phase 2: 他フレームワーク対応
 - [未] Django用テンプレート
@@ -237,6 +255,8 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [tdd-reviewテストケース](docs/20251027_0115_tdd-reviewテストケース.md) - tdd-review Skillの手動テストケース
 - [tdd-init実装計画](docs/20251027_0130_tdd-init実装計画.md) - tdd-init Skillの実装計画
 - [tdd-initテストケース](docs/20251027_0145_tdd-initテストケース.md) - tdd-init Skillの手動テストケース
+- [install実装計画](docs/20251027_0200_install実装計画.md) - install.shの実装計画
+- [installテストケース](docs/20251027_0215_installテストケース.md) - install.shの手動テストケース
 
 ## 技術スタック
 
@@ -278,4 +298,4 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 ---
 
 *最終更新: 2025-10-27*
-*開発状況: 実装フェーズ - Laravel用TDD Skills全て完了（6/6: tdd-init, tdd-plan, tdd-red, tdd-green, tdd-refactor, tdd-review）*
+*開発状況: ✅ Phase 1完了 - Laravel用コアフレームワーク実装完了（Skills 6/6 + install.sh）*
