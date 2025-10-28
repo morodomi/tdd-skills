@@ -184,7 +184,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 
 ## 開発状況
 
-### 現在のフェーズ: 実装フェーズ
+### 現在のフェーズ: 継続改善フェーズ
 
 - [完了] 要件定義完了
 - [完了] Claude Skills/MCP調査完了
@@ -199,6 +199,8 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [完了] Laravel用TDD Skills全て実装完了
 - [完了] install.sh実装完了
 - [完了] Phase 1: コアフレームワーク完了
+- [完了] tdd-red Skill改善: Laravel固有ルール追加（2025-10-28）
+- [完了] tdd-red Skill改善: 大規模プロジェクト向け高速化ガイド追加（2025-10-28）
 
 ### ロードマップ
 
@@ -211,6 +213,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
   - [完了] tdd-refactor Skill実装
   - [完了] tdd-review Skill実装
   - [完了] install.sh実装
+- [完了] tdd-red Skill改善（Laravel固有ルール + 大規模プロジェクト高速化）
 - [次] 既存Laravelプロジェクトでテスト
 
 #### Phase 2: 他フレームワーク対応
@@ -257,6 +260,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [tdd-initテストケース](docs/20251027_0145_tdd-initテストケース.md) - tdd-init Skillの手動テストケース
 - [install実装計画](docs/20251027_0200_install実装計画.md) - install.shの実装計画
 - [installテストケース](docs/20251027_0215_installテストケース.md) - install.shの手動テストケース
+- [Laravel固有ルール追加実装計画](docs/tdd/PLAN.md) - tdd-red SkillへのLaravel固有ルールと大規模プロジェクト高速化ガイド追加
 
 ## 技術スタック
 
@@ -297,5 +301,5 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 
 ---
 
-*最終更新: 2025-10-27*
-*開発状況: ✅ Phase 1完了 - Laravel用コアフレームワーク実装完了（Skills 6/6 + install.sh）*
+*最終更新: 2025-10-28*
+*開発状況: ✅ Phase 1完了 + 改善継続中 - Laravel用コアフレームワーク実装完了（Skills 6/6 + install.sh）+ tdd-red Skill改善（Laravel固有ルール + 大規模プロジェクト高速化）*

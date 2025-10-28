@@ -73,6 +73,374 @@ PLAN.mdに記載されたFeature Testsを順番に作成します。
 
 ユーザーの承認を得てから作成してください。
 
+#### 2.1.5 Laravel固有のテストルール
+
+以下のLaravel固有のルールに**必ず従ってください**。
+
+##### ルール1: RefreshDatabaseは使わない
+
+❌ **使用禁止**:
+```php
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class UserTest extends TestCase
+{
+    use RefreshDatabase;  // ← 使わない
+}
+```
+
+✅ **推奨**:
+```php
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+class UserTest extends TestCase
+{
+    use DatabaseTransactions;  // ← こちらを使う
+}
+```
+
+**理由**:
+- RefreshDatabaseは全データベースを再構築するため遅い
+- DatabaseTransactionsはトランザクションをロールバックするため高速
+- テスト間のデータ分離も確保される
+
+##### ルール2: Factoryを必ず使用する
+
+❌ **悪い例** - ハードコーディング:
+```php
+#[Test]
+public function user_can_login(): void
+{
+    // 仮のデータを直接作成（重複の可能性）
+    $user = User::create([
+        'name' => 'Test User',  // ← 重複の可能性
+        'email' => 'test@example.com',  // ← 重複の可能性
+        'password' => Hash::make('password'),
+    ]);
+}
+```
+
+✅ **良い例** - Factory使用:
+```php
+#[Test]
+public function user_can_login(): void
+{
+    // Factoryでユニークなデータを生成
+    $user = User::factory()->create();
+}
+```
+
+**特定の値が必要な場合**:
+```php
+#[Test]
+public function admin_can_access_dashboard(): void
+{
+    // 必要な属性のみ上書き
+    $admin = User::factory()->create([
+        'role' => 'admin',
+    ]);
+}
+```
+
+**理由**:
+- テスト実行の順序に依存しない
+- データの重複を避ける
+- ユニークな値が自動生成される
+
+##### ルール3: route()関数を使用する
+
+❌ **悪い例** - パス直接指定:
+```php
+#[Test]
+public function user_can_view_profile(): void
+{
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)
+        ->get('/profile');  // ← パスを直接指定
+}
+```
+
+✅ **良い例** - route()関数使用:
+```php
+#[Test]
+public function user_can_view_profile(): void
+{
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)
+        ->get(route('profile.show'));  // ← ルート名を使用
+}
+```
+
+**パラメータが必要な場合**:
+```php
+#[Test]
+public function user_can_view_other_profile(): void
+{
+    $viewer = User::factory()->create();
+    $target = User::factory()->create();
+
+    $response = $this->actingAs($viewer)
+        ->get(route('profile.show', ['user' => $target->id]));
+}
+```
+
+**POSTリクエストの例**:
+```php
+#[Test]
+public function user_can_update_profile(): void
+{
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)
+        ->put(route('profile.update'), [
+            'name' => 'New Name',
+        ]);
+}
+```
+
+**理由**:
+- ルート定義が変更されてもテストが壊れない
+- ルート名で意図が明確になる
+- パラメータのバインディングが安全
+
+##### ルール4: #[Test]アノテーションを使用する
+
+✅ **正しい形式**:
+```php
+use PHPUnit\Framework\Attributes\Test;
+
+#[Test]
+public function user_can_update_profile(): void
+{
+    // テストコード
+}
+```
+
+❌ **使わない形式**:
+```php
+// test_プレフィックスは使わない
+public function test_user_can_update_profile(): void
+{
+    // テストコード
+}
+```
+
+**理由**:
+- Laravel 11 / PHPUnit 10-11の推奨形式
+- メソッド名がより自然な英語表現になる
+- IDEのサポートが向上
+
+---
+
+#### 2.1.6 大規模プロジェクト向けテスト高速化（500テスト以上）
+
+テストが500を超える大規模プロジェクトでは、以下の高速化アプローチを検討してください。
+
+##### 推奨アプローチ: migrate制御 + Hash最適化 + Factory
+
+**基底TestCaseクラスの実装例**:
+
+```php
+<?php
+
+namespace Tests;
+
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
+
+abstract class TestCase extends BaseTestCase
+{
+    use CreatesApplication;
+
+    public static $migrated = false;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        if (!$this->app) {
+            $this->refreshApplication();
+        }
+
+        // パスワードハッシュ最適化（期待効果: 約50%高速化）
+        Hash::setRounds(4);  // デフォルト10 → 4
+
+        // migrate:freshを1回だけ実行
+        if (!self::$migrated) {
+            Artisan::call('migrate:fresh', ['--seed' => true]);
+            Artisan::call('config:clear');
+            Artisan::call('view:clear');
+            self::$migrated = true;
+        }
+    }
+
+    public function tearDown(): void
+    {
+        // DB接続を切断（max_connections対策）
+        try {
+            \DB::connection()->disconnect();
+        } catch (\Exception $e) {
+            // 接続エラーは無視
+        }
+
+        parent::tearDown();
+    }
+}
+```
+
+**ポイント**:
+- ✅ `self::$migrated`フラグでmigrate:freshを1回だけ実行
+- ✅ `Hash::setRounds(4)`でパスワードハッシュを高速化
+- ✅ Factoryでユニークなデータを生成（ID重複防止）
+- ✅ tearDownでDB接続を切断（max_connections対策）
+- ✅ トランザクション不使用（結合テスト対応）
+
+##### 推奨テスト実行コマンド
+
+**XDebug使用（カバレッジ取得）**:
+
+```bash
+# coverage modeのみ有効化（debugモードより高速）
+XDEBUG_MODE=coverage ./vendor/bin/phpunit -d memory_limit=-1 \
+  --testsuite=Unit,Feature \
+  --coverage-cobertura coverage-report.xml \
+  --log-junit unittest-report.xml
+```
+
+**PCOV使用（さらに高速・推奨）**:
+
+```bash
+# PCOVインストール
+pecl install pcov
+
+# XDebug無効化、PCOV使用（約2倍高速）
+XDEBUG_MODE=off PCOV_ENABLED=1 ./vendor/bin/phpunit -d memory_limit=-1 \
+  --testsuite=Unit,Feature \
+  --coverage-cobertura coverage-report.xml \
+  --log-junit unittest-report.xml
+```
+
+##### DatabaseTransactionsの注意事項
+
+⚠️ **DatabaseTransactionsトレイトは使用しない（非推奨）**
+
+**理由**:
+- 結合テスト（Feature Test）でトランザクション分離問題が発生
+- HTTPリクエスト内のDB操作が別トランザクションとなり、テストで作成したデータが見えない
+- テスト間でデータ共有が必要な場合に不適切
+
+**問題例**:
+```php
+use Illuminate\Foundation\Testing\DatabaseTransactions;  // ← 使わない
+
+class ProfileTest extends TestCase
+{
+    use DatabaseTransactions;  // ← 問題あり
+
+    #[Test]
+    public function user_can_view_profile(): void
+    {
+        // トランザクションA内でユーザー作成
+        $user = User::factory()->create();
+
+        // トランザクションB（HTTPリクエスト処理）
+        // → トランザクションAのデータが見えない可能性
+        $response = $this->actingAs($user)->get(route('profile.show'));
+        $response->assertOk();  // 失敗する可能性
+    }
+}
+```
+
+**代替案**: migrate 1回 + Factory で十分高速
+
+##### 高速化オプション: 並列テスト実行（CI/CD環境）
+
+**期待効果**: 2-5倍高速化（1000テスト: 5分 → 1-2分）
+
+**AWS CodeBuild例**:
+
+```yaml
+# buildspec.yml
+version: 0.2
+
+batch:
+  build-fanout:
+    parallelism: 4  # 4プロセス並列実行
+
+phases:
+  install:
+    commands:
+      - composer install --no-interaction --prefer-dist
+      - pecl install pcov  # PCOV拡張（高速カバレッジ）
+
+  pre_build:
+    commands:
+      # 各プロセス用のDB作成
+      - |
+        if [ -n "$CODEBUILD_BATCH_BUILD_IDENTIFIER" ]; then
+          export TEST_DB_NAME="test_db_${CODEBUILD_BATCH_BUILD_IDENTIFIER}"
+        else
+          export TEST_DB_NAME="test_db"
+        fi
+      - mysql -h $RDS_HOST -u $RDS_USER -p$RDS_PASSWORD \
+          -e "CREATE DATABASE IF NOT EXISTS ${TEST_DB_NAME};"
+
+  build:
+    commands:
+      # 並列テスト実行
+      - |
+        XDEBUG_MODE=off PCOV_ENABLED=1 \
+        codebuild-tests-run \
+          --test-command './vendor/bin/phpunit -d memory_limit=-1 --coverage-cobertura coverage-report.xml' \
+          --files-search "codebuild-glob-search 'tests/**/*Test.php'" \
+          --sharding-strategy 'equal-distribution'
+
+reports:
+  test-reports:
+    files:
+      - 'unittest-report.xml'
+    file-format: JUNITXML
+  code-coverage:
+    files:
+      - 'coverage-report.xml'
+    file-format: COBERTURAXML
+```
+
+**並列実行の注意点**:
+- 各プロセスに独立したデータベースが必要
+- RDS上に複数のtest DBを作成
+- CodeBuildコスト増加（プロセス数分）
+
+##### ローカル並列実行
+
+```bash
+# ParaTestインストール
+composer require brianium/paratest --dev
+
+# 並列実行（4プロセス）
+php artisan test --parallel --processes=4
+```
+
+**注意**: 各プロセスに独立したDBが必要（`your_db_test_1`, `your_db_test_2`等）
+
+##### 期待される高速化効果
+
+| 施策 | 効果 | 備考 |
+|------|------|------|
+| **Hash最適化** | 40-50%削減 | 必須 |
+| **PCOV使用** | 50%削減 | XDebugから切り替え |
+| **並列実行（4プロセス）** | 70-80%削減 | CI/CD環境推奨 |
+
+**例: 1000テスト、初期5分の場合**:
+1. Hash最適化: 5分 → 2.5分
+2. +PCOV: 2.5分 → 1.5分
+3. +並列4プロセス: 1.5分 → 20-30秒
+
+---
+
 #### 2.2 テストコード構造
 
 **重要**: Laravel 11 / PHPUnit 10-11 の推奨形式である **#[Test]属性形式** を使用してください。
@@ -85,14 +453,11 @@ PLAN.mdに記載されたFeature Testsを順番に作成します。
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ProfileControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     #[Test]
     public function user_can_update_their_profile(): void
     {
@@ -101,7 +466,7 @@ class ProfileControllerTest extends TestCase
         $this->actingAs($user);
 
         // When: プロフィールを更新する
-        $response = $this->post('/profile', ['name' => 'New Name']);
+        $response = $this->put(route('profile.update'), ['name' => 'New Name']);
 
         // Then: 成功メッセージが表示される
         $response->assertSessionHas('success');
@@ -118,7 +483,7 @@ class ProfileControllerTest extends TestCase
         $this->actingAs($user);
 
         // When: 空の名前で更新する
-        $response = $this->post('/profile', ['name' => '']);
+        $response = $this->put(route('profile.update'), ['name' => '']);
 
         // Then: バリデーションエラーが表示される
         $response->assertSessionHasErrors('name');
@@ -133,12 +498,18 @@ class ProfileControllerTest extends TestCase
 - 戻り値の型は `: void` を明示
 - Given/When/Then/Andコメントで構造を明確化
 - テスト対象に応じて適切な use 文を追加
+- **HTTPリクエストは必ず`route()`関数を使用**
+- **テストデータは必ずFactoryで生成**
 
 **禁止事項**:
 - `/** @test */` アノテーション形式は使わない（PHPUnit 11で非推奨）
 - `test_` プレフィックス付きメソッド名は使わない
 - Pest形式（`it()`, `test()`）は使わない
 - 実装コードを含めない
+- **RefreshDatabaseは使わない（migrate制御については2.1.6参照）**
+- **DatabaseTransactionsは使わない（結合テストで問題発生、2.1.6参照）**
+- **パスを直接指定しない（route()関数を使用）**
+- **テストデータをハードコーディングしない（Factoryを使用）**
 
 #### 2.3 Unit Testsの作成
 
@@ -172,7 +543,10 @@ class UserTest extends TestCase
 }
 ```
 
-Unit Testsも同じ形式（#[Test]属性）を使用してください。
+**重要**:
+- Unit Testsも同じLaravel固有のルールに従う
+- Factoryでテストデータを生成
+- #[Test]属性を使用
 
 ### 3. テスト実行フェーズ
 
