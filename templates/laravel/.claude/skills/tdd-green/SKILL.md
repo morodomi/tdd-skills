@@ -63,6 +63,70 @@ php artisan test
 
 ### 2. 実装フェーズ
 
+#### 2.0 ディレクトリ構造の確認
+
+実装を開始する前に、app/ディレクトリとtests/ディレクトリの構造を一致させることを確認します。
+
+##### 推奨: tests/とapp/の構造を一致させる
+
+**一致させる例**:
+```
+tests/Feature/User/UserProfileControllerTest.php
+→ app/Http/Controllers/User/UserProfileController.php
+
+tests/Unit/Services/User/UserServiceTest.php
+→ app/Services/User/UserService.php
+```
+
+##### ディレクトリ配置の推奨
+
+**Controllers**:
+```
+app/Http/Controllers/
+├── User/
+│   ├── UserProfileController.php
+│   └── UserRegistrationController.php
+├── Product/
+└── Order/
+```
+
+**Services**:
+```
+app/Services/
+├── User/
+│   └── UserService.php
+├── Product/
+│   └── ProductService.php
+└── Order/
+    └── OrderService.php
+```
+
+**Providers**:
+```
+app/Providers/
+├── AppServiceProvider.php
+├── AuthServiceProvider.php
+└── RouteServiceProvider.php
+```
+（Providersは通常app/Providers/直下に配置）
+
+##### 実装時の注意点
+
+1. **テストで定義したディレクトリ構造に従う**
+   - REDフェーズで作成したテストファイルの配置を確認
+   - 同じ構造でapp/ディレクトリを作成
+
+2. **機能単位でまとめる**
+   - User機能: Controllers, Services, Models全てUser/配下
+   - 関連ファイルが近くにあると保守しやすい
+
+3. **Artisanコマンドでディレクトリ指定**
+   ```bash
+   # サブディレクトリ付きで生成
+   php artisan make:controller User/UserProfileController
+   php artisan make:model User/User
+   ```
+
 #### 2.1 実装の原則
 
 **最重要**: テストを通すための**最小限のコード**のみを書いてください。
@@ -253,10 +317,17 @@ GREENフェーズが完了しました。
 
 次のステップ:
 1. テストが通ることを確認してください
-2. 準備ができたら、REFACTORフェーズ（リファクタリング）に進んでください
-3. REFACTORフェーズでは、コードの改善・DRY化・最適化を行います
-4. 重要: REFACTORフェーズ中もテストは通り続けなければなりません
+2. REFACTORフェーズでは、コードの改善・DRY化・最適化を行います
+3. 重要: REFACTORフェーズ中もテストは通り続けなければなりません
+
+================================================================================
+自動遷移: 次のフェーズ（REFACTOR）に進みます
+================================================================================
+
+REFACTORフェーズ（リファクタリング）を自動的に開始します...
 ```
+
+完了メッセージを表示したら、Skillツールを使って`tdd-refactor` Skillを起動してください。
 
 ## 実装の原則（詳細）
 

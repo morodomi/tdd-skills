@@ -90,6 +90,85 @@ TDDドキュメントに記載されたFeature Testsを順番に作成します�
 
 ユーザーの承認を得てから作成してください。
 
+#### 2.1.1 ディレクトリ構造の決定
+
+テストファイルを作成する前に、適切なディレクトリ構造を決定します。
+
+##### 推奨: 機能領域別（ドメイン別）のサブディレクトリ
+
+**小規模プロジェクト**:
+```
+tests/
+├── Feature/
+│   ├── UserControllerTest.php
+│   └── ProductControllerTest.php
+└── Unit/
+    └── UserServiceTest.php
+```
+
+**中〜大規模プロジェクト（推奨）**:
+```
+tests/
+├── Feature/
+│   ├── User/
+│   │   ├── UserProfileControllerTest.php
+│   │   └── UserRegistrationControllerTest.php
+│   ├── Product/
+│   │   ├── ProductControllerTest.php
+│   │   └── ProductSearchTest.php
+│   └── Order/
+│       └── OrderControllerTest.php
+└── Unit/
+    ├── Services/
+    │   ├── User/
+    │   │   └── UserServiceTest.php
+    │   └── Product/
+    │       └── ProductServiceTest.php
+    └── Providers/
+        └── AppServiceProviderTest.php
+```
+
+##### 重要な原則
+
+1. **app/ディレクトリと構造を一致させる**
+   ```
+   app/Http/Controllers/User/UserProfileController.php
+   → tests/Feature/User/UserProfileControllerTest.php
+
+   app/Services/User/UserService.php
+   → tests/Unit/Services/User/UserServiceTest.php
+   ```
+
+2. **機能単位でまとめる**
+   - User機能: 認証、プロフィール、退会など
+   - Product機能: 一覧、詳細、検索など
+   - Order機能: 注文、決済、キャンセルなど
+
+3. **PHPUnit/Pestは自動的にサブディレクトリを検出**
+   - phpunit.xmlの設定で再帰的にスキャン
+   - サブディレクトリがあっても問題なく実行される
+
+##### ディレクトリ作成方法
+
+**Bashコマンド使用**:
+```bash
+mkdir -p tests/Feature/User
+mkdir -p tests/Feature/Product
+mkdir -p tests/Unit/Services/User
+```
+
+**Writeツールで直接作成**:
+```php
+// tests/Feature/User/UserProfileControllerTest.php
+// Writeツールでファイル作成時に自動的にディレクトリが作成される
+```
+
+##### 判断基準
+
+- **テストファイルが10個未満**: tests/Feature/ 直下でも可
+- **テストファイルが10個以上**: サブディレクトリ推奨
+- **複数の機能領域がある**: 必ずサブディレクトリを使用
+
 #### 2.1.5 Laravel固有のテストルール
 
 以下のLaravel固有のルールに**必ず従ってください**。
@@ -614,9 +693,16 @@ REDフェーズが完了しました。
 
 次のステップ:
 1. php artisan test を実行して、すべてのテストが失敗することを確認
-2. 準備ができたら、GREENフェーズ（実装）に進んでください
-3. GREENフェーズでは、最小限の実装でテストを通すことが目標です
+2. GREENフェーズでは、最小限の実装でテストを通すことが目標です
+
+================================================================================
+自動遷移: 次のフェーズ（GREEN）に進みます
+================================================================================
+
+GREENフェーズ（実装）を自動的に開始します...
 ```
+
+完了メッセージを表示したら、Skillツールを使って`tdd-green` Skillを起動してください。
 
 ## 制約の強制
 
