@@ -204,6 +204,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [完了] TDDドキュメントファイル形式変更: 時系列管理 + 機能名自動生成（2025-10-28）
 - [完了] テストディレクトリ構造ガイド追加: tdd-plan/red/greenにディレクトリ配置推奨を追加（2025-10-29）
 - [完了] フェーズ自動遷移機能追加: 各Skill完了時に次のフェーズを自動起動（2025-10-31）
+- [完了] Phase 3A: 基盤MCP統合（Git, Filesystem, GitHub MCP）（2025-10-31）
 
 ### ロードマップ
 
@@ -235,7 +236,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
   - [完了] tdd-green完了時にtdd-refactorを自動起動
   - [完了] tdd-refactor完了時にtdd-reviewを自動起動
   - [完了] ユーザーによる手動コマンド入力が不要に
-- [次] 既存Laravelプロジェクトでテスト（フェーズ自動遷移の検証）
+- [完了] 既存Laravelプロジェクトでテスト（フェーズ自動遷移の検証）完了
 
 #### Phase 2: 他フレームワーク対応
 - [未] Django用テンプレート
@@ -243,10 +244,16 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [未] WordPress用テンプレート
 
 #### Phase 3: MCP統合
-- [未] PHPStan MCP
-- [未] PHPUnit/Pest MCP
-- [未] pytest MCP
-- [未] mypy MCP
+- [完了] Phase 3A: 基盤MCP統合
+  - [完了] Git MCP統合（コミット操作自動化）
+  - [完了] Filesystem MCP統合（ファイル操作の安全性向上）
+  - [完了] GitHub MCP統合（PR作成準備）
+  - [完了] MCPインストールスクリプト作成（scripts/install-mcp.sh）
+  - [完了] MCPインストールガイド作成（docs/MCP_INSTALLATION.md）
+  - [完了] tdd-commit Skill実装（Git MCP活用）
+- [未] Phase 3B: 言語別MCP統合
+  - [未] Python (uv環境): Ruff MCP + pytest MCP
+  - [未] PHP (Laravel環境): PHPStan MCP + PHPUnit/Pest MCP（オプション）
 
 #### Phase 4: 公開
 - [未] ドキュメント整備
@@ -282,6 +289,11 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [install実装計画](docs/20251027_0200_install実装計画.md) - install.shの実装計画
 - [installテストケース](docs/20251027_0215_installテストケース.md) - install.shの手動テストケース
 - [Laravel固有ルール追加実装計画](docs/tdd/PLAN.md) - tdd-red SkillへのLaravel固有ルールと大規模プロジェクト高速化ガイド追加
+- [MCP統合調査](docs/20251031_1500_MCP統合調査.md) - uv, Ruff, pytest等のベストプラクティスとMCPサーバー調査
+- [Phase 3A基盤MCP統合](docs/20251031_2251_Phase3A基盤MCP統合.md) - Git/Filesystem/GitHub MCP統合の実装ドキュメント
+
+### MCPインストールガイド
+- [MCP Installation Guide](docs/MCP_INSTALLATION.md) - MCPサーバーのインストール・設定手順
 
 ## 技術スタック
 

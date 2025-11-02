@@ -10,6 +10,9 @@
 #   cd /path/to/your-laravel-project
 #   bash /path/to/ClaudeSkills/templates/laravel/install.sh
 #
+# MCPインストールをスキップする場合:
+#   bash /path/to/ClaudeSkills/templates/laravel/install.sh --skip-mcp
+#
 # または（公開後）:
 #   curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/templates/laravel/install.sh | bash
 #
@@ -126,7 +129,7 @@ if [ ! -d "$SCRIPT_DIR/.claude/skills" ]; then
 fi
 
 # すべてのSkillsをコピー
-SKILLS=("tdd-init" "tdd-plan" "tdd-red" "tdd-green" "tdd-refactor" "tdd-review")
+SKILLS=("tdd-init" "tdd-plan" "tdd-red" "tdd-green" "tdd-refactor" "tdd-review" "tdd-commit")
 for skill in "${SKILLS[@]}"; do
     if [ -d "$SCRIPT_DIR/.claude/skills/$skill" ]; then
         cp -r "$SCRIPT_DIR/.claude/skills/$skill" .claude/skills/
@@ -169,6 +172,56 @@ fi
 echo ""
 
 ################################################################################
+# 6.5. MCP統合インストール（オプション）
+################################################################################
+
+# コマンドライン引数で --skip-mcp が指定されていない場合、MCPをインストール
+if [[ "$1" != "--skip-mcp" ]]; then
+    echo "=========================================="
+    echo "MCP統合のインストール（推奨）"
+    echo "=========================================="
+    echo ""
+    echo "Git/GitHub MCPを使うとコミット操作が自動化されます。"
+    echo ""
+
+    # MCPインストールスクリプトのパス
+    MCP_SCRIPT="$SCRIPT_DIR/../../scripts/install-mcp.sh"
+
+    if [ -f "$MCP_SCRIPT" ]; then
+        # MCPインストール実行
+        if bash "$MCP_SCRIPT"; then
+            echo ""
+            echo -e "${GREEN}✓ MCP統合も完了しました${NC}"
+        else
+            echo ""
+            echo -e "${YELLOW}⚠ MCP統合でエラーが発生しましたが、テンプレートは正常にインストールされています${NC}"
+            echo -e "${YELLOW}  後で手動インストール可能: bash $MCP_SCRIPT${NC}"
+        fi
+    else
+        echo -e "${YELLOW}⚠ MCPインストールスクリプトが見つかりません${NC}"
+        echo -e "${YELLOW}  期待されるパス: $MCP_SCRIPT${NC}"
+        echo ""
+        echo "手動でインストールする場合:"
+        echo "  bash /path/to/ClaudeSkills/scripts/install-mcp.sh"
+        echo ""
+        echo "詳細: docs/MCP_INSTALLATION.md"
+    fi
+    echo ""
+else
+    echo "=========================================="
+    echo "MCPインストールをスキップ"
+    echo "=========================================="
+    echo ""
+    echo -e "${BLUE}ℹ --skip-mcp フラグが指定されたため、MCPインストールをスキップしました${NC}"
+    echo ""
+    echo "後でインストールする場合:"
+    echo "  bash /path/to/ClaudeSkills/scripts/install-mcp.sh"
+    echo ""
+    echo "詳細: docs/MCP_INSTALLATION.md"
+    echo ""
+fi
+
+################################################################################
 # 7. 完了メッセージ
 ################################################################################
 
@@ -184,6 +237,7 @@ echo "  - .claude/skills/tdd-red/SKILL.md"
 echo "  - .claude/skills/tdd-green/SKILL.md"
 echo "  - .claude/skills/tdd-refactor/SKILL.md"
 echo "  - .claude/skills/tdd-review/SKILL.md"
+echo "  - .claude/skills/tdd-commit/SKILL.md"
 echo "  - docs/tdd/.gitkeep"
 
 if [ ! -f "CLAUDE.md" ]; then
@@ -205,9 +259,22 @@ echo ""
 echo "3. TDDワークフロー:"
 echo "   INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT"
 echo ""
+echo "4. MCP統合（Git/GitHub操作の自動化）:"
+if [[ "$1" == "--skip-mcp" ]]; then
+echo "   ⊙ MCPはスキップされました"
+echo "   後でインストール: bash /path/to/ClaudeSkills/scripts/install-mcp.sh"
+else
+echo "   ✓ MCP統合が完了しています"
+echo "   - Git MCP: コミット操作の自動化"
+echo "   - GitHub MCP: PR作成の準備"
+fi
+echo ""
 echo "詳細なドキュメント:"
 echo "  - CLAUDE.md: プロジェクト設定とガイドライン"
 echo "  - README.md: フレームワークの概要（ClaudeSkillsリポジトリ）"
+if [[ "$1" != "--skip-mcp" ]]; then
+echo "  - docs/MCP_INSTALLATION.md: MCP設定とトラブルシューティング"
+fi
 echo ""
 echo "=========================================="
 echo ""
