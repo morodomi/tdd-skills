@@ -1,0 +1,387 @@
+# [Project Name]
+
+## Project Overview
+
+- **Type**: [Your project type - e.g., Web Application, CLI Tool, Library]
+- **Language**: [Your primary language - e.g., JavaScript, Python, PHP, Go]
+- **Framework**: [Your framework - e.g., Express, Django, None]
+- **Test Framework**: [Your test framework - e.g., Jest, pytest, PHPUnit, Go test]
+- **Quality Tools**: [Your quality tools - e.g., ESLint, mypy, PHPStan, golangci-lint]
+
+## TDD Workflow
+
+このプロジェクトは、ClaudeSkills TDDフレームワークを使用しています。
+
+### 7つのフェーズ
+
+1. **INIT** (初期化): 要件定義とTDDドキュメント作成
+2. **PLAN** (計画): 実装計画とテストケース定義
+3. **RED** (テスト作成): 失敗するテストを作成
+4. **GREEN** (実装): 最小限の実装でテストを通す
+5. **REFACTOR** (リファクタリング): コードを改善
+6. **REVIEW** (品質検証): 品質基準を満たすか確認
+7. **COMMIT** (コミット): 変更をコミット
+
+### フェーズの開始方法
+
+Claude Codeで以下のコマンドを入力:
+- `init` または `/tdd-init`: INITフェーズ開始
+- `plan` または `/tdd-plan`: PLANフェーズ開始
+- `red` または `/tdd-red`: REDフェーズ開始
+- `green` または `/tdd-green`: GREENフェーズ開始
+- `refactor` または `/tdd-refactor`: REFACTORフェーズ開始
+- `review` または `/tdd-review`: REVIEWフェーズ開始
+- `commit` または `/tdd-commit`: COMMITフェーズ開始
+
+### フェーズ自動遷移
+
+各フェーズ完了時に自動的に次のフェーズに遷移します（ユーザー確認なし）。
+
+---
+
+## Quality Standards
+
+このプロジェクトは以下の品質基準を遵守します。
+
+### テストカバレッジ
+
+- **目標**: 90%以上
+- **最低ライン**: 80%
+- **測定**: [Your coverage command - e.g., `npm test -- --coverage`, `pytest --cov`, `composer test -- --coverage`]
+
+### 静的解析
+
+- **ツール**: [Your static analysis tool - e.g., ESLint, mypy, PHPStan, golangci-lint]
+- **レベル**: [Your strictness level - e.g., strictest, Level 8, max]
+- **エラー許容**: 0件
+- **実行**: [Your analysis command - e.g., `npm run lint`, `mypy .`, `vendor/bin/phpstan analyse`]
+
+### コーディング規約
+
+- **ツール**: [Your formatter - e.g., Prettier, black, Laravel Pint, gofmt]
+- **実行**: [Your format command - e.g., `npm run format`, `black .`, `composer pint`]
+- **規約**: [Your style guide - e.g., Airbnb, PEP 8, PSR-12]
+
+### テスト形式
+
+- **テスト構造**: [Your test structure - e.g., describe/it, class-based, #[Test] attribute]
+- **意図の明確化**: Given/When/Then/And コメントで意図を明確化
+- **テスト分離**: Unit/Integration テストを適切に分離
+
+---
+
+## Customization
+
+このテンプレートは**最小コアテンプレート**です。以下をプロジェクト固有にカスタマイズしてください：
+
+### 1. プロジェクト固有の検証ルール（tdd-init）
+
+`.claude/skills/tdd-init/SKILL.md` を編集:
+
+```markdown
+# 追加の検証項目例
+
+## プロジェクト構造の検証
+- package.json/composer.json/requirements.txt が存在するか
+- 必要なディレクトリ（src/, tests/, config/）が存在するか
+- 環境変数ファイル（.env.example）が存在するか
+
+## 依存関係の検証
+- 必要なパッケージがインストールされているか
+- 開発ツール（linter, formatter, test framework）が設定されているか
+```
+
+### 2. テストフレームワーク固有のルール（tdd-red）
+
+`.claude/skills/tdd-red/SKILL.md` を編集:
+
+```markdown
+# 言語/フレームワーク固有のテストルール
+
+## Node.js + Jest
+- テストファイル名: `*.test.js` または `*.spec.js`
+- テスト構造: `describe` と `test`/`it`
+- モック: `jest.mock()` を使用
+
+## Python + pytest
+- テストファイル名: `test_*.py` または `*_test.py`
+- テスト構造: `test_` で始まる関数
+- フィクスチャ: `@pytest.fixture` を使用
+
+## PHP + PHPUnit
+- テストファイル名: `*Test.php`
+- テスト構造: `#[Test]` 属性または `test` プレフィックス
+- データプロバイダ: `#[DataProvider]` を使用
+```
+
+### 3. 品質ツールの設定（tdd-review）
+
+`.claude/skills/tdd-review/SKILL.md` を編集:
+
+```markdown
+# プロジェクト固有の品質チェック
+
+## 実行コマンド
+- 静的解析: [your command]
+- コーディング規約: [your command]
+- カバレッジ: [your command]
+
+## 品質基準
+- 静的解析: エラー0件
+- カバレッジ: 90%以上
+- コーディング規約: 違反0件
+```
+
+---
+
+## Examples
+
+このテンプレートのカスタマイズ例は、ClaudeSkillsリポジトリで確認できます：
+
+### Laravel用テンプレート
+- **パス**: `ClaudeSkills/templates/laravel/`
+- **カスタマイズ内容**: Laravel固有のテストルール、PHPStan Level 8、Laravel Pint
+- **ドキュメント**: `docs/LARAVEL_INSTALLATION.md`
+
+### Bedrock/WordPress用テンプレート
+- **パス**: `ClaudeSkills/templates/bedrock/`
+- **カスタマイズ内容**: WordPress固有のセキュリティルール、wp-phpunit、Brain Monkey
+- **ドキュメント**: `docs/BEDROCK_INSTALLATION.md`
+
+### カスタマイズの参考に
+1. 既存テンプレートの構造を確認
+2. プロジェクト固有のルールを追加
+3. 不要なルールを削除
+
+---
+
+## Available Commands
+
+### テスト実行
+
+```bash
+# すべてのテスト
+[your test command - e.g., npm test, pytest, composer test]
+
+# Unitテストのみ
+[your unit test command]
+
+# Integrationテストのみ
+[your integration test command]
+
+# カバレッジ付き
+[your coverage command]
+```
+
+### 静的解析
+
+```bash
+# 静的解析実行
+[your analysis command - e.g., npm run lint, mypy ., composer stan]
+```
+
+### コーディング規約
+
+```bash
+# チェックのみ
+[your format check command - e.g., npm run format:check, black --check ., composer pint]
+
+# 自動修正
+[your format fix command - e.g., npm run format, black ., composer pint:fix]
+```
+
+### すべてのチェック
+
+```bash
+# すべての品質チェック
+[your check command - e.g., npm run check, make check, composer check]
+```
+
+---
+
+## Testing Guidelines
+
+### テストディレクトリ構造
+
+```
+tests/
+├── unit/              # 純粋なロジック（外部依存なし）
+│   └── *.[test|spec]  # 高速なユニットテスト
+├── integration/       # 外部依存を含む統合テスト
+│   └── *.[test|spec]  # データベース、API等
+└── e2e/               # エンドツーエンドテスト（オプション）
+    └── *.[test|spec]  # ブラウザ、UI等
+```
+
+### テストの選択
+
+#### ユニットテスト
+- 純粋なロジック（外部依存なし）
+- 高速な実行
+- モック/スタブを使用
+
+#### 統合テスト
+- 外部システムとの統合
+- データベース、API、ファイルシステム等
+- 実環境に近い検証
+
+#### エンドツーエンドテスト（オプション）
+- ユーザー視点の検証
+- ブラウザ、CLI、UI等
+- 最も遅い実行
+
+---
+
+## Commit Guidelines
+
+### コミットメッセージ形式
+
+```
+feat: 新機能を追加
+fix: バグ修正
+docs: ドキュメント更新
+refactor: リファクタリング
+test: テスト追加・修正
+chore: ビルド、補助ツール等の変更
+```
+
+### 例
+
+```bash
+git commit -m "feat: ユーザー認証機能を実装"
+git commit -m "fix: パスワードバリデーションのバグを修正"
+git commit -m "test: ログイン機能のテストケース追加"
+```
+
+---
+
+## Development Workflow Example
+
+```
+1. Claude Codeで「init」と入力
+   → TDDドキュメント（docs/tdd/YYYYMMDD_hhmm_機能名.md）が作成される
+
+2. PLANフェーズで実装計画とテストケースを定義
+   → 自動的にREDフェーズへ遷移
+
+3. REDフェーズでテスト作成
+   → tests/unit/feature.test.js
+   → tests/integration/feature.test.js
+   → 自動的にGREENフェーズへ遷移
+
+4. GREENフェーズで最小限の実装
+   → src/feature.js
+   → 自動的にREFACTORフェーズへ遷移
+
+5. REFACTORフェーズでリファクタリング
+   → コードを改善
+   → 自動的にREVIEWフェーズへ遷移
+
+6. REVIEWフェーズで品質チェック
+   → 静的解析: 0 errors
+   → カバレッジ: 95%
+   → コーディング規約: OK
+   → 自動的にCOMMITフェーズへ遷移
+
+7. COMMITフェーズでコミット
+   → git add .
+   → git commit -m "feat: 新機能実装"
+```
+
+---
+
+## Notes for Claude Code
+
+### メタルール
+
+- コードの動作、ファイル場所、システム状態について不確実な場合は**推測せず、ユーザーに明確化を求める**
+- 「おそらく〜」「〜だと思います」などの曖昧な表現を避ける
+- 絶対に必要でない限り、新規ファイルを作成しない
+- **既存ファイルの編集を新規作成より優先する**
+
+### 開発での重要原則
+
+1. **テストファースト**: 実装前にテストを書く
+2. **最小限の実装**: テストを通すための最小限の実装
+3. **リファクタリング**: テストが通った後にコードを改善
+4. **品質基準の遵守**: 静的解析、カバレッジ、コーディング規約
+5. **意図の明確化**: Given/When/Then/And コメントで意図を明確化
+
+### プロジェクト固有の注意事項
+
+[Add your project-specific notes here]
+
+例:
+- セキュリティ対策: 入力のサニタイズ、出力のエスケープ
+- パフォーマンス: N+1問題の回避、キャッシュの活用
+- 国際化: すべての文字列を翻訳可能に
+- アクセシビリティ: WAI-ARIA準拠
+
+---
+
+## Language/Framework Specific Examples
+
+### Node.js + Jest
+
+```javascript
+// tests/unit/math.test.js
+describe('Math operations', () => {
+  test('adds two numbers', () => {
+    // Given: 2つの数値
+    const a = 1;
+    const b = 2;
+
+    // When: 足し算を実行
+    const result = add(a, b);
+
+    // Then: 正しい結果を返す
+    expect(result).toBe(3);
+  });
+});
+```
+
+### Python + pytest
+
+```python
+# tests/unit/test_math.py
+def test_add_two_numbers():
+    # Given: 2つの数値
+    a = 1
+    b = 2
+
+    # When: 足し算を実行
+    result = add(a, b)
+
+    # Then: 正しい結果を返す
+    assert result == 3
+```
+
+### PHP + PHPUnit
+
+```php
+// tests/Unit/MathTest.php
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+
+class MathTest extends TestCase
+{
+    #[Test]
+    public function adds_two_numbers(): void
+    {
+        // Given: 2つの数値
+        $a = 1;
+        $b = 2;
+
+        // When: 足し算を実行
+        $result = add($a, $b);
+
+        // Then: 正しい結果を返す
+        $this->assertSame(3, $result);
+    }
+}
+```
+
+---
+
+*最終更新: [YYYY-MM-DD]*
+*ClaudeSkills Version: [バージョン]*
