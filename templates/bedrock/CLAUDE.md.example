@@ -1,0 +1,472 @@
+# [Project Name] - WordPress Plugin/Theme
+
+## Project Overview
+
+- **Type**: WordPress Plugin / Theme
+- **Framework**: Bedrock (WordPress)
+- **PHP**: 8.1+
+- **Test Framework**: PHPUnit 9.6 + wp-phpunit 6.8
+- **Quality Tools**: PHPStan Level 8, Laravel Pint, Brain Monkey
+
+## TDD Workflow
+
+このプロジェクトは、ClaudeSkills TDDフレームワークを使用しています。
+
+### 7つのフェーズ
+
+1. **INIT** (初期化): 要件定義とTDDドキュメント作成
+2. **PLAN** (計画): 実装計画とテストケース定義
+3. **RED** (テスト作成): 失敗するテストを作成
+4. **GREEN** (実装): 最小限の実装でテストを通す
+5. **REFACTOR** (リファクタリング): コードを改善
+6. **REVIEW** (品質検証): 品質基準を満たすか確認
+7. **COMMIT** (コミット): 変更をコミット
+
+### フェーズの開始方法
+
+Claude Codeで以下のコマンドを入力:
+- `init` または `/tdd-init`: INITフェーズ開始
+- `plan` または `/tdd-plan`: PLANフェーズ開始
+- `red` または `/tdd-red`: REDフェーズ開始
+- `green` または `/tdd-green`: GREENフェーズ開始
+- `refactor` または `/tdd-refactor`: REFACTORフェーズ開始
+- `review` または `/tdd-review`: REVIEWフェーズ開始
+- `commit` または `/tdd-commit`: COMMITフェーズ開始
+
+### フェーズ自動遷移
+
+各フェーズ完了時に自動的に次のフェーズに遷移します（ユーザー確認なし）。
+
+---
+
+## Quality Standards
+
+このプロジェクトは以下の品質基準を遵守します。
+
+### テストカバレッジ
+
+- **目標**: 90%以上
+- **最低ライン**: 80%
+- **測定**: `composer test -- --coverage-text`
+
+### 静的解析
+
+- **PHPStan Level 8** (最高レベル) 必須
+- **エラー許容**: 0件
+- **実行**: `composer stan` または `vendor/bin/phpstan analyse`
+
+### コーディング規約
+
+- **Laravel Pint** (PSR-12準拠)
+- **実行**: `composer pint`
+- **WordPress Coding Standards** 準拠
+
+### テスト形式
+
+- **#[Test]属性形式** でテストを記述
+- **Given/When/Then/And** コメントで意図を明確化
+- **Unit/Integration** テストを適切に分離
+
+---
+
+## Docker Environment
+
+### コンテナ内でテスト実行
+
+このプロジェクトはDockerコンテナ内で実行されます。
+
+#### プラグインのテスト
+
+```bash
+docker exec <container> bash -c "cd /var/task/web/app/mu-plugins/<plugin-name> && composer test"
+```
+
+#### テーマのテスト
+
+```bash
+docker exec <container> bash -c "cd /var/task/web/app/themes/<theme-name> && composer test"
+```
+
+#### 実行例
+
+```bash
+# プラグイン: thenews-weather
+docker exec thenews-app-1 bash -c "cd /var/task/web/app/mu-plugins/thenews-weather && composer test"
+
+# テーマ: thenews-theme
+docker exec thenews-app-1 bash -c "cd /var/task/web/app/themes/thenews-theme && composer test"
+```
+
+### カバレッジ取得
+
+```bash
+docker exec <container> bash -c "cd /path/to/component && composer test -- --coverage-text"
+```
+
+### 静的解析実行
+
+```bash
+docker exec <container> bash -c "cd /path/to/component && composer stan"
+```
+
+### コーディング規約チェック
+
+```bash
+docker exec <container> bash -c "cd /path/to/component && composer pint"
+```
+
+---
+
+## Git Subtree Configuration
+
+このプロジェクトはGit Subtreeで複数のコンポーネントを管理しています。
+
+### 開発ワークフロー
+
+#### 1. 親リポジトリで作業
+
+```bash
+cd /path/to/bedrock-project
+
+# プラグイン開発
+cd web/app/mu-plugins/my-plugin
+
+# TDDワークフローを実行
+# Claude Codeで「init」と入力
+```
+
+#### 2. Subtreeへプッシュ
+
+```bash
+# 親リポジトリのルートに戻る
+cd /path/to/bedrock-project
+
+# Subtreeにプッシュ
+git subtree push --prefix=web/app/mu-plugins/my-plugin my-plugin main
+```
+
+#### 3. Subtreeから更新を取得
+
+```bash
+# 親リポジトリのルートで実行
+git subtree pull --prefix=web/app/mu-plugins/my-plugin my-plugin main
+```
+
+### 注意事項
+
+- 各コンポーネントは独立したテスト環境を持つ
+- Subtreeディレクトリ内で `.claude/skills` を配置可能
+- 親リポジトリとSubtreeの両方で ClaudeSkills を使える
+
+### Subtreeの追加（初回のみ）
+
+```bash
+# リモート追加
+git remote add my-plugin git@github.com:username/my-plugin.git
+
+# Subtree追加
+git subtree add --prefix=web/app/mu-plugins/my-plugin my-plugin main --squash
+```
+
+---
+
+## WordPress Development Guidelines
+
+### セキュリティ対策（必須）
+
+#### 入力のサニタイズ
+
+すべてのユーザー入力を必ずサニタイズ:
+
+```php
+$text = sanitize_text_field($_POST['input']);
+$content = sanitize_textarea_field($_POST['content']);
+$html = wp_kses_post($_POST['html']);
+$url = esc_url_raw($_POST['url']);
+$email = sanitize_email($_POST['email']);
+```
+
+#### 出力のエスケープ
+
+すべての出力を必ずエスケープ:
+
+```php
+echo esc_html($user_input);
+echo '<div data-value="' . esc_attr($value) . '">';
+echo '<a href="' . esc_url($link) . '">';
+```
+
+#### Nonce検証
+
+フォーム送信時は必ずNonceを検証:
+
+```php
+// フォーム生成
+wp_nonce_field('my_action', 'my_nonce');
+
+// フォーム処理
+if (!isset($_POST['my_nonce']) || !wp_verify_nonce($_POST['my_nonce'], 'my_action')) {
+    wp_die('Security check failed');
+}
+```
+
+#### 権限チェック
+
+管理機能には必ず権限チェック:
+
+```php
+if (!current_user_can('manage_options')) {
+    wp_die('You do not have sufficient permissions');
+}
+```
+
+### WordPress関数の優先使用
+
+直接DBアクセスではなく、WordPress関数を使用:
+
+```php
+// ✅ Good
+wp_insert_post(['post_title' => $title]);
+update_post_meta($post_id, 'key', $value);
+$value = get_option('option_name');
+
+// ❌ Bad
+global $wpdb;
+$wpdb->query("INSERT INTO ...");
+```
+
+### Hooks/Filters
+
+機能を拡張可能にする:
+
+```php
+// フィルタで値を変更可能に
+$value = apply_filters('my_plugin_value', $default_value);
+
+// アクションで処理を追加可能に
+do_action('my_plugin_before_save', $data);
+save_data($data);
+do_action('my_plugin_after_save', $data);
+```
+
+### 国際化対応
+
+すべての文字列を翻訳可能に:
+
+```php
+echo esc_html__('Weather Information', 'my-plugin');
+printf(
+    esc_html__('Weather in %s', 'my-plugin'),
+    esc_html($city)
+);
+```
+
+---
+
+## Available Commands
+
+### テスト実行
+
+```bash
+# すべてのテスト
+composer test
+
+# Unitテストのみ
+composer test:unit
+
+# Integrationテストのみ
+composer test:integration
+
+# カバレッジ付き
+composer test -- --coverage-text
+```
+
+### 静的解析
+
+```bash
+# PHPStan実行
+composer stan
+
+# または
+vendor/bin/phpstan analyse --memory-limit=1G
+```
+
+### コーディング規約
+
+```bash
+# Pint実行（チェックのみ）
+composer pint
+
+# Pint実行（自動修正）
+composer pint:fix
+```
+
+### すべてのチェック
+
+```bash
+# Pint + PHPStan + Test
+composer check
+```
+
+---
+
+## Testing Guidelines
+
+### テストディレクトリ構造
+
+```
+tests/
+├── Unit/              # 純粋なPHPロジック（WordPress環境不要）
+│   └── *Test.php      # PHPUnit\Framework\TestCase を継承
+├── Integration/       # WordPress環境が必要
+│   └── *Test.php      # WP_UnitTestCase を継承
+└── bootstrap.php      # wp-phpunitセットアップ
+```
+
+### テストクラスの選択
+
+#### WP_UnitTestCase を使うケース
+
+- WordPress関数（`get_option`, `wp_insert_post`等）を実行する
+- データベース操作を伴う
+- WordPressフック/フィルタを使用する
+
+```php
+use WP_UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
+
+class IntegrationTest extends WP_UnitTestCase
+{
+    #[Test]
+    public function widget_saves_settings(): void
+    {
+        // Given/When/Then...
+    }
+}
+```
+
+#### PHPUnit\Framework\TestCase を使うケース
+
+- 純粋なPHPロジック（WordPress関数を使わない）
+- 高速なユニットテスト
+- Brain Monkeyでモック化可能なケース
+
+```php
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Brain\Monkey\Functions;
+
+class UnitTest extends TestCase
+{
+    protected function setUp(): void
+    {
+        parent::setUp();
+        \Brain\Monkey\setUp();
+    }
+
+    protected function tearDown(): void
+    {
+        \Brain\Monkey\tearDown();
+        parent::tearDown();
+    }
+
+    #[Test]
+    public function uses_cached_value(): void
+    {
+        // Given: WordPress関数をモック
+        Functions\expect('get_transient')
+            ->once()
+            ->andReturn(['data' => 'value']);
+
+        // When/Then...
+    }
+}
+```
+
+---
+
+## Commit Guidelines
+
+### コミットメッセージ形式
+
+```
+feat: 新機能を追加
+fix: バグ修正
+docs: ドキュメント更新
+refactor: リファクタリング
+test: テスト追加・修正
+chore: ビルド、補助ツール等の変更
+```
+
+### 例
+
+```bash
+git commit -m "feat: 天気ウィジェットのショートコード実装"
+git commit -m "fix: 気温表示のエスケープ処理を追加"
+git commit -m "test: 天気データ取得のテストケース追加"
+```
+
+---
+
+## Development Workflow Example
+
+```
+1. Claude Codeで「init」と入力
+   → TDDドキュメント（docs/YYYYMMDD_hhmm_天気ウィジェット.md）が作成される
+
+2. PLANフェーズで実装計画とテストケースを定義
+   → 自動的にREDフェーズへ遷移
+
+3. REDフェーズでテスト作成
+   → tests/Unit/WeatherServiceTest.php
+   → tests/Integration/WeatherWidgetTest.php
+   → 自動的にGREENフェーズへ遷移
+
+4. GREENフェーズで最小限の実装
+   → src/WeatherService.php
+   → 自動的にREFACTORフェーズへ遷移
+
+5. REFACTORフェーズでリファクタリング
+   → コードを改善
+   → 自動的にREVIEWフェーズへ遷移
+
+6. REVIEWフェーズで品質チェック
+   → PHPStan Level 8: 0 errors
+   → カバレッジ: 95%
+   → セキュリティ: サニタイズ/エスケープ OK
+   → 自動的にCOMMITフェーズへ遷移
+
+7. COMMITフェーズでコミット
+   → git add .
+   → git commit -m "feat: 天気ウィジェット実装"
+```
+
+---
+
+## Notes for Claude Code
+
+### メタルール
+
+- コードの動作、ファイル場所、システム状態について不確実な場合は**推測せず、ユーザーに明確化を求める**
+- 「おそらく〜」「〜だと思います」などの曖昧な表現を避ける
+- 絶対に必要でない限り、新規ファイルを作成しない
+- **既存ファイルの編集を新規作成より優先する**
+
+### WordPress開発での重要原則
+
+1. **セキュリティファースト**: サニタイズ/エスケープ/Nonce検証は必須
+2. **WordPress関数優先**: 直接DBアクセスを避ける
+3. **拡張性**: Hooks/Filtersで拡張可能にする
+4. **国際化**: すべての文字列を翻訳可能に
+5. **テスト分離**: Unit/Integration を適切に分離
+
+### Docker環境での開発
+
+- テスト実行は必ずDockerコンテナ内で実行
+- ローカル環境での実行は避ける
+- コンテナ名とパスを確認してから実行
+
+---
+
+*最終更新: [YYYY-MM-DD]*
+*ClaudeSkills Version: [バージョン]*

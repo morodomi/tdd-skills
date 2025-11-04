@@ -1,0 +1,187 @@
+# [機能名] 実装計画
+
+## ユーザーストーリー
+
+**As a** [ユーザー種別]
+**I want to** [実現したいこと]
+**So that** [目的・価値]
+
+## 受け入れ基準
+
+### シナリオ1: [シナリオ名]
+**Given** [前提条件]
+**When** [アクション]
+**Then** [期待結果]
+**And** [追加の期待結果]
+
+### シナリオ2: [シナリオ名]
+**Given** [前提条件]
+**When** [アクション]
+**Then** [期待結果]
+**And** [追加の期待結果]
+
+## 実装範囲
+
+### 対象ファイル
+- `app/Models/XXX.php` - [説明]
+- `app/Http/Controllers/XXXController.php` - [説明]
+- `app/Services/XXXService.php` - [説明]
+- `routes/web.php` - [説明]
+- `resources/views/XXX/index.blade.php` - [説明]
+
+### 対象外
+- [この機能で実装しないもの]
+- [後のフェーズで実装するもの]
+
+## アーキテクチャ設計
+
+### データモデル
+
+```php
+// app/Models/XXX.php
+class XXX extends Model
+{
+    // テーブル名
+    protected $table = 'xxx';
+
+    // 主キー
+    protected $primaryKey = 'id';
+
+    // フィールド
+    protected $fillable = [
+        'field1',
+        'field2',
+    ];
+
+    // リレーション
+    public function relatedModel()
+    {
+        return $this->belongsTo(RelatedModel::class);
+    }
+}
+```
+
+### API設計
+
+**エンドポイント**: `GET /api/xxx`
+**パラメータ**:
+- `param1` (string, required) - 説明
+- `param2` (int, optional) - 説明
+
+**レスポンス**:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "field1": "value1",
+            "field2": "value2"
+        }
+    ],
+    "meta": {
+        "total": 10,
+        "page": 1
+    }
+}
+```
+
+### UI/UX設計
+
+**画面名**: XXX一覧画面
+
+**レイアウト**:
+```
++---------------------------+
+| ヘッダー                   |
++---------------------------+
+| フィルター                 |
++---------------------------+
+| 一覧テーブル               |
+| - 列1                     |
+| - 列2                     |
+| - アクションボタン         |
++---------------------------+
+| ページネーション           |
++---------------------------+
+```
+
+**インタラクション**:
+- ボタンクリック → アクション
+- フォーム送信 → バリデーション → 処理
+
+## テストケース一覧
+
+### Feature Tests
+
+1. `tests/Feature/XXXControllerTest.php`
+   - ユーザーがXXX一覧ページにアクセスできる
+   - ユーザーがXXXを作成できる
+   - バリデーションエラーが正しく表示される
+   - 認証されていないユーザーはアクセスできない
+
+2. `tests/Feature/XXXApiTest.php`
+   - API経由でXXX一覧を取得できる
+   - API経由でXXXを作成できる
+   - 不正なパラメータでエラーが返される
+
+### Unit Tests
+
+1. `tests/Unit/Models/XXXTest.php`
+   - リレーションが正しく設定されている
+   - スコープが正しく動作する
+
+2. `tests/Unit/Services/XXXServiceTest.php`
+   - XXXService::create()が正しく動作する
+   - XXXService::update()が正しく動作する
+   - エラーケースで例外がスローされる
+
+## 見積もり
+
+- テスト作成: 2時間
+- 実装: 3時間
+- リファクタリング: 1時間
+
+**合計**: 約6時間
+
+## 依存関係
+
+- なし
+
+または
+
+- XXX機能が実装済みであること
+- YYYテーブルが存在すること
+
+## リスク
+
+### リスク1: [リスク名]
+**発生条件**: [どんな時に発生するか]
+**影響**: [どんな影響があるか]
+**対策**: [どう対処するか]
+
+### リスク2: パフォーマンス低下
+**発生条件**: データ量が多い場合
+**影響**: レスポンスが遅くなる
+**対策**: ページネーション、インデックス追加、キャッシュ導入
+
+## 品質基準
+
+### テストカバレッジ
+- 目標: 90%以上
+- 測定方法: `php artisan test --coverage`
+- 最低ライン: 80%
+
+### 静的解析
+- PHPStan: Level 8（最高レベル）
+- 実行コマンド: `vendor/bin/phpstan analyse`
+- エラー許容: 0件
+
+### コード品質
+- TDD徹底: すべての機能にテスト必須
+- Given/When/Thenコメントで意図を明確化
+- #[Test]属性形式の使用（Laravel 11 / PHPUnit 10-11）
+
+---
+
+*作成日時: YYYY-MM-DD HH:MM*
+*次のフェーズ: RED（テスト作成）*

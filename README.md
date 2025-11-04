@@ -205,6 +205,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 - [完了] テストディレクトリ構造ガイド追加: tdd-plan/red/greenにディレクトリ配置推奨を追加（2025-10-29）
 - [完了] フェーズ自動遷移機能追加: 各Skill完了時に次のフェーズを自動起動（2025-10-31）
 - [完了] Phase 3A: 基盤MCP統合（Git, Filesystem, GitHub MCP）（2025-10-31）
+- [完了] Phase 4: Bedrock/WordPress用テンプレート（2025-11-04）
 
 ### ロードマップ
 
@@ -241,7 +242,7 @@ Claude Skillsが各フェーズで以下の制約を強制します:
 #### Phase 2: 他フレームワーク対応
 - [未] Django用テンプレート
 - [未] Flask用テンプレート
-- [未] WordPress用テンプレート
+- [完了] Bedrock/WordPress用テンプレート（Phase 4で完了）
 
 #### Phase 3: MCP統合
 - [完了] Phase 3A: 基盤MCP統合
@@ -255,7 +256,29 @@ Claude Skillsが各フェーズで以下の制約を強制します:
   - [未] Python (uv環境): Ruff MCP + pytest MCP
   - [未] PHP (Laravel環境): PHPStan MCP + PHPUnit/Pest MCP（オプション）
 
-#### Phase 4: 公開
+#### Phase 4: Bedrock/WordPress用テンプレート ✅ **完了**
+
+**完了日**: 2025-11-04
+
+- [完了] WordPress固有のテストルール（WP_UnitTestCase, Brain Monkey）
+- [完了] セキュリティ対策ガイドライン（サニタイズ/エスケープ/Nonce）
+- [完了] Docker環境対応
+- [完了] Git Subtree構成対応
+- [完了] 包括的なドキュメント
+
+**ドキュメント**:
+- [Phase 4 TDD Document](docs/20251104_0001_Phase4_Bedrock_WordPress統合.md) - WordPress/Bedrock統合の要件定義・実装ドキュメント
+- [Bedrock Installation Guide](docs/BEDROCK_INSTALLATION.md) - Bedrock/WordPress環境向けインストールガイド
+
+**主な成果物**:
+- `templates/bedrock/` - WordPress/Bedrock用テンプレート
+- `templates/bedrock/.claude/skills/tdd-red/SKILL.md` - WordPress固有のテストルール追加
+- `templates/bedrock/.claude/skills/tdd-green/SKILL.md` - セキュリティ対策ガイドライン追加
+- `templates/bedrock/.claude/skills/tdd-review/SKILL.md` - WordPress品質チェックリスト追加
+- `templates/bedrock/CLAUDE.md.example` - WordPress/Bedrock向けプロジェクト設定例
+- `docs/BEDROCK_INSTALLATION.md` - インストールガイド（Docker/Git Subtree対応）
+
+#### Phase 5: 公開
 - [未] ドキュメント整備
 - [未] サンプルプロジェクト作成
 - [未] 公開リポジトリ化
