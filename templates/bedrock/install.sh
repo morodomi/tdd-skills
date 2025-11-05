@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 ################################################################################
-# ClaudeSkills TDD Framework Installer for Laravel
+# ClaudeSkills TDD Framework Installer for Bedrock/WordPress
 ################################################################################
 #
-# このスクリプトは、既存のLaravelプロジェクトにClaudeSkills TDD環境を導入します。
+# このスクリプトは、既存のBedrock/WordPressプロジェクトにClaudeSkills TDD環境を導入します。
 #
 # 使用方法:
-#   cd /path/to/your-laravel-project
-#   bash /path/to/ClaudeSkills/templates/laravel/install.sh
+#   cd /path/to/your-bedrock-project
+#   bash /path/to/ClaudeSkills/templates/bedrock/install.sh
 #
 # MCPインストールをスキップする場合:
-#   bash /path/to/ClaudeSkills/templates/laravel/install.sh --skip-mcp
+#   bash /path/to/ClaudeSkills/templates/bedrock/install.sh --skip-mcp
 #
 # または（公開後）:
-#   curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/templates/laravel/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/yourname/ClaudeSkills/main/templates/bedrock/install.sh | bash
 #
 ################################################################################
 
@@ -45,26 +45,27 @@ echo ""
 
 echo "環境チェック中..."
 
-# Laravelプロジェクトか確認
-if [ ! -f "artisan" ]; then
-    echo -e "${RED}✗ エラー: このスクリプトはLaravelプロジェクトのルートディレクトリで実行してください。${NC}"
+# Bedrock/WordPressプロジェクトか確認
+# Bedrockは通常composer.jsonとweb/ディレクトリを持つ
+BEDROCK_DETECTED=false
+
+if [ -f "composer.json" ] && [ -d "web" ]; then
+    # composer.jsonにroots/bedrockまたはwordpressが含まれているか確認
+    if grep -q "roots/bedrock\|johnpbloch/wordpress" composer.json 2>/dev/null; then
+        BEDROCK_DETECTED=true
+        echo -e "${GREEN}✓ Bedrock/WordPressプロジェクトを検出しました。${NC}"
+    fi
+fi
+
+# Bedrockでない場合は警告
+if [ "$BEDROCK_DETECTED" = false ]; then
+    echo -e "${YELLOW}⚠ 警告: Bedrock/WordPressプロジェクトを検出できませんでした。${NC}"
     echo ""
     echo "確認方法:"
-    echo "  - artisanファイルが存在するか"
-    echo "  - composer.jsonに\"laravel/framework\"があるか"
+    echo "  - composer.jsonが存在するか"
+    echo "  - web/ディレクトリが存在するか"
+    echo "  - composer.jsonに\"roots/bedrock\"または\"johnpbloch/wordpress\"があるか"
     echo ""
-    exit 1
-fi
-
-if [ ! -f "composer.json" ]; then
-    echo -e "${RED}✗ エラー: composer.jsonが見つかりません。${NC}"
-    exit 1
-fi
-
-# composer.jsonにlaravelが含まれているか確認
-if ! grep -q "laravel/framework" composer.json; then
-    echo -e "${YELLOW}⚠ 警告: composer.jsonに\"laravel/framework\"が見つかりません。${NC}"
-    echo -e "${YELLOW}   Laravelプロジェクトでない可能性があります。${NC}"
     read -p "続行しますか？ (y/N): " -n 1 -r || true
     echo
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -73,7 +74,6 @@ if ! grep -q "laravel/framework" composer.json; then
     fi
 fi
 
-echo -e "${GREEN}✓ Laravelプロジェクトを検出しました。${NC}"
 echo ""
 
 ################################################################################
