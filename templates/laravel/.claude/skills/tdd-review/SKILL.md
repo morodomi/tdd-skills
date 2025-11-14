@@ -1,7 +1,7 @@
 ---
 name: tdd-review
-description: REVIEWフェーズ用。REFACTORフェーズ完了後の最終的な品質検証を行う。静的解析（PHPStan Level 8）、カバレッジチェック（最低80%、目標90%+）、Laravel Pint実行、品質基準クリアできない場合はDISCOVEREDに追加。Progress Logに記録、YAML frontmatterのphaseを"REVIEW"に更新。ユーザーが「review」「レビュー」と言った時、REFACTORフェーズ完了後、または /tdd-review コマンド実行時に使用。
-allowed-tools: Read, Grep, Glob, Bash, Edit
+description: REVIEWフェーズ用。REFACTORフェーズ完了後の最終的な品質検証を行う。静的解析（PHPStan Level 8）、カバレッジチェック（最低80%、目標90%+）、Laravel Pint実行、Code Review（/code-review、3つのSubagent並行実行）、品質基準クリアできない場合はDISCOVEREDに追加。Progress Logに記録、YAML frontmatterのphaseを"REVIEW"に更新。ユーザーが「review」「レビュー」と言った時、REFACTORフェーズ完了後、または /tdd-review コマンド実行時に使用。
+allowed-tools: Read, Grep, Glob, Bash, Edit, Task, SlashCommand
 ---
 
 # TDD REVIEW Phase
@@ -27,8 +27,9 @@ REFACTORフェーズ完了後の**最終的な品質検証**を行うことで�
 - [ ] 静的解析を実行する（PHPStan Level 8）
 - [ ] カバレッジをチェックする（最低80%、目標90%+）
 - [ ] コードフォーマッタを実行する（Laravel Pint）
-- [ ] 品質基準をクリアできない場合はDISCOVEREDに追加する
-- [ ] Progress Logに記録する（REVIEW phase - 静的解析結果、カバレッジ、品質チェック結果）
+- [ ] **Code Review実行**（`/code-review`、3つのSubagent並行実行）
+- [ ] 品質基準・Code Review指摘事項をクリアできない場合はDISCOVEREDに追加する
+- [ ] Progress Logに記録する（REVIEW phase - 静的解析結果、カバレッジ、Code Review結果）
 - [ ] YAML frontmatterのphaseを"REVIEW"に、updatedを更新する
 - [ ] 次のフェーズを選択肢提示（星5つ形式）
 
@@ -260,7 +261,47 @@ php artisan test
 
 修正後にテストが失敗した場合はDISCOVEREDに追加します。
 
-### 4. Progress Log記録フェーズ
+### 4. Code Reviewフェーズ
+
+**重要**: REVIEWフェーズでは、静的解析に加えて、必ず Code Review を実行します。
+
+SlashCommandツールを使って `/code-review` を実行してください：
+
+```
+SlashCommand: /code-review
+```
+
+`/code-review` コマンドは、3つのSubagentを並行実行します：
+1. **Correctness Review**: 論理エラー、エッジケース処理
+2. **Performance Review**: Gemini CLIでパフォーマンス分析
+3. **Security Review**: セキュリティ脆弱性チェック
+
+**Code Review結果の処理**:
+
+Code Reviewが完了したら、以下のように対応してください：
+
+1. **🔴 Critical問題**: すべてDISCOVEREDに追加（HIGH優先度）
+2. **🟡 Important問題**: DISCOVEREDに追加（MED優先度）、ユーザーに報告
+3. **🟢 Optional問題**: 必要に応じてDISCOVEREDに追加（LOW優先度）
+
+**DISCOVEREDへの記録例**:
+
+```markdown
+### 実装中に気づいた追加テスト（DISCOVERED）
+
+**Code Review指摘事項**:
+- 🔴 SQLインジェクション脆弱性: User検索でパラメータ化されていないクエリ - 次サイクルで対応（HIGH）
+- 🟡 N+1問題: Post一覧でeager loadingなし - 次サイクルで対応（MED）
+- 🟢 命名規則: 変数名が冗長 - バックログ（LOW）
+```
+
+**Code Review完了後**:
+
+- ユーザーに結果を報告
+- DISCOVEREDに記録した件数を伝える
+- 「完璧なコードは一度に生まれない」哲学に基づき、次のフェーズに進む
+
+### 5. Progress Log記録フェーズ
 
 品質検証の結果をProgress Logに記録します。
 
@@ -272,7 +313,8 @@ Editツールを使用してCycle docのProgress Logセクションに追記：
 - 静的解析: [合格/不合格] PHPStan Level 8, エラー XX件
 - カバレッジ: XX% ([合格/条件付き合格/不合格])
 - コードフォーマット: [自動修正完了/修正なし]
-- DISCOVEREDに追加: XX件
+- Code Review: Critical XX件、Important YY件、Optional ZZ件
+- DISCOVEREDに追加: XX件（うちCode Review指摘: AA件）
 ```
 
 **記録例（すべて合格の場合）**:
@@ -282,7 +324,8 @@ Editツールを使用してCycle docのProgress Logセクションに追記：
 - 静的解析: 合格 PHPStan Level 8, エラー 0件
 - カバレッジ: 92% (合格)
 - コードフォーマット: 修正なし
-- DISCOVEREDに追加: 0件
+- Code Review: Critical 0件、Important 2件、Optional 3件
+- DISCOVEREDに追加: 2件（うちCode Review指摘: 2件）
 ```
 
 **記録例（一部不合格の場合）**:

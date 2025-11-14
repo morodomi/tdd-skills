@@ -1,7 +1,7 @@
 ---
 name: tdd-review
-description: REVIEWフェーズ用。REFACTORフェーズ完了後の最終的な品質検証を行う。静的解析（PHPStan/mypy Level 8等）、カバレッジチェック（最低80%、目標90%+）、コードフォーマッタ実行、品質基準クリアできない場合はDISCOVEREDに追加。Progress Logに記録、YAML frontmatterのphaseを"REVIEW"に更新。ユーザーが「review」「レビュー」と言った時、REFACTORフェーズ完了後、または /tdd-review コマンド実行時に使用。
-allowed-tools: Read, Grep, Glob, Bash, Edit
+description: REVIEWフェーズ用。REFACTORフェーズ完了後の最終的な品質検証を行う。静的解析（PHPStan/mypy Level 8等）、カバレッジチェック（最低80%、目標90%+）、コードフォーマッタ実行、Code Review（/code-review、3つのSubagent並行実行）、品質基準クリアできない場合はDISCOVEREDに追加。Progress Logに記録、YAML frontmatterのphaseを"REVIEW"に更新。ユーザーが「review」「レビュー」と言った時、REFACTORフェーズ完了後、または /tdd-review コマンド実行時に使用。
+allowed-tools: Read, Grep, Glob, Bash, Edit, Task, SlashCommand
 ---
 
 # TDD REVIEW Phase
@@ -19,8 +19,9 @@ REFACTORフェーズ完了後の**最終的な品質検証**を行うことで�
 - [ ] 静的解析を実行する（PHPStan/mypy Level 8等）
 - [ ] カバレッジをチェックする（最低80%、目標90%+）
 - [ ] コードフォーマッタを実行する（Pint/black/ruff）
-- [ ] 品質基準をクリアできない場合はDISCOVEREDに追加する
-- [ ] Progress Logに記録する（REVIEW phase - 静的解析結果、カバレッジ、品質チェック結果）
+- [ ] **Code Review実行**（`/code-review`、3つのSubagent並行実行）
+- [ ] 品質基準・Code Review指摘事項をクリアできない場合はDISCOVEREDに追加する
+- [ ] Progress Logに記録する（REVIEW phase - 静的解析結果、カバレッジ、Code Review結果）
 - [ ] YAML frontmatterのphaseを"REVIEW"に、updatedを更新する
 - [ ] 次のフェーズを選択肢提示（星5つ形式）
 
@@ -253,7 +254,47 @@ Editツールを使用してCycle docのTest List > DISCOVERED セクション�
 
 修正後にテストが失敗した場合はDISCOVEREDに追加します。
 
-### 4. Progress Log記録フェーズ
+### 4. Code Reviewフェーズ
+
+**重要**: REVIEWフェーズでは、静的解析に加えて、必ず Code Review を実行します。
+
+SlashCommandツールを使って `/code-review` を実行してください：
+
+```
+SlashCommand: /code-review
+```
+
+`/code-review` コマンドは、3つのSubagentを並行実行します：
+1. **Correctness Review**: 論理エラー、エッジケース処理
+2. **Performance Review**: パフォーマンス分析
+3. **Security Review**: セキュリティ脆弱性チェック
+
+**Code Review結果の処理**:
+
+Code Reviewが完了したら、以下のように対応してください：
+
+1. **🔴 Critical問題**: すべてDISCOVEREDに追加（HIGH優先度）
+2. **🟡 Important問題**: DISCOVEREDに追加（MED優先度）、ユーザーに報告
+3. **🟢 Optional問題**: 必要に応じてDISCOVEREDに追加（LOW優先度）
+
+**DISCOVEREDへの記録例**:
+
+```markdown
+### 実装中に気づいた追加テスト（DISCOVERED）
+
+**Code Review指摘事項**:
+- 🔴 セキュリティ脆弱性: ユーザー検索でパラメータ化されていないクエリ - 次サイクルで対応（HIGH）
+- 🟡 パフォーマンス: データ一覧でeager loadingなし - 次サイクルで対応（MED）
+- 🟢 命名規則: 変数名が冗長 - バックログ（LOW）
+```
+
+**Code Review完了後**:
+
+- ユーザーに結果を報告
+- DISCOVEREDに記録した件数を伝える
+- 「完璧なコードは一度に生まれない」哲学に基づき、次のフェーズに進む
+
+### 5. Progress Log記録フェーズ
 
 品質検証の結果をProgress Logに記録します。
 
@@ -265,30 +306,33 @@ Editツールを使用してCycle docのProgress Logセクションに追記：
 - 静的解析: [合格/不合格] Level 8, エラー XX件
 - カバレッジ: XX% ([合格/条件付き合格/不合格])
 - コードフォーマット: [自動修正完了/修正なし]
-- DISCOVEREDに追加: XX件
+- Code Review: Critical XX件、Important YY件、Optional ZZ件
+- DISCOVEREDに追加: XX件（うちCode Review指摘: AA件）
 ```
 
 **記録例（すべて合格の場合）**:
 ```markdown
-### 2025-10-28 16:30 - REVIEW phase
+### 2025-11-14 16:30 - REVIEW phase
 - テスト実行: 合格 15件、失敗 0件
 - 静的解析: 合格 Level 8, エラー 0件
 - カバレッジ: 92% (合格)
 - コードフォーマット: 修正なし
-- DISCOVEREDに追加: 0件
+- Code Review: Critical 0件、Important 2件、Optional 3件
+- DISCOVEREDに追加: 2件（うちCode Review指摘: 2件）
 ```
 
 **記録例（一部不合格の場合）**:
 ```markdown
-### 2025-10-28 16:30 - REVIEW phase
+### 2025-11-14 16:30 - REVIEW phase
 - テスト実行: 合格 12件、失敗 3件（DISCOVEREDに追加）
 - 静的解析: 不合格 Level 8, エラー 5件（DISCOVEREDに追加）
 - カバレッジ: 76% (不合格、DISCOVEREDに追加)
 - コードフォーマット: 自動修正完了（3ファイル）
+- Code Review: Critical 1件、Important 3件、Optional 2件
 - DISCOVEREDに追加: 3件
 ```
 
-### 5. YAML frontmatter更新フェーズ
+### 6. YAML frontmatter更新フェーズ
 
 Cycle docのYAML frontmatterを更新します。
 
@@ -308,7 +352,7 @@ updated: YYYY-MM-DD HH:MM  # 現在時刻に更新
 - `phase`: "REVIEW"に変更
 - `updated`: 現在日時に更新
 
-### 6. 完了フェーズ
+### 7. 完了フェーズ
 
 レビュー完了後、次のフェーズを選択肢で案内します：
 
@@ -368,7 +412,7 @@ DISCOVERED:
 
 ## 制約の強化
 
-このフェーズでは、`allowed-tools: Read, Grep, Glob, Bash, Edit` が使用可能です。
+このフェーズでは、`allowed-tools: Read, Grep, Glob, Bash, Edit, Task, SlashCommand` が使用可能です。
 
 **Editツールの使用は限定的**:
 - Cycle docのTest List > DISCOVERED セクションへの追記のみ
@@ -432,6 +476,45 @@ WIP:
 3. 再度REVIEWフェーズに進む
 ```
 
+## 参考情報
+
+このSkillは、TDDワークフローの一部です。
+
+- 詳細なワークフロー: README.md参照
+- プロジェクト設定: CLAUDE.md参照
+- 前のフェーズ: tdd-refactor Skill（リファクタリング）
+- 次のフェーズ: tdd-commit Skill（コミット）
+
+### REVIEWフェーズの重要性
+
+REVIEWフェーズは、TDDサイクルの**品質ゲートキーパー**です：
+
+- **品質検証**: 静的解析、カバレッジ、フォーマットをチェック
+- **問題の記録**: 品質基準未達の場合はDISCOVEREDに追加
+- **次サイクルへの橋渡し**: 完璧を求めず、小さなサイクルを回す
+
+「完璧なコードは一度に生まれない。小さな改善を積み重ねる」哲学に基づいています。
+
+### DISCOVEREDの活用
+
+REVIEWフェーズでは、以下をDISCOVEREDに記録します：
+
+1. **テスト失敗**: 失敗したテストケース
+2. **静的解析エラー**: Level 8/--strictで検出されたエラー
+3. **カバレッジ不足**: 80%未達のケース
+4. **Code Review指摘**: Critical/Important/Optionalな問題
+5. **その他の品質問題**: リファクタリング候補等
+
+DISCOVEREDに記録された項目は、次のTDDサイクルで対応します。
+
+### 小さなサイクルを回す
+
+REVIEWフェーズでは、完璧を求めません：
+
+- 品質基準をクリアできなくても、DISCOVEREDに記録してコミット可能
+- 次のサイクルで改善することを推奨
+- 小さく、頻繁にコミットする方が効率的
+
 ## プロジェクト固有のカスタマイズ
 
 このSkillファイルはフレームワーク非依存の汎用版です。
@@ -475,44 +558,6 @@ WIP:
 - 静的解析: `mypy . --strict`
 - コードフォーマット: `black . && ruff format .`
 ```
-
-## 参考情報
-
-このSkillは、TDDワークフローの一部です。
-
-- 詳細なワークフロー: README.md参照
-- プロジェクト設定: CLAUDE.md参照
-- 前のフェーズ: tdd-refactor Skill（リファクタリング）
-- 次のフェーズ: tdd-doc Skill（ドキュメント更新）または COMMIT（コミット）
-
-### REVIEWフェーズの重要性
-
-REVIEWフェーズは、TDDサイクルの**品質ゲートキーパー**です：
-
-- **品質検証**: 静的解析、カバレッジ、フォーマットをチェック
-- **問題の記録**: 品質基準未達の場合はDISCOVEREDに追加
-- **次サイクルへの橋渡し**: 完璧を求めず、小さなサイクルを回す
-
-「完璧なコードは一度に生まれない。小さな改善を積み重ねる」哲学に基づいています。
-
-### DISCOVEREDの活用
-
-REVIEWフェーズでは、以下をDISCOVEREDに記録します：
-
-1. **テスト失敗**: 失敗したテストケース
-2. **静的解析エラー**: Level 8で検出されたエラー
-3. **カバレッジ不足**: 80%未達のケース
-4. **その他の品質問題**: リファクタリング候補等
-
-DISCOVEREDに記録された項目は、次のTDDサイクルで対応します。
-
-### 小さなサイクルを回す
-
-REVIEWフェーズでは、完璧を求めません：
-
-- 品質基準をクリアできなくても、DISCOVEREDに記録してコミット可能
-- 次のサイクルで改善することを推奨
-- 小さく、頻繁にコミットする方が効率的
 
 ---
 

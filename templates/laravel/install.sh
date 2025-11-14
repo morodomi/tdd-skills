@@ -142,6 +142,23 @@ echo -e "${GREEN}✓ Skillsをコピーしました。${NC}"
 echo ""
 
 ################################################################################
+# 4-2. グローバルcode-reviewコマンドのインストール
+################################################################################
+
+echo "グローバルcode-reviewコマンドをインストール中..."
+
+GLOBAL_COMMANDS_DIR="$HOME/.claude/commands"
+mkdir -p "$GLOBAL_COMMANDS_DIR"
+
+if [ -f "$SCRIPT_DIR/../../.claude/commands/code-review.md" ]; then
+    cp "$SCRIPT_DIR/../../.claude/commands/code-review.md" "$GLOBAL_COMMANDS_DIR/"
+    echo -e "${GREEN}✓ グローバルcode-reviewコマンドを ~/.claude/commands/ にインストールしました。${NC}"
+else
+    echo -e "${YELLOW}⚠ 警告: グローバルcode-reviewコマンドが見つかりません。スキップします。${NC}"
+fi
+echo ""
+
+################################################################################
 # 5. docs/tdd/.gitkeep 作成
 ################################################################################
 
