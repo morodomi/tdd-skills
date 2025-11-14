@@ -16,11 +16,12 @@
 
 ---
 
-## Current Phase
+## Project Status
 
-**Phase: 要件定義・設計フェーズ**
-
-現在、テンプレートリポジトリの設計と、最初のSkills実装の準備中。
+プロジェクトの現状は以下を参照:
+- 完了機能・次期計画: [README.md](README.md)
+- 進行中の作業: `docs/cycles/` ディレクトリ
+- 設計・調査ドキュメント: `docs/` ディレクトリ
 
 ---
 
@@ -82,33 +83,68 @@
 
 ---
 
-## TDD Workflow (Target)
+## TDD Workflow (このプロジェクト開発用)
+
+このプロジェクト（ClaudeSkills）の開発も、厳格なTDDワークフローに従います。
+
+### 7つのフェーズ
 
 ```
-INIT (初期化)
-  ↓
-PLAN (計画・docs作成)
-  ↓
-PLAN REVIEW (計画レビュー)
-  ↓
-RED (テスト作成)
-  ↓
-GREEN (実装)
-  ↓
-REFACTOR (リファクタリング)
-  ↓
-REVIEW (品質検証)
-  ↓
-DOC (ドキュメント更新)
-  ↓
-COMMIT
+INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 ```
+
+1. **INIT（初期化）**: Cycle doc作成（`docs/cycles/YYYYMMDD_hhmm_<機能名>.md`）
+2. **PLAN（計画）**: Scope Definition, Context & Dependencies, Test List, Implementation Notes記入
+3. **RED（テスト作成）**: テストコード作成（Test List: TODO→WIP）
+4. **GREEN（実装）**: 最小実装（Test List: WIP→DONE、DISCOVERED管理）
+5. **REFACTOR（リファクタリング）**: 品質改善
+6. **REVIEW（品質検証）**: 品質チェック（DISCOVERED追加、完璧主義回避）
+7. **COMMIT（コミット）**: Git commit + Feature doc更新（DOC統合済み）
+
+### Cycle Document構造
+
+```yaml
+---
+feature: [機能領域]
+cycle: [サイクル識別子]
+phase: [INIT/PLAN/RED/GREEN/REFACTOR/REVIEW/DONE]
+created: YYYY-MM-DD HH:MM
+updated: YYYY-MM-DD HH:MM
+---
+
+## やりたいこと
+## Scope Definition
+## Context & Dependencies
+## Test List
+  ### 実装予定（TODO）
+  ### 実装中（WIP）
+  ### 実装中に気づいた追加テスト（DISCOVERED）
+  ### 完了（DONE）
+## Implementation Notes
+## Progress Log
+```
+
+### DISCOVERED哲学
+
+「完璧なコードは一度に生まれない。小さな改善を積み重ねる」
+
+- 実装中に気づいた追加テスト・改善点はDISCOVEREDに記録
+- 今回のサイクルでは実装せず、次サイクルに回す
+- 完璧主義による開発停滞を防ぐ
+
+### DOC統合
+
+- DOCフェーズは独立せず、COMMITフェーズに統合
+- コミット時にFeature doc更新、Overview doc更新（必要時）を実施
+
+### フェーズごとの制約
 
 各フェーズでClaude Skillsが制約を強制:
-- `PLAN`: 実装コードを書かない（`allowed-tools: Read, Grep, Glob`）
+- `PLAN`: 実装コードを書かない（`allowed-tools: Read, Grep, Glob, Edit, Bash`）
 - `RED`: テストコードのみ書く
 - `GREEN`: 最小限の実装のみ
 - `REFACTOR`: テストを維持しながらリファクタ
+- `REVIEW`: DISCOVEREDに記録、フェーズ中断しない
 
 ---
 
@@ -140,22 +176,23 @@ COMMIT
 
 ### このプロジェクト自体の開発
 
-このプロジェクト（ClaudeSkills）の開発も、将来的にTDDワークフローで進める予定。
+このプロジェクト（ClaudeSkills）の開発も、TDDワークフローで進めます。
 
-現在は**調査・設計フェーズ**のため、以下のルール:
+**開発ルール**:
 
-1. **ドキュメントファースト**
-   - 実装前に設計ドキュメントを作成
-   - 調査結果を必ずドキュメント化
+1. **TDDサイクル厳守**
+   - 機能追加・バグ修正は必ずTDDサイクルを通す
+   - Cycle doc（`docs/cycles/`）を作成してから実装
 
 2. **段階的な実装**
-   - 小さく始める（tdd-plan Skill 1つから）
+   - 小さく始める（変更ファイル10個以下を目安）
    - 動作確認してから拡大
 
 3. **プロジェクト構造の維持**
-   - ドキュメントは `docs/` 配下
-   - テンプレートは `templates/` 配布
-   - サンプルは `examples/` 配下
+   - Cycle doc: `docs/cycles/YYYYMMDD_hhmm_<機能名>.md`
+   - 設計・調査: `docs/YYYYMMDD_hhmm_<内容>.md`
+   - テンプレート: `templates/<framework>/.claude/skills/`
+   - サンプル: `examples/`
 
 ### ドキュメント作成ルール
 
@@ -185,6 +222,67 @@ COMMIT
    - ドキュメント内で絵文字を使用しない
    - 状態表示は記号（✅ ❌ ⏸️）ではなくテキスト（完了、未完了、保留）で表現
    - 見出しやリストに装飾的な絵文字を使用しない
+
+### チケット管理方針
+
+**基本方針**: docs/ 中心、GitHub Issue補助
+
+#### パターン1: docs/ 管理（推奨）
+
+**使うケース**:
+- TDDサイクル内の機能開発・バグ修正
+- 設計・調査・実装計画
+- 自分専用のメモ・記録
+
+**命名規則**:
+```bash
+# 機能開発（TDDサイクル）
+docs/cycles/YYYYMMDD_hhmm_<機能名>.md
+
+# 設計・調査（cyclesに入らない）
+docs/YYYYMMDD_hhmm_<内容>.md
+```
+
+**利点**:
+- Cycle docと同じディレクトリで管理しやすい
+- コミット履歴で追跡可能
+- Claude Codeが読み込みやすい
+
+#### パターン2: GitHub Issue管理
+
+**使うケース**:
+- 将来のバックログ管理
+- チーム共有が必要なタスク（将来的）
+- 外部からの報告・要望
+
+**運用方法**:
+```bash
+# Issue作成
+gh issue create --title "機能名" --body "詳細: docs/YYYYMMDD_hhmm_*.md 参照"
+
+# Issue番号をCycle docに記録
+---
+feature: [機能領域]
+cycle: [サイクル識別子]
+issue: #123  # GitHub Issue番号
+---
+```
+
+**利点**:
+- ラベル・マイルストーンで整理可能
+- 外部からの参照が容易
+- プロジェクト管理しやすい
+
+#### 使い分け基準
+
+| 状況 | 推奨 | 理由 |
+|------|------|------|
+| TDDサイクル内の作業 | **docs/** | Cycle docと一緒に管理 |
+| 設計・調査 | **docs/** | コード近くで参照しやすい |
+| バグ修正（すぐ着手） | **docs/** | TDDサイクルで即対応 |
+| バグ修正（あとで対応） | **Issue** | バックログ管理 |
+| 機能要望（あとで検討） | **Issue** | 優先度付け・議論 |
+| チーム共有タスク | **Issue** | 可視化・担当者管理 |
 
 ---
 
@@ -402,5 +500,4 @@ fix(#456): CLAUDE.mdのタイポを修正
 
 ---
 
-*最終更新: 2025-10-23*
-*現在のフェーズ: 要件定義・設計*
+*最終更新: 2025-11-14*
