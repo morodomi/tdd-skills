@@ -1,6 +1,6 @@
 ---
 name: tdd-refactor
-description: REFACTORフェーズ用。GREENフェーズで作成した実装をリファクタリングし、コード品質を改善する。テストを維持しながら、DRY原則の適用、定数化、メソッド分割、ネーミング改善等を行う。ユーザーが「refactor」「リファクタリング」と言った時、GREENフェーズ完了後、または /tdd-refactor コマンド実行時に使用。
+description: REFACTORフェーズ用。GREENフェーズで作成した実装をリファクタリングし、コード品質を改善する。テストを維持しながら、DRY原則の適用、定数化、メソッド分割、ネーミング改善等を行う。Progress Logに記録、Cycle docのYAML frontmatterのphaseを"REFACTOR"に更新。ユーザーが「refactor」「リファクタリング」と言った時、GREENフェーズ完了後、または /tdd-refactor コマンド実行時に使用。
 allowed-tools: Read, Write, Edit, Grep, Glob, Bash
 ---
 
@@ -15,13 +15,15 @@ GREENフェーズで作成した実装をリファクタリングし、コード
 
 ## このフェーズでやること
 
-- [ ] 最新のTDDドキュメントを検索する（`ls -t docs/202*.md | head -1`）
+- [ ] 最新のCycle docを読み込む（`docs/cycles/YYYYMMDD_hhmm_*.md`）
 - [ ] すべてのテストが通っていることを確認する
-- [ ] TDDドキュメントの品質基準を確認する
+- [ ] Cycle docの品質基準を確認する
 - [ ] リファクタリングを行う（DRY、定数化、メソッド分割等）
 - [ ] 各変更後にテストを実行する
-- [ ] 品質チェックツールを実行する（PHPStan, Pint, カバレッジ）
-- [ ] 次のフェーズ（REVIEW）を案内する
+- [ ] 品質チェックツールを実行する（PHPStan Level 8, Laravel Pint, カバレッジ）
+- [ ] Progress Logに記録する（REFACTORフェーズの実施内容）
+- [ ] YAML frontmatterのphaseを"REFACTOR"に、updatedを更新する
+- [ ] 次のフェーズ（REVIEW）を5つ星形式で案内する
 
 ## このフェーズで絶対にやってはいけないこと
 
@@ -49,19 +51,30 @@ REFACTORフェーズを開始できません。
 GREENフェーズに戻って、テストを通してください。
 ```
 
-次に、TDDドキュメントの品質基準を確認します：
+次に、Cycle docの品質基準を確認します：
 
 ```bash
-# 最新のTDDドキュメントを検索
-ls -t docs/202*.md 2>/dev/null | head -1
+# 最新のCycle docを検索
+ls -t docs/cycles/202*.md 2>/dev/null | head -1
 
-# TDDドキュメントの読み込み
-Read docs/YYYYMMDD_hhmm_<機能名>.md
+# Cycle docの読み込み
+Read docs/cycles/YYYYMMDD_hhmm_<機能名>.md
+```
+
+**Cycle docが見つからない場合**:
+```
+エラー: Cycle docが見つかりません。
+
+まず tdd-init を実行してください。
+
+手順:
+1. /tdd-init を実行
+2. 再度 /tdd-refactor を実行
 ```
 
 品質基準を確認：
-- テストカバレッジ目標
-- PHPStanレベル
+- テストカバレッジ目標（デフォルト: 90%以上）
+- PHPStanレベル（デフォルト: Level 8）
 - その他の品質基準
 
 ### 2. リファクタリングフェーズ
@@ -387,12 +400,50 @@ php artisan test --coverage
 3. または品質基準を見直し
 ```
 
-### 4. 完了フェーズ
+### 4. Progress Log記録フェーズ
+
+リファクタリング完了後、Progress Logに記録します。
+
+Editツールを使用してCycle docのProgress Logセクションに追記：
+
+```markdown
+### YYYY-MM-DD HH:MM - REFACTOR phase
+- DRY原則適用: XX箇所
+- 定数化: XX箇所
+- メソッド分割: XX箇所
+- 条件式簡潔化: XX箇所
+- ネーミング改善: XX箇所
+- 品質チェック: PHPStan Level 8 エラー 0件、Pint実行済み、カバレッジ XX%
+```
+
+### 5. YAML frontmatter更新フェーズ
+
+Cycle docのYAML frontmatterを更新します。
+
+Editツールを使用してCycle docの先頭部分を更新：
+
+```markdown
+---
+feature: [機能領域]
+cycle: [サイクル識別子]
+phase: REFACTOR
+created: YYYY-MM-DD HH:MM
+updated: YYYY-MM-DD HH:MM  # 現在時刻に更新
+---
+```
+
+**更新内容**:
+- `phase`: "REFACTOR"に変更
+- `updated`: 現在日時に更新
+
+### 6. 完了フェーズ
 
 すべての品質チェックが完了したら、以下を伝えてください：
 
 ```
-REFACTORフェーズが完了しました。
+================================================================================
+REFACTORフェーズが完了しました
+================================================================================
 
 リファクタリング内容:
 - DRY原則適用: XX箇所
@@ -402,9 +453,9 @@ REFACTORフェーズが完了しました。
 - ネーミング改善: XX箇所
 
 品質チェック結果:
-- PHPStan (Level 8): エラー 0件 ✓
-- Laravel Pint: PSR-12準拠 ✓
-- テストカバレッジ: XX% ✓
+- PHPStan (Level 8): エラー 0件
+- Laravel Pint: PSR-12準拠
+- テストカバレッジ: XX%
 
 現在のTDDワークフロー:
 [完了] INIT (初期化)
@@ -413,20 +464,17 @@ REFACTORフェーズが完了しました。
 [完了] GREEN (実装)
 [完了] REFACTOR (リファクタリング) ← 現在ここ
 [次] REVIEW (品質検証)
-[ ] COMMIT (コミット)
 
-次のステップ:
-1. すべてのテストが通っていることを最終確認してください
-2. REVIEWフェーズでは、コード全体のレビューと最終チェックを行います
+次のステップを選択してください:
 
-================================================================================
-自動遷移: 次のフェーズ（REVIEW）に進みます
-================================================================================
+1. [推奨★★★★★] REVIEWフェーズに進む（品質検証）
+   理由: すべてのテストが通っているので、最終的な品質検証を実施。95%のケースでこれが最適
 
-REVIEWフェーズ（品質検証）を自動的に開始します...
+2. [推奨★☆☆☆☆] さらにREFACTORを実施（追加リファクタリング）
+   理由: さらなる品質改善が必要な場合。通常はREVIEWを通してから次サイクルで対応
+
+どうしますか？
 ```
-
-完了メッセージを表示したら、Skillツールを使って`tdd-review` Skillを起動してください。
 
 ## リファクタリングの原則
 
@@ -499,7 +547,7 @@ PHPStan (Level 8) でエラーが発生しました。
 段階的に修正します：
 1. まずは重要なエラーから修正
 2. 各修正後にテストを実行
-3. 修正が困難な場合はTDDドキュメントの品質基準を見直し
+3. 修正が困難な場合はCycle docの品質基準を見直し
 ```
 
 ### テストカバレッジが目標に達しない場合

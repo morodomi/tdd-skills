@@ -1,6 +1,6 @@
 ---
 name: tdd-green
-description: GREENフェーズ用。REDフェーズで作成したテストを通すための最小限の実装のみを行う。ユーザーが「green」「実装」と言った時、REDフェーズ完了後、または /tdd-green コマンド実行時に使用。過剰な実装を防ぎ、テストを通すことに集中。
+description: GREENフェーズ用。REDフェーズで作成したテストを通すための最小限の実装のみを行う。ユーザーが「green」「実装」と言った時、REDフェーズ完了後、または /tdd-green コマンド実行時に使用。過剰な実装を防ぎ、テストを通すことに集中。Laravel向け。
 allowed-tools: Read, Write, Edit, Grep, Glob, Bash
 ---
 
@@ -15,11 +15,16 @@ REDフェーズで作成したテストを通すための**最小限の実装**�
 
 ## このフェーズでやること
 
-- [ ] 最新のTDDドキュメントを検索する（`ls -t docs/202*.md | head -1`）
-- [ ] 作成済みのテストファイルを確認する（tests/Feature/, tests/Unit/）
+- [ ] 最新のCycle docを検索する（`ls -t docs/cycles/202*.md | head -1`）
+- [ ] Cycle docを読み込み、Test ListのWIP項目を確認する
+- [ ] 作成済みのテストファイルを確認する
 - [ ] テストを実行してエラー内容を確認する
-- [ ] TDDドキュメントを参照して実装範囲を確認する
-- [ ] テストを通すための最小限のコードを実装する
+- [ ] Cycle docのImplementation Notesを参照して実装範囲を確認する
+- [ ] テストを通すための最小限のコードを実装する（GREEN状態）
+- [ ] エッジケース発見時はTest ListのDISCOVEREDセクションに追加（実装はしない）
+- [ ] Test ListのWIP項目をDONEに移動する
+- [ ] Progress Logに記録（GREEN phase）
+- [ ] YAML frontmatterのphaseを"GREEN"に、updatedを更新
 - [ ] テストが通ることを確認する
 - [ ] 次のフェーズ（REFACTOR）を案内する
 
@@ -37,16 +42,26 @@ REDフェーズで作成したテストを通すための**最小限の実装**�
 まず、以下を確認してください：
 
 ```bash
-# 最新のTDDドキュメントを検索
-ls -t docs/202*.md 2>/dev/null | head -1
+# 最新のCycle docを検索
+ls -t docs/cycles/202*.md 2>/dev/null | head -1
 
-# TDDドキュメントの確認
-Read docs/YYYYMMDD_hhmm_<機能名>.md
+# Cycle docの確認
+Read docs/cycles/YYYYMMDD_hhmm_<機能名>.md
 
 # テストファイルの確認
 Glob tests/Feature/**/*.php
 Glob tests/Unit/**/*.php
 ```
+
+**Cycle docから以下を確認**：
+- YAML frontmatter の `phase` フィールド（RED のはず）
+- Test List セクション：
+  - 実装中（WIP）: 現在作業中のテストケース
+  - 実装予定（TODO）: 次に実装するテストケース
+  - 完了（DONE）: 既に完了したテストケース
+  - 実装中に気づいた追加テスト（DISCOVERED）: 発見された新しいエッジケース
+- Implementation Notes: 実装方針・背景
+- Scope Definition: 実装範囲
 
 次に、テストを実行してエラーを確認します：
 
@@ -62,70 +77,6 @@ php artisan test
 - データベーステーブルが存在しない → マイグレーション実行
 
 ### 2. 実装フェーズ
-
-#### 2.0 ディレクトリ構造の確認
-
-実装を開始する前に、app/ディレクトリとtests/ディレクトリの構造を一致させることを確認します。
-
-##### 推奨: tests/とapp/の構造を一致させる
-
-**一致させる例**:
-```
-tests/Feature/User/UserProfileControllerTest.php
-→ app/Http/Controllers/User/UserProfileController.php
-
-tests/Unit/Services/User/UserServiceTest.php
-→ app/Services/User/UserService.php
-```
-
-##### ディレクトリ配置の推奨
-
-**Controllers**:
-```
-app/Http/Controllers/
-├── User/
-│   ├── UserProfileController.php
-│   └── UserRegistrationController.php
-├── Product/
-└── Order/
-```
-
-**Services**:
-```
-app/Services/
-├── User/
-│   └── UserService.php
-├── Product/
-│   └── ProductService.php
-└── Order/
-    └── OrderService.php
-```
-
-**Providers**:
-```
-app/Providers/
-├── AppServiceProvider.php
-├── AuthServiceProvider.php
-└── RouteServiceProvider.php
-```
-（Providersは通常app/Providers/直下に配置）
-
-##### 実装時の注意点
-
-1. **テストで定義したディレクトリ構造に従う**
-   - REDフェーズで作成したテストファイルの配置を確認
-   - 同じ構造でapp/ディレクトリを作成
-
-2. **機能単位でまとめる**
-   - User機能: Controllers, Services, Models全てUser/配下
-   - 関連ファイルが近くにあると保守しやすい
-
-3. **Artisanコマンドでディレクトリ指定**
-   ```bash
-   # サブディレクトリ付きで生成
-   php artisan make:controller User/UserProfileController
-   php artisan make:model User/User
-   ```
 
 #### 2.1 実装の原則
 
@@ -153,7 +104,7 @@ app/Providers/
    - マジックナンバーも許容
    - 設定ファイル化はREFACTORフェーズで
 
-#### 2.2 実装順序
+#### 2.2 Laravel実装順序
 
 以下の順序で実装してください：
 
@@ -199,7 +150,7 @@ app/Providers/
 4. **ルート定義**
    ```php
    // routes/web.php または routes/api.php
-   Route::get('/xxx', [XXXController::class, 'index']);
+   Route::get('/xxx', [XXXController::class, 'index'])->name('xxx.index');
    ```
 
 5. **サービスクラス**（必要な場合）
@@ -293,7 +244,96 @@ GREENフェーズ完了です。
 
 エラーメッセージから、追加で必要な実装を判断して修正してください。
 
-### 4. 完了フェーズ
+### 4. DISCOVERED項目の管理
+
+実装中に新しいエッジケースや追加テストが必要だと気づいた場合、Test ListのDISCOVEREDセクションに追加します。
+
+**DISCOVEREDに追加すべき例**:
+- 境界値テスト（0件、1件、100件のデータ）
+- エラーハンドリング（存在しないIDでアクセス）
+- 権限チェック（管理者のみアクセス可能な機能）
+- セキュリティテスト（SQLインジェクション、XSS）
+
+**優先度の付け方**:
+- 🔴 HIGH: セキュリティリスク、データ破損リスク
+- 🟡 MED: ユーザー体験に影響、エラーハンドリング
+- 🟢 LOW: エッジケース、パフォーマンス最適化
+
+**記録方法**:
+
+Editツールを使用してCycle docのTest Listを更新：
+
+```markdown
+### 実装中に気づいた追加テスト（DISCOVERED）
+- 🔴 TC-XX: 権限のないユーザーがアクセスできないこと（HIGH）
+  理由: セキュリティリスク
+  次サイクルで実装
+
+- 🟡 TC-YY: データが0件の場合の表示（MED）
+  理由: ユーザー体験に影響
+  次サイクルで実装
+```
+
+**重要**: DISCOVEREDに追加した項目は、**今回のサイクルでは実装しません**。次のTDDサイクルでTODOに追加します。
+
+### 5. Test List更新フェーズ
+
+WIP項目をDONEに移動します。
+
+Editツールを使用してCycle docを更新：
+
+**更新前**:
+```markdown
+### 実装中（WIP）
+- [ ] TC-01: ログインページが表示される
+
+### 完了（DONE）
+（現在なし）
+```
+
+**更新後**:
+```markdown
+### 実装中（WIP）
+（現在なし）
+
+### 完了（DONE）
+- [x] TC-01: ログインページが表示される
+  実装日: YYYY-MM-DD HH:MM
+  実装ファイル: app/Http/Controllers/Auth/LoginController.php, routes/web.php
+```
+
+### 6. Progress Log記録フェーズ
+
+Progress Logセクションに記録を追加します。
+
+Editツールを使用してProgress Logに追記：
+```markdown
+### YYYY-MM-DD HH:MM - GREEN phase
+- TC-XX: [テストケース名] の実装完了
+  実装ファイル: app/Models/XXX.php, app/Http/Controllers/XXXController.php, routes/web.php
+  テスト結果: GREEN（全テスト通過）
+- 発見事項:
+  - DISCOVERED: TC-YY ([追加テスト内容]) - 優先度🟡MED
+- Test List更新（WIP→DONE: TC-XX）
+- YAML frontmatter更新（phase: RED → GREEN）
+```
+
+### 7. YAML frontmatter更新フェーズ
+
+Cycle docのYAML frontmatterを更新します。
+
+Editツールを使用して更新：
+```markdown
+---
+feature: [機能領域]
+cycle: [サイクル識別子]
+phase: GREEN  # RED から GREEN に更新
+created: YYYY-MM-DD HH:MM
+updated: YYYY-MM-DD HH:MM  # 現在日時に更新
+---
+```
+
+### 8. 完了フェーズ
 
 すべてのテストが通ったら、以下を伝えてください：
 
@@ -306,6 +346,12 @@ GREENフェーズが完了しました。
 - routes/web.php
 - database/migrations/YYYY_MM_DD_HHMMSS_create_xxx_table.php
 
+Test List更新:
+- WIP → DONE: TC-XX
+
+DISCOVERED項目:
+- TC-YY: [追加テスト内容] (優先度🟡MED)
+
 現在のTDDワークフロー:
 [完了] INIT (初期化)
 [完了] PLAN (計画)
@@ -316,10 +362,22 @@ GREENフェーズが完了しました。
 [ ] COMMIT (コミット)
 
 次のステップ:
-1. テストが通ることを確認してください
-2. REFACTORフェーズでは、コードの改善・DRY化・最適化を行います
-3. 重要: REFACTORフェーズ中もテストは通り続けなければなりません
+選択肢:
+1. [推奨★★★★★] REFACTORフェーズでコード改善する
+   理由: TDDサイクルの標準フロー。コード品質を向上
 
+2. [推奨★★★☆☆] さらにテストを追加して実装する（TODO項目をRED→GREEN）
+   理由: 複数機能をまとめて実装したい場合。管理コスト増加
+
+3. [推奨★★☆☆☆] そのままREVIEWに進む（REFACTORスキップ）
+   理由: 実装が既に十分綺麗な場合のみ。品質低下リスク
+
+どうしますか？
+```
+
+ユーザーが選択1（REFACTORフェーズ）を選んだ場合：
+
+```
 ================================================================================
 自動遷移: 次のフェーズ（REFACTOR）に進みます
 ================================================================================
@@ -327,7 +385,7 @@ GREENフェーズが完了しました。
 REFACTORフェーズ（リファクタリング）を自動的に開始します...
 ```
 
-完了メッセージを表示したら、Skillツールを使って`tdd-refactor` Skillを起動してください。
+その後、Skillツールを使って`tdd-refactor` Skillを起動してください。
 
 ## 実装の原則（詳細）
 

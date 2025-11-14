@@ -1,7 +1,7 @@
 ---
 name: tdd-red
-description: REDフェーズ用。テストコードのみを作成し、実装コードは一切書かない。ユーザーが「red」「テスト」「テスト作成」と言った時、PLANフェーズ完了後、または /tdd-red コマンド実行時に使用。最新のTDDドキュメント（docs/YYYYMMDD_hhmm_*.md）のテストケース一覧を基にPHPUnit #[Test]属性形式でテストを作成。
-allowed-tools: Read, Write, Grep, Glob, Bash
+description: REDフェーズ用。テストコードのみを作成し、実装コードは一切書かない。ユーザーが「red」「テスト」「テスト作成」と言った時、PLANフェーズ完了後、または /tdd-red コマンド実行時に使用。最新のCycle doc（docs/cycles/）のTest ListからTODOを1つWIPに移動してテストを作成。Laravel/PHPUnit向け。
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash
 ---
 
 # TDD RED Phase
@@ -11,18 +11,19 @@ allowed-tools: Read, Write, Grep, Glob, Bash
 ## このフェーズの目的
 
 失敗するテストコードを作成し、実装の要件を明確にすることです。
-最新のTDDドキュメントのテストケース一覧を基に、PHPUnit #[Test]属性形式でテストを作成します。
+最新のCycle docのTest ListからTODO項目を1つずつWIPに移動し、PHPUnit #[Test]属性形式でテストを作成します。
 
 ## このフェーズでやること
 
-- [ ] 最新のTDDドキュメントを検索する（`ls -t docs/202*.md | head -1`）
-- [ ] TDDドキュメントを読み込む
-- [ ] テストケース一覧セクションを抽出する
+- [ ] 最新のCycle docを検索する（`ls -t docs/cycles/202*.md | head -1`）
+- [ ] Cycle docを読み込む
+- [ ] Test ListのTODO項目を1つWIPに移動する
 - [ ] 既存のテストディレクトリ構造を確認する
-- [ ] Feature Testsを作成する（tests/Feature/）
-- [ ] Unit Testsを作成する（tests/Unit/）
-- [ ] すべてのテストが失敗することを確認するよう促す
-- [ ] 次のフェーズ（GREEN）を案内する
+- [ ] そのテストケースのテストコードを作成（Feature/Unit Tests）
+- [ ] テストを実行して失敗することを確認（RED状態）
+- [ ] Progress Logに記録（RED phase）
+- [ ] YAML frontmatterのphaseを"RED"に、updatedを更新
+- [ ] 次のアクションを案内する
 
 ## このフェーズで絶対にやってはいけないこと
 
@@ -39,11 +40,11 @@ allowed-tools: Read, Write, Grep, Glob, Bash
 まず、以下を確認してください：
 
 ```bash
-# 最新のTDDドキュメントを検索
-ls -t docs/202*.md 2>/dev/null | head -1
+# 最新のCycle docを検索
+ls -t docs/cycles/202*.md 2>/dev/null | head -1
 
-# TDDドキュメントの読み込み
-Read docs/YYYYMMDD_hhmm_<機能名>.md
+# Cycle docの読み込み
+Read docs/cycles/YYYYMMDD_hhmm_<機能名>.md
 
 # テストディレクトリ構造の確認
 Glob tests/Feature/**/*.php
@@ -53,7 +54,7 @@ Glob tests/Unit/**/*.php
 **ドキュメントが見つからない場合**:
 
 ```
-⚠️ エラー: TDDドキュメントが見つかりません。
+エラー: Cycle docが見つかりません。
 
 まず tdd-init と tdd-plan を実行してください。
 
@@ -63,34 +64,62 @@ Glob tests/Unit/**/*.php
 3. 再度 /tdd-red を実行
 ```
 
-TDDドキュメントから以下の情報を抽出してください：
-- 「## テストケース一覧」セクション
-- 「### Feature Tests」サブセクション
-- 「### Unit Tests」サブセクション
+Cycle docから以下の情報を抽出してください：
+- YAML frontmatter（feature, cycle, phase, created, updated）
+- 「## Test List（テストリスト）」セクション
+  - 実装予定（TODO）
+  - 実装中（WIP）
+  - 実装中に気づいた追加テスト（DISCOVERED）
+  - 完了（DONE）
 
-各テストケースについて、以下を確認：
-- テストファイル名（例: `tests/Feature/ProfileControllerTest.php`）
-- テストケース概要（例: ユーザーがプロフィールを更新できる）
+### 2. Test List更新フェーズ
 
-### 2. テスト作成フェーズ
+#### 2.1 TODO項目を1つ選択
 
-#### 2.1 Feature Testsから作成開始
+Test ListのTODO項目から、最初の1つを選択します。
 
-TDDドキュメントに記載されたFeature Testsを順番に作成します。
-
-**作成前の確認**：
+**選択例**：
 ```
-これから以下のFeature Testを作成します：
-- tests/Feature/XXXTest.php
-  - テストケース1の概要
-  - テストケース2の概要
+Test Listの実装予定（TODO）:
+- [ ] TC-01: ログインページが表示される
+- [ ] TC-02: 正しい認証情報でログインできる
+- [ ] TC-03: 誤った認証情報でログインできない
 
-よろしいですか？
+次に実装するテストケースを選んでください（TC-01を推奨）：
 ```
 
-ユーザーの承認を得てから作成してください。
+ユーザーが選択したテストケース（例: TC-01）を次に進めます。
 
-#### 2.1.1 ディレクトリ構造の決定
+#### 2.2 WIPに移動
+
+選択したTODO項目をWIPセクションに移動します。
+
+Editツールを使用してCycle docを更新：
+
+**更新前**:
+```markdown
+### 実装予定（TODO）
+- [ ] TC-01: ログインページが表示される
+- [ ] TC-02: 正しい認証情報でログインできる
+- [ ] TC-03: 誤った認証情報でログインできない
+
+### 実装中（WIP）
+（現在なし）
+```
+
+**更新後**:
+```markdown
+### 実装予定（TODO）
+- [ ] TC-02: 正しい認証情報でログインできる
+- [ ] TC-03: 誤った認証情報でログインできない
+
+### 実装中（WIP）
+- [ ] TC-01: ログインページが表示される
+```
+
+### 3. テスト作成フェーズ
+
+#### 3.1 ディレクトリ構造の決定
 
 テストファイルを作成する前に、適切なディレクトリ構造を決定します。
 
@@ -148,28 +177,7 @@ tests/
    - phpunit.xmlの設定で再帰的にスキャン
    - サブディレクトリがあっても問題なく実行される
 
-##### ディレクトリ作成方法
-
-**Bashコマンド使用**:
-```bash
-mkdir -p tests/Feature/User
-mkdir -p tests/Feature/Product
-mkdir -p tests/Unit/Services/User
-```
-
-**Writeツールで直接作成**:
-```php
-// tests/Feature/User/UserProfileControllerTest.php
-// Writeツールでファイル作成時に自動的にディレクトリが作成される
-```
-
-##### 判断基準
-
-- **テストファイルが10個未満**: tests/Feature/ 直下でも可
-- **テストファイルが10個以上**: サブディレクトリ推奨
-- **複数の機能領域がある**: 必ずサブディレクトリを使用
-
-#### 2.1.5 Laravel固有のテストルール
+#### 3.2 Laravel固有のテストルール
 
 以下のLaravel固有のルールに**必ず従ってください**。
 
@@ -282,20 +290,6 @@ public function user_can_view_other_profile(): void
 }
 ```
 
-**POSTリクエストの例**:
-```php
-#[Test]
-public function user_can_update_profile(): void
-{
-    $user = User::factory()->create();
-
-    $response = $this->actingAs($user)
-        ->put(route('profile.update'), [
-            'name' => 'New Name',
-        ]);
-}
-```
-
 **理由**:
 - ルート定義が変更されてもテストが壊れない
 - ルート名で意図が明確になる
@@ -328,9 +322,7 @@ public function test_user_can_update_profile(): void
 - メソッド名がより自然な英語表現になる
 - IDEのサポートが向上
 
----
-
-#### 2.1.6 大規模プロジェクト向けテスト高速化（500テスト以上）
+#### 3.3 大規模プロジェクト向けテスト高速化（500テスト以上）
 
 テストが500を超える大規模プロジェクトでは、以下の高速化アプローチを検討してください。
 
@@ -396,17 +388,7 @@ abstract class TestCase extends BaseTestCase
 
 ##### 推奨テスト実行コマンド
 
-**XDebug使用（カバレッジ取得）**:
-
-```bash
-# coverage modeのみ有効化（debugモードより高速）
-XDEBUG_MODE=coverage ./vendor/bin/phpunit -d memory_limit=-1 \
-  --testsuite=Unit,Feature \
-  --coverage-cobertura coverage-report.xml \
-  --log-junit unittest-report.xml
-```
-
-**PCOV使用（さらに高速・推奨）**:
+**PCOV使用（推奨・高速）**:
 
 ```bash
 # PCOVインストール
@@ -428,118 +410,11 @@ XDEBUG_MODE=off PCOV_ENABLED=1 ./vendor/bin/phpunit -d memory_limit=-1 \
 - HTTPリクエスト内のDB操作が別トランザクションとなり、テストで作成したデータが見えない
 - テスト間でデータ共有が必要な場合に不適切
 
-**問題例**:
-```php
-use Illuminate\Foundation\Testing\DatabaseTransactions;  // ← 使わない
-
-class ProfileTest extends TestCase
-{
-    use DatabaseTransactions;  // ← 問題あり
-
-    #[Test]
-    public function user_can_view_profile(): void
-    {
-        // トランザクションA内でユーザー作成
-        $user = User::factory()->create();
-
-        // トランザクションB（HTTPリクエスト処理）
-        // → トランザクションAのデータが見えない可能性
-        $response = $this->actingAs($user)->get(route('profile.show'));
-        $response->assertOk();  // 失敗する可能性
-    }
-}
-```
-
 **代替案**: migrate 1回 + Factory で十分高速
 
-##### 高速化オプション: 並列テスト実行（CI/CD環境）
+#### 3.4 テストコード作成
 
-**期待効果**: 2-5倍高速化（1000テスト: 5分 → 1-2分）
-
-**AWS CodeBuild例**:
-
-```yaml
-# buildspec.yml
-version: 0.2
-
-batch:
-  build-fanout:
-    parallelism: 4  # 4プロセス並列実行
-
-phases:
-  install:
-    commands:
-      - composer install --no-interaction --prefer-dist
-      - pecl install pcov  # PCOV拡張（高速カバレッジ）
-
-  pre_build:
-    commands:
-      # 各プロセス用のDB作成
-      - |
-        if [ -n "$CODEBUILD_BATCH_BUILD_IDENTIFIER" ]; then
-          export TEST_DB_NAME="test_db_${CODEBUILD_BATCH_BUILD_IDENTIFIER}"
-        else
-          export TEST_DB_NAME="test_db"
-        fi
-      - mysql -h $RDS_HOST -u $RDS_USER -p$RDS_PASSWORD \
-          -e "CREATE DATABASE IF NOT EXISTS ${TEST_DB_NAME};"
-
-  build:
-    commands:
-      # 並列テスト実行
-      - |
-        XDEBUG_MODE=off PCOV_ENABLED=1 \
-        codebuild-tests-run \
-          --test-command './vendor/bin/phpunit -d memory_limit=-1 --coverage-cobertura coverage-report.xml' \
-          --files-search "codebuild-glob-search 'tests/**/*Test.php'" \
-          --sharding-strategy 'equal-distribution'
-
-reports:
-  test-reports:
-    files:
-      - 'unittest-report.xml'
-    file-format: JUNITXML
-  code-coverage:
-    files:
-      - 'coverage-report.xml'
-    file-format: COBERTURAXML
-```
-
-**並列実行の注意点**:
-- 各プロセスに独立したデータベースが必要
-- RDS上に複数のtest DBを作成
-- CodeBuildコスト増加（プロセス数分）
-
-##### ローカル並列実行
-
-```bash
-# ParaTestインストール
-composer require brianium/paratest --dev
-
-# 並列実行（4プロセス）
-php artisan test --parallel --processes=4
-```
-
-**注意**: 各プロセスに独立したDBが必要（`your_db_test_1`, `your_db_test_2`等）
-
-##### 期待される高速化効果
-
-| 施策 | 効果 | 備考 |
-|------|------|------|
-| **Hash最適化** | 40-50%削減 | 必須 |
-| **PCOV使用** | 50%削減 | XDebugから切り替え |
-| **並列実行（4プロセス）** | 70-80%削減 | CI/CD環境推奨 |
-
-**例: 1000テスト、初期5分の場合**:
-1. Hash最適化: 5分 → 2.5分
-2. +PCOV: 2.5分 → 1.5分
-3. +並列4プロセス: 1.5分 → 20-30秒
-
----
-
-#### 2.2 テストコード構造
-
-**重要**: Laravel 11 / PHPUnit 10-11 の推奨形式である **#[Test]属性形式** を使用してください。
+選択したテストケースのテストコードを作成します。
 
 **テンプレート**:
 
@@ -602,60 +477,23 @@ class ProfileControllerTest extends TestCase
 - `test_` プレフィックス付きメソッド名は使わない
 - Pest形式（`it()`, `test()`）は使わない
 - 実装コードを含めない
-- **RefreshDatabaseは使わない（migrate制御については2.1.6参照）**
-- **DatabaseTransactionsは使わない（結合テストで問題発生、2.1.6参照）**
+- **RefreshDatabaseは使わない（migrate制御については3.3参照）**
+- **DatabaseTransactionsは使わない（結合テストで問題発生）**
 - **パスを直接指定しない（route()関数を使用）**
 - **テストデータをハードコーディングしない（Factoryを使用）**
 
-#### 2.3 Unit Testsの作成
+### 4. テスト実行フェーズ
 
-Feature Testsの作成が完了したら、Unit Testsを作成します。
-
-**Unit Test用テンプレート**:
-
-```php
-<?php
-
-namespace Tests\Unit;
-
-use App\Models\User;
-use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
-
-class UserTest extends TestCase
-{
-    #[Test]
-    public function user_has_profile_relation(): void
-    {
-        // Given: ユーザーがいる
-        $user = User::factory()->create();
-
-        // When: profileリレーションにアクセスする
-        $profile = $user->profile;
-
-        // Then: Profileインスタンスが返される
-        $this->assertInstanceOf(\App\Models\Profile::class, $profile);
-    }
-}
-```
-
-**重要**:
-- Unit Testsも同じLaravel固有のルールに従う
-- Factoryでテストデータを生成
-- #[Test]属性を使用
-
-### 3. テスト実行フェーズ
-
-すべてのテストを作成したら、テスト実行を促してください：
+テストを作成したら、テスト実行を促してください：
 
 ```
-すべてのテストを作成しました。
+テストを作成しました。
 
 次のステップ:
 1. テストを実行してください:
    php artisan test
 
-2. すべてのテストが失敗することを確認してください
+2. テストが失敗することを確認してください
    （これは正常です。まだ実装がないためです）
 
 3. 失敗メッセージを確認してください:
@@ -668,19 +506,49 @@ class UserTest extends TestCase
 
 **重要**: この時点では、テストが失敗するのが正しい状態です。実装がないためです。
 
-### 4. 完了フェーズ
+### 5. Progress Log記録フェーズ
+
+Progress Logセクションに記録を追加します。
+
+Editツールを使用してProgress Logに追記：
+```markdown
+### YYYY-MM-DD HH:MM - RED phase
+- TC-XX: [テストケース名] のテストを作成
+  ファイル: tests/Feature/XXX/XXXTest.php
+  状態: RED（失敗確認済み）
+- Test List更新（TODO→WIP: TC-XX）
+- YAML frontmatter更新（phase: PLAN → RED）
+```
+
+### 6. YAML frontmatter更新フェーズ
+
+Cycle docのYAML frontmatterを更新します。
+
+Editツールを使用して更新：
+```markdown
+---
+feature: [機能領域]
+cycle: [サイクル識別子]
+phase: RED  # PLAN から RED に更新
+created: YYYY-MM-DD HH:MM
+updated: YYYY-MM-DD HH:MM  # 現在日時に更新
+---
+```
+
+### 7. 完了フェーズ
 
 テスト作成完了後、以下を伝えてください：
 
 ```
 REDフェーズが完了しました。
 
-作成したテストファイル:
+作成したテスト:
 - tests/Feature/XXXTest.php
-  - テストケース1
-  - テストケース2
-- tests/Unit/YYYTest.php
-  - テストケース1
+  - TC-XX: [テストケース名]
+  状態: RED（失敗確認済み）
+
+Test List更新:
+- TODO → WIP: TC-XX
 
 現在のTDDワークフロー:
 [完了] INIT (初期化)
@@ -692,9 +560,22 @@ REDフェーズが完了しました。
 [ ] COMMIT (コミット)
 
 次のステップ:
-1. php artisan test を実行して、すべてのテストが失敗することを確認
-2. GREENフェーズでは、最小限の実装でテストを通すことが目標です
+選択肢:
+1. [推奨★★★★★] GREENフェーズで実装する（テストを通す）
+   理由: TDDサイクルを完了させる。最も一般的なフロー
 
+2. [推奨★★★☆☆] さらにテストを追加する（別のTODO項目をREDにする）
+   理由: 複数テストをまとめて実装したい場合。管理コスト増加
+
+3. [推奨★★☆☆☆] PLANフェーズに戻る（テストケースを見直し）
+   理由: テスト設計に問題があった場合のみ。手戻りコスト大
+
+どうしますか？
+```
+
+ユーザーが選択1（GREENフェーズで実装）を選んだ場合：
+
+```
 ================================================================================
 自動遷移: 次のフェーズ（GREEN）に進みます
 ================================================================================
@@ -702,17 +583,17 @@ REDフェーズが完了しました。
 GREENフェーズ（実装）を自動的に開始します...
 ```
 
-完了メッセージを表示したら、Skillツールを使って`tdd-green` Skillを起動してください。
+その後、Skillツールを使って`tdd-green` Skillを起動してください。
 
 ## 制約の強制
 
-このフェーズでは、`allowed-tools: Read, Write, Grep, Glob` のみ使用可能です。
+このフェーズでは、`allowed-tools: Read, Write, Edit, Grep, Glob, Bash` が使用可能です。
 
 もしユーザーが以下のような依頼をした場合は、**丁寧に拒否**してください：
 
 - 「ProfileControllerを実装して」→ 「REDフェーズでは実装コードを作成できません。これはGREENフェーズで行います」
 - 「テストを通して」→ 「REDフェーズではテストを失敗させたままにします。GREENフェーズで実装してテストを通します」
-- 「マイグレーションを実行して」→ 「REDフェーズでは実行できません。TDDドキュメントに記載されていることを確認し、GREENフェーズで実装します」
+- 「マイグレーションを実行して」→ 「REDフェーズでは実行できません。Cycle docに記載されていることを確認し、GREENフェーズで実装します」
 - 「ルートを追加して」→ 「REDフェーズではルート定義は追加できません。GREENフェーズで実装します」
 
 ## テストケースの優先順位
@@ -731,38 +612,24 @@ GREENフェーズ（実装）を自動的に開始します...
 
 ## トラブルシューティング
 
-### TDDドキュメントが見つからない場合
+### Cycle docが見つからない場合
 
 ```
-TDDドキュメントが見つかりません。
+Cycle docが見つかりません。
 REDフェーズを開始する前に、INIT と PLAN フェーズを完了してください。
 
 以下を確認してください：
-- docs/YYYYMMDD_hhmm_*.md が存在するか（ls -t docs/202*.md で確認）
-- TDDドキュメントに「## PLAN（実装計画）」セクションがあるか
-- PLANセクション内に「## テストケース一覧」サブセクションがあるか
+- docs/cycles/YYYYMMDD_hhmm_*.md が存在するか（ls -t docs/cycles/202*.md で確認）
+- Cycle docに「## PLAN（実装計画）」セクションがあるか
+- PLANセクション内に「## Test List」サブセクションがあるか
 ```
 
-### テストケース一覧が空の場合
+### Test Listが空の場合
 
 ```
-TDDドキュメントにテストケース一覧が記載されていません。
+Cycle docにTest Listが記載されていません。
 
 PLANフェーズに戻って、テストケースを定義してください。
-```
-
-### ユーザーが「どんなテストを書けばいいかわからない」と言った場合
-
-```
-TDDドキュメントの「## テストケース一覧」セクションに記載されたテストケースを作成します。
-
-もしTDDドキュメントのテストケースが不明確な場合は、PLANフェーズに戻って見直しましょうか？
-
-または、以下のような質問で具体化できます：
-- この機能で、ユーザーは何ができるべきですか？
-- どんな入力を受け付けますか？
-- どんな出力が期待されますか？
-- どんなエラーケースがありますか？
 ```
 
 ### PHPUnitのバージョンが古い場合
@@ -771,29 +638,13 @@ TDDドキュメントの「## テストケース一覧」セクションに記�
 PHPUnit 9以下では #[Test] 属性が使えません。
 
 以下のいずれかを選択してください：
-1. PHPUnit 10以上にアップグレード（推奨）
-2. test_ プレフィックス形式にフォールバック
+1. [推奨★★★★★] PHPUnit 10以上にアップグレード
+   理由: 最新機能が使える。Laravel 11推奨
+
+2. [推奨★★☆☆☆] test_ プレフィックス形式にフォールバック
+   理由: 古いPHPUnitでも動く。非推奨形式
 
 どちらにしますか？
-```
-
-フォールバック時のテンプレート:
-
-```php
-<?php
-
-namespace Tests\Feature;
-
-use Tests\TestCase;
-
-class ProfileControllerTest extends TestCase
-{
-    public function test_user_can_update_their_profile(): void
-    {
-        // Given: ログイン済みユーザーがいる
-        // ...
-    }
-}
 ```
 
 ## 参考情報
