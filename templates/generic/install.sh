@@ -122,7 +122,7 @@ if [ ! -d "$SCRIPT_DIR/.claude/skills" ]; then
 fi
 
 # すべてのSkillsをコピー
-SKILLS=("tdd-init" "tdd-plan" "tdd-red" "tdd-green" "tdd-refactor" "tdd-review" "tdd-commit")
+SKILLS=("tdd-init" "tdd-plan" "tdd-red" "tdd-green" "tdd-refactor" "tdd-review" "tdd-commit" "ux-design")
 for skill in "${SKILLS[@]}"; do
     if [ -d "$SCRIPT_DIR/.claude/skills/$skill" ]; then
         cp -r "$SCRIPT_DIR/.claude/skills/$skill" .claude/skills/
@@ -148,6 +148,23 @@ if [ -f "$SCRIPT_DIR/../../.claude/commands/code-review.md" ]; then
     echo -e "${GREEN}✓ グローバルcode-reviewコマンドを ~/.claude/commands/ にインストールしました。${NC}"
 else
     echo -e "${YELLOW}⚠ 警告: グローバルcode-reviewコマンドが見つかりません。スキップします。${NC}"
+fi
+echo ""
+
+################################################################################
+# 4-3. グローバルux-design Skillのインストール
+################################################################################
+
+echo "グローバルux-design Skillをインストール中..."
+
+GLOBAL_SKILLS_DIR="$HOME/.claude/skills"
+mkdir -p "$GLOBAL_SKILLS_DIR/ux-design"
+
+if [ -d "$SCRIPT_DIR/.claude/skills/ux-design" ]; then
+    cp -r "$SCRIPT_DIR/.claude/skills/ux-design/" "$GLOBAL_SKILLS_DIR/ux-design/"
+    echo -e "${GREEN}✓ グローバルux-design Skillを ~/.claude/skills/ux-design/ にインストールしました。${NC}"
+else
+    echo -e "${YELLOW}⚠ 警告: ux-design Skillが見つかりません。スキップします。${NC}"
 fi
 echo ""
 
