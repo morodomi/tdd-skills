@@ -156,6 +156,14 @@ if [ -f "$SCRIPT_DIR/../../.claude/commands/code-review.md" ]; then
 else
     echo -e "${YELLOW}⚠ 警告: グローバルcode-reviewコマンドが見つかりません。スキップします。${NC}"
 fi
+
+# test-agentコマンドもインストール
+if [ -f "$SCRIPT_DIR/../../.claude/commands/test-agent.md" ]; then
+    cp "$SCRIPT_DIR/../../.claude/commands/test-agent.md" "$GLOBAL_COMMANDS_DIR/"
+    echo -e "${GREEN}✓ グローバルtest-agentコマンドを ~/.claude/commands/ にインストールしました。${NC}"
+else
+    echo -e "${YELLOW}⚠ 警告: グローバルtest-agentコマンドが見つかりません。スキップします。${NC}"
+fi
 echo ""
 
 ################################################################################
