@@ -164,6 +164,14 @@ if [ -f "$SCRIPT_DIR/../../.claude/commands/test-agent.md" ]; then
 else
     echo -e "${YELLOW}⚠ 警告: グローバルtest-agentコマンドが見つかりません。スキップします。${NC}"
 fi
+
+# tdd-onboardコマンドもインストール
+if [ -f "$SCRIPT_DIR/../../.claude/commands/tdd-onboard.md" ]; then
+    cp "$SCRIPT_DIR/../../.claude/commands/tdd-onboard.md" "$GLOBAL_COMMANDS_DIR/"
+    echo -e "${GREEN}✓ グローバルtdd-onboardコマンドを ~/.claude/commands/ にインストールしました。${NC}"
+else
+    echo -e "${YELLOW}⚠ 警告: グローバルtdd-onboardコマンドが見つかりません。スキップします。${NC}"
+fi
 echo ""
 
 ################################################################################
