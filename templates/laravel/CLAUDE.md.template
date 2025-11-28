@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-- **Type**: [Your project type - e.g., Web Application, CLI Tool, Library]
-- **Language**: [Your primary language - e.g., JavaScript, Python, PHP, Go]
-- **Framework**: [Your framework - e.g., Express, Django, None]
-- **Test Framework**: [Your test framework - e.g., Jest, pytest, PHPUnit, Go test]
-- **Quality Tools**: [Your quality tools - e.g., ESLint, mypy, PHPStan, golangci-lint]
+- **Type**: Web Application
+- **Language**: PHP 8.2+
+- **Framework**: Laravel 11.0+
+- **Test Framework**: PHPUnit / Pest
+- **Quality Tools**: PHPStan Level 8, Laravel Pint (PSR-12)
 
 ## TDD Workflow
 
@@ -350,158 +350,27 @@ GREENフェーズを継続しますか？
 
 - **目標**: 90%以上
 - **最低ライン**: 80%
-- **測定**: [Your coverage command - e.g., `npm test -- --coverage`, `pytest --cov`, `composer test -- --coverage`]
+- **測定**: `php artisan test --coverage` または `vendor/bin/pest --coverage`
 
 ### 静的解析
 
-- **ツール**: [Your static analysis tool - e.g., ESLint, mypy, PHPStan, golangci-lint]
-- **レベル**: [Your strictness level - e.g., strictest, Level 8, max]
+- **ツール**: PHPStan
+- **レベル**: Level 8（最高レベル）
 - **エラー許容**: 0件
-- **実行**: [Your analysis command - e.g., `npm run lint`, `mypy .`, `vendor/bin/phpstan analyse`]
+- **実行**: `vendor/bin/phpstan analyse`
 
 ### コーディング規約
 
-- **ツール**: [Your formatter - e.g., Prettier, black, Laravel Pint, gofmt]
-- **実行**: [Your format command - e.g., `npm run format`, `black .`, `composer pint`]
-- **規約**: [Your style guide - e.g., Airbnb, PEP 8, PSR-12]
+- **ツール**: Laravel Pint
+- **実行チェック**: `./vendor/bin/pint --test`
+- **自動修正**: `./vendor/bin/pint`
+- **規約**: PSR-12
 
 ### テスト形式
 
-- **テスト構造**: [Your test structure - e.g., describe/it, class-based, #[Test] attribute]
+- **テスト構造**: `#[Test]` 属性形式（PHPUnit / Pest）
 - **意図の明確化**: Given/When/Then/And コメントで意図を明確化
-- **テスト分離**: Unit/Integration テストを適切に分離
-
----
-
-## Customization
-
-このテンプレートは**最小コアテンプレート**です。以下をプロジェクト固有にカスタマイズしてください：
-
-### 1. プロジェクト固有の検証ルール（tdd-init）
-
-`.claude/skills/tdd-init/SKILL.md` を編集:
-
-```markdown
-# 追加の検証項目例
-
-## プロジェクト構造の検証
-- package.json/composer.json/requirements.txt が存在するか
-- 必要なディレクトリ（src/, tests/, config/）が存在するか
-- 環境変数ファイル（.env.example）が存在するか
-
-## 依存関係の検証
-- 必要なパッケージがインストールされているか
-- 開発ツール（linter, formatter, test framework）が設定されているか
-```
-
-### 2. テストフレームワーク固有のルール（tdd-red）
-
-`.claude/skills/tdd-red/SKILL.md` を編集:
-
-```markdown
-# 言語/フレームワーク固有のテストルール
-
-## Node.js + Jest
-- テストファイル名: `*.test.js` または `*.spec.js`
-- テスト構造: `describe` と `test`/`it`
-- モック: `jest.mock()` を使用
-
-## Python + pytest
-- テストファイル名: `test_*.py` または `*_test.py`
-- テスト構造: `test_` で始まる関数
-- フィクスチャ: `@pytest.fixture` を使用
-
-## PHP + PHPUnit
-- テストファイル名: `*Test.php`
-- テスト構造: `#[Test]` 属性または `test` プレフィックス
-- データプロバイダ: `#[DataProvider]` を使用
-```
-
-### 3. 品質ツールの設定（tdd-review）
-
-`.claude/skills/tdd-review/SKILL.md` を編集:
-
-```markdown
-# プロジェクト固有の品質チェック
-
-## 実行コマンド
-- 静的解析: [your command]
-- コーディング規約: [your command]
-- カバレッジ: [your command]
-
-## 品質基準
-- 静的解析: エラー0件
-- カバレッジ: 90%以上
-- コーディング規約: 違反0件
-```
-
----
-
-## Examples
-
-> **注意**: このセクションの例示内容は、Claudeの実際の動作に影響します。
-> 例を変更する場合は、意図した動作になるか確認してください。
-
-このテンプレートのカスタマイズ例は、ClaudeSkillsリポジトリで確認できます：
-
-### Laravel用テンプレート
-- **パス**: `ClaudeSkills/templates/laravel/`
-- **カスタマイズ内容**: Laravel固有のテストルール、PHPStan Level 8、Laravel Pint
-- **ドキュメント**: `docs/LARAVEL_INSTALLATION.md`
-
-### Bedrock/WordPress用テンプレート
-- **パス**: `ClaudeSkills/templates/bedrock/`
-- **カスタマイズ内容**: WordPress固有のセキュリティルール、wp-phpunit、Brain Monkey
-- **ドキュメント**: `docs/BEDROCK_INSTALLATION.md`
-
-### カスタマイズの参考に
-1. 既存テンプレートの構造を確認
-2. プロジェクト固有のルールを追加
-3. 不要なルールを削除
-
----
-
-## Available Commands
-
-### テスト実行
-
-```bash
-# すべてのテスト
-[your test command - e.g., npm test, pytest, composer test]
-
-# Unitテストのみ
-[your unit test command]
-
-# Integrationテストのみ
-[your integration test command]
-
-# カバレッジ付き
-[your coverage command]
-```
-
-### 静的解析
-
-```bash
-# 静的解析実行
-[your analysis command - e.g., npm run lint, mypy ., composer stan]
-```
-
-### コーディング規約
-
-```bash
-# チェックのみ
-[your format check command - e.g., npm run format:check, black --check ., composer pint]
-
-# 自動修正
-[your format fix command - e.g., npm run format, black ., composer pint:fix]
-```
-
-### すべてのチェック
-
-```bash
-# すべての品質チェック
-[your check command - e.g., npm run check, make check, composer check]
-```
+- **テスト分離**: Unit/Feature テストを適切に分離
 
 ---
 
@@ -511,30 +380,82 @@ GREENフェーズを継続しますか？
 
 ```
 tests/
-├── unit/              # 純粋なロジック（外部依存なし）
-│   └── *.[test|spec]  # 高速なユニットテスト
-├── integration/       # 外部依存を含む統合テスト
-│   └── *.[test|spec]  # データベース、API等
-└── e2e/               # エンドツーエンドテスト（オプション）
-    └── *.[test|spec]  # ブラウザ、UI等
+├── Feature/           # 機能テスト（HTTP、コマンド、複数クラスの統合）
+│   ├── Auth/         # 認証機能
+│   ├── Api/          # API機能
+│   └── *Test.php     # 機能テスト
+├── Unit/              # 純粋なロジック（単一クラス、外部依存なし）
+│   ├── Models/       # Eloquentモデル
+│   ├── Services/     # ビジネスロジック
+│   └── *Test.php     # ユニットテスト
+└── Pest.php           # Pest設定（オプション）
 ```
 
 ### テストの選択
 
-#### ユニットテスト
-- 純粋なロジック（外部依存なし）
+#### ユニットテスト（tests/Unit/）
+- 単一クラスのロジックテスト
+- 外部依存なし（データベース、HTTP、ファイルシステム等を使わない）
 - 高速な実行
 - モック/スタブを使用
 
-#### 統合テスト
-- 外部システムとの統合
-- データベース、API、ファイルシステム等
+#### 機能テスト（tests/Feature/）
+- HTTP リクエスト/レスポンスのテスト
+- 複数クラスの統合テスト
+- データベース、キュー、ストレージ等を使用
 - 実環境に近い検証
 
-#### エンドツーエンドテスト（オプション）
-- ユーザー視点の検証
-- ブラウザ、CLI、UI等
-- 最も遅い実行
+---
+
+## Available Commands
+
+### テスト実行
+
+```bash
+# すべてのテスト
+php artisan test
+# または
+vendor/bin/pest
+
+# Unitテストのみ
+php artisan test --testsuite=Unit
+# または
+vendor/bin/pest --testsuite=Unit
+
+# Featureテストのみ
+php artisan test --testsuite=Feature
+# または
+vendor/bin/pest --testsuite=Feature
+
+# カバレッジ付き
+php artisan test --coverage
+# または
+vendor/bin/pest --coverage
+```
+
+### 静的解析
+
+```bash
+# 静的解析実行
+vendor/bin/phpstan analyse
+```
+
+### コーディング規約
+
+```bash
+# チェックのみ
+./vendor/bin/pint --test
+
+# 自動修正
+./vendor/bin/pint
+```
+
+### すべてのチェック
+
+```bash
+# すべての品質チェック（まとめて実行）
+composer check
+```
 
 ---
 
@@ -565,18 +486,19 @@ git commit -m "test: ログイン機能のテストケース追加"
 
 ```
 1. Claude Codeで「init」と入力
-   → TDDドキュメント（docs/tdd/YYYYMMDD_hhmm_機能名.md）が作成される
+   → TDDドキュメント（docs/YYYYMMDD_hhmm_機能名.md）が作成される
 
 2. PLANフェーズで実装計画とテストケースを定義
    → 自動的にREDフェーズへ遷移
 
 3. REDフェーズでテスト作成
-   → tests/unit/feature.test.js
-   → tests/integration/feature.test.js
+   → tests/Unit/Services/UserServiceTest.php
+   → tests/Feature/Auth/LoginTest.php
    → 自動的にGREENフェーズへ遷移
 
 4. GREENフェーズで最小限の実装
-   → src/feature.js
+   → app/Services/UserService.php
+   → app/Http/Controllers/Auth/LoginController.php
    → 自動的にREFACTORフェーズへ遷移
 
 5. REFACTORフェーズでリファクタリング
@@ -591,7 +513,7 @@ git commit -m "test: ログイン機能のテストケース追加"
 
 7. COMMITフェーズでコミット
    → git add .
-   → git commit -m "feat: 新機能実装"
+   → git commit -m "feat: ユーザー認証機能実装"
 ```
 
 ---
@@ -613,6 +535,103 @@ CLIでの可読性を考慮し、以下のガイドラインに従ってくだ�
 - **長いコードブロックは分割**: 50行以上のコードは分割して説明を挟む
 - **表形式は簡潔に**: 5列以下を推奨。複雑な表はリスト形式に変換
 - **散文形式の活用**: 箇条書きより自然な文章が適切な場合もある
+
+### 開発での重要原則
+
+1. **テストファースト**: 実装前にテストを書く
+2. **最小限の実装**: テストを通すための最小限の実装
+3. **リファクタリング**: テストが通った後にコードを改善
+4. **品質基準の遵守**: 静的解析、カバレッジ、コーディング規約
+5. **意図の明確化**: Given/When/Then/And コメントで意図を明確化
+
+### Laravel固有の注意事項
+
+- **Eloquent**: N+1問題を回避（Eager Loading使用）
+- **セキュリティ**: CSRF保護、XSS対策、SQLインジェクション対策
+- **バリデーション**: FormRequestを使用した入力検証
+- **認可**: Policyを使用した権限管理
+- **キュー**: 重い処理は非同期処理に
+- **キャッシュ**: 頻繁にアクセスするデータはキャッシュ活用
+
+---
+
+## Language/Framework Specific Examples
+
+> **注意**: このセクションの例示内容は、Claudeの実際の動作に影響します。
+> 例を変更する場合は、意図した動作になるか確認してください。
+
+### Laravel + PHPUnit/Pest
+
+```php
+// tests/Unit/Services/MathServiceTest.php
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+
+class MathServiceTest extends TestCase
+{
+    #[Test]
+    public function adds_two_numbers(): void
+    {
+        // Given: 2つの数値
+        $a = 1;
+        $b = 2;
+
+        // When: 足し算を実行
+        $result = app(MathService::class)->add($a, $b);
+
+        // Then: 正しい結果を返す
+        $this->assertSame(3, $result);
+    }
+}
+```
+
+### Laravel + Pest
+
+```php
+// tests/Unit/Services/MathServiceTest.php
+use App\Services\MathService;
+
+test('adds two numbers', function () {
+    // Given: 2つの数値
+    $a = 1;
+    $b = 2;
+
+    // When: 足し算を実行
+    $result = app(MathService::class)->add($a, $b);
+
+    // Then: 正しい結果を返す
+    expect($result)->toBe(3);
+});
+```
+
+### Feature Test Example
+
+```php
+// tests/Feature/Auth/LoginTest.php
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
+
+test('user can login with valid credentials', function () {
+    // Given: 登録済みのユーザー
+    $user = User::factory()->create([
+        'email' => 'test@example.com',
+        'password' => bcrypt('password'),
+    ]);
+
+    // When: 正しい認証情報でログイン
+    $response = $this->post('/login', [
+        'email' => 'test@example.com',
+        'password' => 'password',
+    ]);
+
+    // Then: ログイン成功し、ダッシュボードにリダイレクト
+    $response->assertRedirect('/dashboard');
+    $this->assertAuthenticated();
+});
+```
+
+---
 
 ### ユーザーへの選択肢提示ルール
 
@@ -733,88 +752,6 @@ CLIでの可読性を考慮し、以下のガイドラインに従ってくだ�
 ```
 
 ✅ **正しい提示方法**（上記の例参照）
-
-### 開発での重要原則
-
-1. **テストファースト**: 実装前にテストを書く
-2. **最小限の実装**: テストを通すための最小限の実装
-3. **リファクタリング**: テストが通った後にコードを改善
-4. **品質基準の遵守**: 静的解析、カバレッジ、コーディング規約
-5. **意図の明確化**: Given/When/Then/And コメントで意図を明確化
-
-### プロジェクト固有の注意事項
-
-[Add your project-specific notes here]
-
-例:
-- セキュリティ対策: 入力のサニタイズ、出力のエスケープ
-- パフォーマンス: N+1問題の回避、キャッシュの活用
-- 国際化: すべての文字列を翻訳可能に
-- アクセシビリティ: WAI-ARIA準拠
-
----
-
-## Language/Framework Specific Examples
-
-### Node.js + Jest
-
-```javascript
-// tests/unit/math.test.js
-describe('Math operations', () => {
-  test('adds two numbers', () => {
-    // Given: 2つの数値
-    const a = 1;
-    const b = 2;
-
-    // When: 足し算を実行
-    const result = add(a, b);
-
-    // Then: 正しい結果を返す
-    expect(result).toBe(3);
-  });
-});
-```
-
-### Python + pytest
-
-```python
-# tests/unit/test_math.py
-def test_add_two_numbers():
-    # Given: 2つの数値
-    a = 1
-    b = 2
-
-    # When: 足し算を実行
-    result = add(a, b)
-
-    # Then: 正しい結果を返す
-    assert result == 3
-```
-
-### PHP + PHPUnit
-
-```php
-// tests/Unit/MathTest.php
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\Test;
-
-class MathTest extends TestCase
-{
-    #[Test]
-    public function adds_two_numbers(): void
-    {
-        // Given: 2つの数値
-        $a = 1;
-        $b = 2;
-
-        // When: 足し算を実行
-        $result = add($a, $b);
-
-        // Then: 正しい結果を返す
-        $this->assertSame(3, $result);
-    }
-}
-```
 
 ---
 
