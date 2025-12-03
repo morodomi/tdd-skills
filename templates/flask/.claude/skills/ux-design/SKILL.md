@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: UX心理学とRefactoring UI原則に基づいたUI/UXデザイン支援。AIの統計的デフォルトを禁止し、効果的なデザインを促進。
+description: UX心理学とRefactoring UI原則に基づいたUI/UXデザイン支援。AIの統計的デフォルトを禁止し、大胆で独自性のあるデザインを促進。
 allowed-tools:
   - Read
   - Write
@@ -12,161 +12,449 @@ allowed-tools:
 
 # UX Design Skill
 
-AIが統計的に「安全」な選択をすることを防ぎ、UX心理学とRefactoring UI原則に基づいた効果的なUI/UXデザインを実現する。
+AIが統計的に「安全」な選択をすることを防ぎ、**大胆で独自性のある**UI/UXデザインを実現する。
 
 ---
 
-## 禁止パターン（絶対に避けるべきこと）
+## Design Thinking Process
 
-以下のパターンは、AIが統計的に選びがちな「安全」なデフォルトです。これらを明示的に禁止します。
+コーディング前に、コンテキストを理解し**大胆な美的方向性**にコミットする。
 
-### フォント禁止
+### 4つの問い
 
-❌ **禁止**: システムデフォルトフォントのみ使用
-❌ **禁止**: font-family: sans-serif; のみ指定
-❌ **禁止**: フォントサイズを16pxで統一
-❌ **禁止**: line-heightを1.5で全体統一
+1. **Purpose（目的）**: このインターフェースはどんな問題を解決するか？誰が使うか？
+2. **Tone（トーン）**: 極端な美的方向性を1つ選ぶ
+   - Brutally Minimal（極限ミニマル）
+   - Maximalist Chaos（最大主義的カオス）
+   - Retro-Futuristic（レトロフューチャー）
+   - Organic（オーガニック）
+   - Luxury（ラグジュアリー）
+   - Playful（遊び心）
+   - Editorial（エディトリアル）
+   - Industrial（インダストリアル）
+   - Art Deco（アールデコ）
+   - Soft（ソフト）
+3. **Constraints（制約）**: フレームワーク、パフォーマンス、アクセシビリティ要件
+4. **Differentiation（差別化）**: 何がこのUIを忘れられないものにするか？
 
-**代替案**:
-- Inter, Noto Sans JP等の意図的なフォント選定
-- 見出し/本文/キャプションで異なるフォントサイズ（階層構造）
-- line-height: 見出し1.2、本文1.6-1.8、キャプション1.4
-
-### カラー禁止
-
-❌ **禁止**: 純粋な黒（#000000）をテキストに使用
-❌ **禁止**: 純粋な白（#FFFFFF）を背景に使用
-❌ **禁止**: 彩度100%の原色をそのまま使用
-❌ **禁止**: グレーにHSLでの色味を持たせない
-
-**代替案**:
-- テキスト: #1a1a1a〜#2d2d2d（ソフトブラック）
-- 背景: #fafafa〜#f5f5f5（オフホワイト）
-- アクセント色: HSLでS値を60-80%に調整
-- グレー: HSL(220, 10%, 40%) のように青みを持たせる
-
-### UIパターン禁止
-
-❌ **禁止**: 「Submit」「送信」などの汎用ボタンラベル
-❌ **禁止**: すべてのボタンを同じサイズ・色で統一
-❌ **禁止**: フォームエラーを赤色テキストのみで表示
-❌ **禁止**: ローディング時に何も表示しない
-❌ **禁止**: 確認モーダルで「OK」「キャンセル」
-
-**代替案**:
-- 「アカウントを作成」「変更を保存」等の行動指向ラベル
-- プライマリ/セカンダリ/ターシャリの視覚的階層
-- エラー: アイコン + 色 + 具体的なメッセージ
-- ローディング: スケルトン or プログレスインジケータ
-- 「削除する」「キャンセル」等の具体的なアクションラベル
-
-### レイアウト禁止
-
-❌ **禁止**: すべての要素にボーダーを追加
-❌ **禁止**: 余白を8px固定
-❌ **禁止**: コンテンツを中央揃えのみ
-❌ **禁止**: カード全体に均一なシャドウ
-
-**代替案**:
-- ボーダーの代わりに背景色・余白で区切る
-- 8/16/24/32/48pxの一貫したスペーシングスケール
-- 左揃え基本、中央揃えは意図的な場合のみ
-- シャドウは小さく、下方向のみ（y: 2-4px）
+**原則**: 「明確なコンセプト方向を選び、精度を持って実行する。大胆なマキシマリズムも洗練されたミニマリズムも機能する—重要なのは強度ではなく意図性」
 
 ---
 
-## UX心理学原則（適用ガイド）
+## AIスロップ回避（絶対禁止）
 
-### 1. アンカー効果（Anchoring）
+以下はAIが統計的に選ぶ「安全」なデフォルト。これらを**絶対に使用しない**。
 
-最初に提示された情報が判断基準となる。
+### フォント禁止リスト
 
-**適用場面**: 料金表、商品比較
-**実装例**:
-```html
-<!-- 料金表：最高プランを最初に表示 -->
-<div class="pricing">
-  <div class="plan featured">
-    <div class="price">¥9,800/月</div>
-    <div class="name">プロフェッショナル</div>
-  </div>
-  <div class="plan">
-    <div class="price">¥2,980/月</div>
-    <div class="name">スタンダード</div>
-  </div>
-</div>
+| 禁止 | 理由 |
+|------|------|
+| Inter, Roboto, Arial | 過剰使用されたAI定番フォント |
+| font-family: sans-serif; のみ | 意図のない選択 |
+| 全要素16px統一 | 階層構造の欠如 |
+| line-height: 1.5 全体統一 | コンテキスト無視 |
+
+**代替**: 独自性のあるディスプレイフォント + 洗練されたボディフォント
+
+```css
+/* 良い例: 意図的なフォントペアリング */
+:root {
+  --font-display: 'Playfair Display', serif;  /* 見出し */
+  --font-body: 'Source Sans Pro', sans-serif; /* 本文 */
+  --font-mono: 'JetBrains Mono', monospace;   /* コード */
+}
+
+h1, h2 { font-family: var(--font-display); line-height: 1.2; }
+body { font-family: var(--font-body); line-height: 1.6; }
+code { font-family: var(--font-mono); }
 ```
 
-### 2. 認知負荷削減（Cognitive Load）
+### カラー禁止リスト
+
+| 禁止 | 理由 |
+|------|------|
+| #000000（純粋な黒） | 不自然で目が疲れる |
+| #FFFFFF（純粋な白） | 同上 |
+| 紫グラデーション | AI生成の象徴、クリシェ |
+| 均等に分散した控えめなパレット | 印象に残らない |
+
+**代替**: **支配色 + シャープなアクセント**
+
+```css
+/* 良い例: 支配色 + アクセント */
+:root {
+  /* 支配色（メイン） */
+  --dominant: hsl(220, 90%, 15%);      /* 深いネイビー */
+  --dominant-light: hsl(220, 80%, 95%); /* 背景 */
+
+  /* シャープなアクセント */
+  --accent: hsl(45, 100%, 50%);        /* 金色 */
+  --accent-muted: hsl(45, 60%, 70%);
+
+  /* ニュアンスのあるグレー */
+  --gray-warm: hsl(30, 10%, 40%);
+  --gray-cool: hsl(220, 10%, 50%);
+}
+```
+
+### レイアウト禁止リスト
+
+| 禁止 | 理由 |
+|------|------|
+| すべて中央揃え | 退屈で予測可能 |
+| 均一なカードグリッド | 視覚的単調さ |
+| 全要素にボーダー | 視覚的ノイズ |
+| 均一なシャドウ（0 4px 6px） | AI定番シャドウ |
+
+**代替**: 非対称・グリッド破壊・余白活用
+
+---
+
+## Typography（タイポグラフィ）
+
+### 原則
+
+- **独自性**: ジェネリックではなく、キャラクターのあるフォントを選ぶ
+- **ペアリング**: ディスプレイフォント（見出し）+ ボディフォント（本文）
+- **階層**: サイズ・太さ・色で明確な視覚的階層を作る
+
+### 実装ガイド
+
+```css
+/* タイプスケール（1.25比率） */
+:root {
+  --text-xs: 0.75rem;   /* 12px */
+  --text-sm: 0.875rem;  /* 14px */
+  --text-base: 1rem;    /* 16px */
+  --text-lg: 1.25rem;   /* 20px */
+  --text-xl: 1.563rem;  /* 25px */
+  --text-2xl: 1.953rem; /* 31px */
+  --text-3xl: 2.441rem; /* 39px */
+  --text-4xl: 3.052rem; /* 49px */
+}
+
+/* 階層構造 */
+.heading-primary {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--gray-900);
+}
+
+.body-text {
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--gray-700);
+}
+
+.caption {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--gray-500);
+}
+```
+
+---
+
+## Color & Theme（色彩・テーマ）
+
+### 原則
+
+- **CSS変数で一貫性**: テーマ全体をCSS変数で管理
+- **支配色 + アクセント**: 控えめで均等なパレットより効果的
+- **HSLベース**: 明度・彩度の調整が容易
+
+### 実装ガイド
+
+```css
+:root {
+  /* ベースカラー（HSL） */
+  --hue-primary: 220;
+  --hue-accent: 45;
+
+  /* プライマリカラー（シェード生成） */
+  --primary-50: hsl(var(--hue-primary), 90%, 97%);
+  --primary-100: hsl(var(--hue-primary), 85%, 92%);
+  --primary-500: hsl(var(--hue-primary), 80%, 50%);
+  --primary-700: hsl(var(--hue-primary), 75%, 35%);
+  --primary-900: hsl(var(--hue-primary), 70%, 15%);
+
+  /* アクセントカラー */
+  --accent: hsl(var(--hue-accent), 100%, 50%);
+  --accent-hover: hsl(var(--hue-accent), 100%, 45%);
+
+  /* セマンティックカラー */
+  --success: hsl(142, 76%, 36%);
+  --warning: hsl(38, 92%, 50%);
+  --error: hsl(0, 84%, 60%);
+
+  /* ニュアンスグレー（色味を持たせる） */
+  --gray-50: hsl(var(--hue-primary), 10%, 98%);
+  --gray-100: hsl(var(--hue-primary), 10%, 94%);
+  --gray-500: hsl(var(--hue-primary), 8%, 50%);
+  --gray-900: hsl(var(--hue-primary), 10%, 10%);
+}
+```
+
+---
+
+## Motion（モーション）
+
+### 原則
+
+- **目的のあるアニメーション**: 装飾ではなく、意味を伝える
+- **CSSファースト**: HTMLではCSS、ReactではMotion/Framer
+- **高インパクトな瞬間**: 協調したリビール、マイクロインタラクション
+
+### 実装ガイド
+
+```css
+/* トランジション変数 */
+:root {
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+}
+
+/* ボタン：即座のフィードバック */
+.btn {
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* カード：ホバーで浮き上がり */
+.card {
+  transition: transform var(--duration-normal) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* フェードイン（スクロール表示用） */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInUp var(--duration-slow) var(--ease-out) forwards;
+}
+
+/* スタガード表示（リストアイテム） */
+.list-item:nth-child(1) { animation-delay: 0ms; }
+.list-item:nth-child(2) { animation-delay: 100ms; }
+.list-item:nth-child(3) { animation-delay: 200ms; }
+.list-item:nth-child(4) { animation-delay: 300ms; }
+
+/* ローディング：400ms後に表示（Doherty Threshold） */
+.loading-indicator {
+  opacity: 0;
+  animation: fadeIn 300ms ease-in 400ms forwards;
+}
+```
+
+---
+
+## Spatial Composition（空間構成）
+
+### 原則
+
+- **予期しないレイアウト**: 標準グリッドを超える
+- **非対称**: 完璧な対称を避け、視覚的緊張を作る
+- **オーバーラップ**: 要素を重ねて深度を作る
+- **余白の両極**: 広大なネガティブスペース or 制御された密度
+
+### 実装ガイド
+
+```css
+/* スペーシングスケール */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+}
+
+/* 非対称レイアウト */
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--space-12);
+  align-items: end; /* 下揃えで非対称感 */
+}
+
+/* オーバーラップ */
+.card-featured {
+  position: relative;
+  margin-top: calc(var(--space-8) * -1); /* 上のセクションに重ねる */
+  z-index: 10;
+}
+
+/* 対角線フロー */
+.diagonal-section {
+  transform: skewY(-3deg);
+  margin: var(--space-16) 0;
+}
+
+.diagonal-section > * {
+  transform: skewY(3deg); /* 中身は戻す */
+}
+
+/* グリッド破壊：一部を大きく */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.masonry-grid .featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+```
+
+---
+
+## Backgrounds & Details（背景・詳細）
+
+### 原則
+
+- **雰囲気を作る**: 平坦な背景ではなく、視覚的な深みを
+- **レイヤー**: 複数のビジュアルレイヤーで奥行きを
+- **質感**: ノイズ、グレイン、テクスチャで生命感を
+
+### 実装ガイド
+
+```css
+/* グラデーションメッシュ */
+.bg-mesh {
+  background:
+    radial-gradient(at 20% 80%, hsl(220, 80%, 70%) 0%, transparent 50%),
+    radial-gradient(at 80% 20%, hsl(280, 80%, 70%) 0%, transparent 50%),
+    radial-gradient(at 50% 50%, hsl(180, 80%, 85%) 0%, transparent 70%),
+    hsl(220, 30%, 98%);
+}
+
+/* ノイズテクスチャオーバーレイ */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+/* グレインエフェクト */
+.grain {
+  position: relative;
+}
+
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/grain.png');
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ドラマチックシャドウ */
+.dramatic-shadow {
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.07),
+    0 10px 20px rgba(0, 0, 0, 0.1),
+    0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* グラスモーフィズム */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 幾何学パターン */
+.geometric-bg {
+  background-image:
+    linear-gradient(30deg, var(--primary-100) 12%, transparent 12.5%),
+    linear-gradient(150deg, var(--primary-100) 12%, transparent 12.5%),
+    linear-gradient(210deg, var(--primary-100) 12%, transparent 12.5%),
+    linear-gradient(330deg, var(--primary-100) 12%, transparent 12.5%);
+  background-size: 80px 140px;
+}
+```
+
+---
+
+## UX心理学原則
+
+### 認知負荷削減（Cognitive Load）
 
 人間の作業記憶は限られている（7±2項目）。
 
-**適用場面**: フォーム設計、ナビゲーション
-**実装例**:
 ```html
-<!-- フォーム：ステップ分割で認知負荷を削減 -->
-<form>
-  <div class="step active">
-    <h3>Step 1 of 3: 基本情報</h3>
-    <input name="name" placeholder="お名前">
-    <input name="email" placeholder="メールアドレス">
+<!-- ステップ分割でフォームの認知負荷を削減 -->
+<form class="multi-step">
+  <div class="progress">
+    <span class="step active">1</span>
+    <span class="step">2</span>
+    <span class="step">3</span>
   </div>
-  <!-- 次のステップは非表示 -->
+  <div class="step-content">
+    <h3>まず、お名前を教えてください</h3>
+    <input name="name" autofocus>
+  </div>
 </form>
 ```
 
-### 3. ドハティの閾値（Doherty Threshold）
+### ドハティの閾値（Doherty Threshold）
 
-システム応答は400ms以内で。それを超える場合はフィードバック必須。
+システム応答は400ms以内で。超える場合はフィードバック必須。
 
-**適用場面**: ボタンクリック、データ取得
-**実装例**:
-```css
-/* ボタン：即座のフィードバック */
-.btn:active {
-  transform: scale(0.98);
-  transition: transform 0.1s;
-}
+### 損失回避（Loss Aversion）
 
-/* ローディング：400ms後に表示 */
-.loading {
-  animation: fadeIn 0.3s ease-in 0.4s forwards;
-  opacity: 0;
-}
-```
+人は利益より損失を重視する。
 
-### 4. 社会的証明（Social Proof）
-
-他者の行動が判断基準となる。
-
-**適用場面**: 商品ページ、サインアップ
-**実装例**:
 ```html
-<div class="social-proof">
-  <div class="avatars">
-    <img src="user1.jpg">
-    <img src="user2.jpg">
-    <img src="user3.jpg">
-    <span>+2,847人が登録</span>
-  </div>
-  <div class="testimonial">
-    "このツールで作業時間が50%削減できました" - 田中様
-  </div>
+<!-- 損失を強調したCTA -->
+<div class="cta-section">
+  <button class="cta-primary">今すぐ始める</button>
+  <p class="urgency">残り3日で30%オフ終了</p>
 </div>
-```
-
-### 5. 損失回避（Loss Aversion）
-
-人は利益を得ることより損失を避けることを重視する。
-
-**適用場面**: CTA、退会防止
-**実装例**:
-```html
-<!-- CTA：損失を強調 -->
-<button class="cta">
-  今すぐ始める
-  <span class="urgency">残り3日で割引終了</span>
-</button>
 
 <!-- 退会防止 -->
 <div class="cancel-warning">
@@ -174,434 +462,144 @@ AIが統計的に「安全」な選択をすることを防ぎ、UX心理学とR
   <ul>
     <li>保存した47件のプロジェクト</li>
     <li>1,200分の作業履歴</li>
-    <li>特別会員限定の機能</li>
   </ul>
 </div>
 ```
 
-### 6. ナッジ効果（Nudge）
+### 希少性の原理（Scarcity）
 
-選択肢のデフォルト設定が行動を誘導する。
+限定されたものほど価値が高く感じる。
 
-**適用場面**: 設定画面、チェックボックス
-**実装例**:
 ```html
-<!-- 推奨オプションをデフォルトON -->
-<label>
-  <input type="checkbox" checked>
-  週次レポートを受け取る（推奨）
-</label>
-
-<!-- 料金表：推奨プランを強調 -->
-<div class="plan recommended">
-  <div class="badge">おすすめ</div>
-  <!-- ... -->
+<div class="scarcity-indicator">
+  <span class="stock warning">残り3個</span>
+  <span class="viewers">12人が閲覧中</span>
 </div>
 ```
 
-### 7. 段階的要請（Foot-in-the-Door）
+### 社会的証明（Social Proof）
 
-小さな要求から始めて、徐々に大きな要求へ。
+他者の行動が判断基準となる。
 
-**適用場面**: オンボーディング、アップセル
-**実装例**:
 ```html
-<!-- オンボーディング：段階的に情報収集 -->
-<div class="onboarding">
-  <div class="step-1">
-    <p>まず、お名前を教えてください</p>
-    <input name="name">
+<div class="social-proof">
+  <div class="avatar-stack">
+    <img src="user1.jpg" alt="">
+    <img src="user2.jpg" alt="">
+    <img src="user3.jpg" alt="">
+    <span>+2,847人が登録</span>
   </div>
-  <!-- 完了後に次のステップ -->
 </div>
 ```
 
-### 8. ツァイガルニク効果（Zeigarnik Effect）
+### ツァイガルニク効果（Zeigarnik Effect）
 
-未完了のタスクは完了したものより記憶に残る。
+未完了タスクは記憶に残る。
 
-**適用場面**: プロフィール完成度、チュートリアル
-**実装例**:
 ```html
 <div class="profile-completion">
-  <div class="progress-bar" style="width: 65%"></div>
+  <div class="progress-ring" style="--progress: 65"></div>
   <p>プロフィール完成度: 65%</p>
-  <ul class="remaining">
+  <ul class="remaining-tasks">
     <li>プロフィール写真を追加</li>
     <li>自己紹介を記入</li>
   </ul>
 </div>
 ```
 
-### 9. 変動型報酬（Variable Rewards）
-
-予測不能な報酬が最もエンゲージメントを高める。
-
-**適用場面**: 通知、ゲーミフィケーション
-**実装例**:
-```html
-<!-- 通知バッジ：数値表示で期待感 -->
-<div class="notification-bell">
-  <span class="badge">3</span>
-</div>
-
-<!-- 達成バッジ：ランダム要素 -->
-<div class="achievement">
-  新しいバッジを獲得しました！
-  <div class="badge-reveal">???</div>
-</div>
-```
-
-### 10. フレーミング効果（Framing Effect）
-
-同じ情報でも表現方法で印象が変わる。
-
-**適用場面**: 統計表示、価格表示
-**実装例**:
-```html
-<!-- ポジティブフレーミング -->
-<p>95%のユーザーが満足</p>
-<!-- vs ネガティブ: 5%が不満 -->
-
-<!-- 価格フレーミング -->
-<p>1日あたりたったの¥99</p>
-<!-- vs: 月額¥2,980 -->
-```
-
-### 11. 希少性の原理（Scarcity）
-
-限定されたものほど価値が高く感じる。
-
-**適用場面**: 在庫表示、期間限定
-**実装例**:
-```html
-<div class="scarcity">
-  <span class="stock">残り3個</span>
-  <span class="viewers">現在12人が閲覧中</span>
-</div>
-```
-
-### 12. デフォルト効果（Default Effect）
-
-人はデフォルト設定を変更しない傾向がある。
-
-**適用場面**: プラン選択、オプション設定
-**実装例**:
-```html
-<!-- 中間プランをデフォルト選択 -->
-<div class="plans">
-  <div class="plan">ベーシック</div>
-  <div class="plan selected">スタンダード</div>
-  <div class="plan">プレミアム</div>
-</div>
-```
-
-### 13. 目標勾配効果（Goal Gradient）
+### 目標勾配効果（Goal Gradient）
 
 ゴールに近づくほどモチベーションが上がる。
 
-**適用場面**: ポイント、進捗表示
-**実装例**:
 ```html
 <div class="points-progress">
-  <p>あと200ポイントで特典獲得！</p>
-  <div class="bar" style="width: 80%">
-    <span>800/1000</span>
+  <p>あと<strong>200ポイント</strong>で特典獲得！</p>
+  <div class="progress-bar">
+    <div class="fill" style="width: 80%"></div>
   </div>
 </div>
 ```
 
 ---
 
-## Refactoring UI原則
+## 実装複雑度の原則
 
-### 階層構造（Visual Hierarchy）
+**美的ビジョンに実装複雑度を合わせる**
 
-重要度に応じて視覚的な重みを与える。
-
-**実装ルール**:
-- フォントサイズ: 見出し > 本文 > キャプション（1.25-1.5倍の比率）
-- 色の濃さ: 重要な情報ほど濃く
-- 太さ: 重要なものはbold、補足はnormal
-
-```css
-.heading { font-size: 24px; font-weight: 700; color: #1a1a1a; }
-.body { font-size: 16px; font-weight: 400; color: #4a4a4a; }
-.caption { font-size: 12px; font-weight: 400; color: #6a6a6a; }
-```
-
-### ボーダー削減（Less Borders）
-
-ボーダーに頼らず、余白と背景色で区切る。
-
-**実装ルール**:
-- カード: ボーダーではなく背景色 + シャドウ
-- セクション: 余白で区切る
-- 区切り線: 必要最小限（テーブルヘッダーなど）
-
-```css
-/* 悪い例 */
-.card { border: 1px solid #ccc; }
-
-/* 良い例 */
-.card {
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-}
-```
-
-### スペーシング（Spacing System）
-
-一貫したスペーシングスケールを使用。
-
-**実装ルール**:
-- 基本単位: 4px または 8px
-- スケール: 4, 8, 16, 24, 32, 48, 64px
-- 関連要素は近く、無関連は遠く
-
-```css
-:root {
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-}
-```
-
-### タイポグラフィ（Typography）
-
-フォントの選定と一貫した使用。
-
-**実装ルール**:
-- 本文フォント: 読みやすさ優先（Noto Sans JP, Inter）
-- 見出しフォント: 個性（必要に応じて）
-- 数字: 等幅フォント（tabular-nums）
-
-```css
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  font-feature-settings: 'palt';
-}
-
-.price {
-  font-variant-numeric: tabular-nums;
-}
-```
-
-### 色彩管理（HSL Color Management）
-
-HSLで色を管理し、シェードを生成。
-
-**実装ルール**:
-- ベース色をHSLで定義
-- 明度を調整してシェード生成
-- グレーにも微妙な色味を
-
-```css
-:root {
-  /* ブランドカラー */
-  --primary-h: 220;
-  --primary-s: 90%;
-  --primary: hsl(var(--primary-h), var(--primary-s), 50%);
-  --primary-light: hsl(var(--primary-h), var(--primary-s), 70%);
-  --primary-dark: hsl(var(--primary-h), var(--primary-s), 30%);
-
-  /* 色味のあるグレー */
-  --gray-100: hsl(220, 10%, 95%);
-  --gray-500: hsl(220, 10%, 50%);
-  --gray-900: hsl(220, 10%, 15%);
-}
-```
-
-### グレースケールデザイン
-
-まずグレースケールでデザインし、後から色を追加。
-
-**実装ルール**:
-- 最初は色を使わず、明度のみで階層を作る
-- 階層が明確になったら色を追加
-- 色は強調したい部分のみ
-
-### コントラスト確保
-
-WCAG基準を満たすコントラスト比。
-
-**実装ルール**:
-- 本文テキスト: 4.5:1以上
-- 大きな文字: 3:1以上
-- 背景とのコントラストを常に確認
-
----
-
-## UIコンポーネント設計例
-
-### CTAボタン（Call to Action）
-
-```html
-<button class="cta-primary">
-  <span class="label">無料で始める</span>
-  <span class="subtext">クレジットカード不要</span>
-</button>
-```
-
-```css
-.cta-primary {
-  background: hsl(220, 90%, 50%);
-  color: white;
-  padding: 16px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.cta-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.cta-primary:active {
-  transform: translateY(0);
-}
-
-.cta-primary .subtext {
-  display: block;
-  font-size: 12px;
-  font-weight: 400;
-  opacity: 0.9;
-  margin-top: 4px;
-}
-```
-
-### 料金表（Pricing Table）
-
-```html
-<div class="pricing-table">
-  <div class="plan">
-    <div class="plan-name">スターター</div>
-    <div class="plan-price">
-      <span class="amount">¥980</span>
-      <span class="period">/月</span>
-    </div>
-    <ul class="features">
-      <li>機能A</li>
-      <li>機能B</li>
-      <li class="unavailable">機能C</li>
-    </ul>
-    <button class="plan-cta">選択する</button>
-  </div>
-
-  <div class="plan featured">
-    <div class="badge">人気</div>
-    <div class="plan-name">プロ</div>
-    <div class="plan-price">
-      <span class="amount">¥2,980</span>
-      <span class="period">/月</span>
-    </div>
-    <ul class="features">
-      <li>機能A</li>
-      <li>機能B</li>
-      <li>機能C</li>
-    </ul>
-    <button class="plan-cta primary">選択する</button>
-  </div>
-</div>
-```
-
-### フォーム入力（Form Input）
-
-```html
-<div class="form-field">
-  <label for="email">メールアドレス</label>
-  <div class="input-wrapper">
-    <input
-      type="email"
-      id="email"
-      placeholder="example@mail.com"
-      aria-describedby="email-hint"
-    >
-    <span class="icon-valid">✓</span>
-  </div>
-  <p id="email-hint" class="hint">仕事用メールアドレスを推奨します</p>
-</div>
-
-<div class="form-field error">
-  <label for="password">パスワード</label>
-  <input type="password" id="password">
-  <p class="error-message">
-    <span class="icon">⚠</span>
-    8文字以上で入力してください（現在: 5文字）
-  </p>
-</div>
-```
-
-### ローディング状態
-
-```html
-<!-- スケルトンローダー -->
-<div class="card skeleton">
-  <div class="skeleton-image"></div>
-  <div class="skeleton-text"></div>
-  <div class="skeleton-text short"></div>
-</div>
-
-<!-- プログレスインジケータ -->
-<div class="loading-overlay">
-  <div class="spinner"></div>
-  <p>データを読み込み中...</p>
-  <p class="progress">3/10 件処理完了</p>
-</div>
-```
+| 方向性 | 実装アプローチ |
+|--------|---------------|
+| マキシマリスト | 精巧なコード、広範なアニメーション、複雑なレイヤー |
+| ミニマリスト | 抑制と精度、スペーシングとタイポグラフィへの細心の注意 |
 
 ---
 
 ## 実装前チェックリスト
 
-### 基本確認
+### Design Thinking
 
-- [ ] ターゲットユーザーのペルソナを定義したか
-- [ ] 主要なユーザーフローを洗い出したか
-- [ ] 競合サービスのUIを調査したか
-- [ ] アクセシビリティ要件を確認したか
+- [ ] Purpose（目的）を明確に定義したか
+- [ ] Tone（トーン）を1つ選んでコミットしたか
+- [ ] Constraints（制約）を確認したか
+- [ ] Differentiation（差別化ポイント）を特定したか
 
-### 禁止パターン確認
+### AIスロップ回避
 
-- [ ] 汎用的なボタンラベルを使っていないか
+- [ ] 禁止フォント（Inter, Roboto, Arial単体）を使っていないか
 - [ ] 純粋な黒/白を使っていないか
-- [ ] システムデフォルトフォントのみになっていないか
-- [ ] すべてのボーダーが必要か確認したか
-- [ ] エラー表示が色のみに依存していないか
+- [ ] 紫グラデーションを使っていないか
+- [ ] 均一なカードグリッドのみになっていないか
+- [ ] 全要素が中央揃えになっていないか
 
-### UX心理学適用確認
+### Typography
+
+- [ ] 意図的なフォントペアリングをしているか
+- [ ] 明確な視覚的階層（サイズ・太さ・色）があるか
+
+### Color & Theme
+
+- [ ] CSS変数でテーマを管理しているか
+- [ ] 支配色 + アクセントの構成か
+- [ ] グレーに色味を持たせているか
+
+### Motion
+
+- [ ] ボタン・カードにホバー/クリックフィードバックがあるか
+- [ ] 400ms超の処理にローディング表示があるか
+- [ ] アニメーションに目的があるか
+
+### Spatial Composition
+
+- [ ] 一貫したスペーシングスケールを使用しているか
+- [ ] 非対称やグリッド破壊を検討したか
+- [ ] ボーダーより背景色・余白で区切っているか
+
+### Backgrounds & Details
+
+- [ ] 平坦な背景ではなく雰囲気を作っているか
+- [ ] 必要に応じてテクスチャ・グレインを使用しているか
+
+### UX心理学
 
 - [ ] CTAに損失回避/希少性を適用したか
 - [ ] フォームの認知負荷を削減したか
-- [ ] ローディング時間が400ms超の場合フィードバックがあるか
-- [ ] 社会的証明（レビュー、利用者数）を配置したか
-- [ ] 進捗表示にツァイガルニク効果を活用したか
+- [ ] 社会的証明を配置したか
+- [ ] 進捗表示にゴール勾配効果を活用したか
 
-### Refactoring UI確認
+### アクセシビリティ
 
-- [ ] 視覚的階層が明確か（サイズ、色、太さ）
-- [ ] スペーシングが一貫しているか
-- [ ] 不要なボーダーを削除したか
-- [ ] 色彩がHSLベースで管理されているか
-- [ ] コントラスト比がWCAG基準を満たしているか
-
-### コンポーネント確認
-
-- [ ] ボタンに明確なフィードバック（hover/active）があるか
-- [ ] フォームエラーが具体的で対処法を示しているか
-- [ ] ローディング状態が適切に表示されるか
-- [ ] モバイル対応を考慮しているか
+- [ ] コントラスト比がWCAG基準を満たしているか（本文4.5:1以上）
+- [ ] フォーカス状態が明確か
+- [ ] 色だけに依存していないか（アイコン・テキスト併用）
 
 ---
 
 ## 参考リソース
 
-- [松下村塾 UX心理学45原則](https://www.shokasonjuku.com/ux-psychology)
+- [Anthropic Frontend Design Skill](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design)
 - [Refactoring UI](https://www.refactoringui.com/)
-- [izanami.dev 禁止パターン方式](https://izanami.dev/post/e84bbd32-cc13-46d2-9b62-b2aef12e6564)
 - [Laws of UX](https://lawsofux.com/)
+- [松下村塾 UX心理学45原則](https://www.shokasonjuku.com/ux-psychology)
+
+---
+
+*このSkillはClaudeSkillsプロジェクトの一部です*
