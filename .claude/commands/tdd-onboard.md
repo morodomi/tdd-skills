@@ -180,15 +180,108 @@ docs/README.md が存在しない場合、Write ツールで作成:
 
 ---
 
-## Step 4: CLAUDE.md 生成
+## Step 4: CLAUDE.md 生成（マージ機能付き）
 
 ### 4.1 既存 CLAUDE.md の確認
 
-既存の CLAUDE.md がある場合:
-1. バックアップ作成: `CLAUDE.md.backup`
-2. ユーザーに上書き確認
+```bash
+ls CLAUDE.md 2>/dev/null
+```
 
-### 4.2 テンプレートから生成（短縮版、約100行）
+**CLAUDE.md が存在しない場合** → 4.3 へ（新規作成）
+
+**CLAUDE.md が存在する場合** → 4.2 へ（マージ処理）
+
+---
+
+### 4.2 マージ処理（既存CLAUDE.mdがある場合）
+
+#### 4.2.1 バックアップ作成
+
+```bash
+cp CLAUDE.md CLAUDE.md.backup.$(date +%Y%m%d_%H%M%S)
+```
+
+#### 4.2.2 既存CLAUDE.mdのセクション解析
+
+Read ツールで既存 CLAUDE.md を読み込み、以下のセクションを識別:
+
+**標準セクション**（`##` で始まるHeading2）:
+- Overview
+- Tech Stack
+- Quick Commands
+- TDD Workflow
+- Quality Standards
+- Documentation
+- Project Structure
+- Available Commands
+
+**カスタムセクション**: 上記以外のすべての `##` セクション
+
+#### 4.2.3 マージ戦略
+
+| セクション | 戦略 | 処理 |
+|-----------|------|------|
+| **Overview** | 既存を保持 | 既存内容をそのまま使用 |
+| **Tech Stack** | 新規で上書き | 検出結果で置換 |
+| **Quick Commands** | 新規で上書き | 検出結果で置換 |
+| **TDD Workflow** | 新規で上書き | 最新テンプレート |
+| **Quality Standards** | 新規で上書き | 最新テンプレート |
+| **Documentation** | 新規で上書き | agent_docs/参照 |
+| **Project Structure** | 既存を保持 | 既存内容をそのまま使用 |
+| **Available Commands** | 新規で上書き | 最新テンプレート |
+| **カスタムセクション** | 既存を保持 | ファイル末尾に追加 |
+
+#### 4.2.4 差分表示
+
+マージ結果をユーザーに表示:
+
+```
+================================================================================
+CLAUDE.md マージプレビュー
+================================================================================
+
+【保持されるセクション】
+- Overview: [既存の内容を表示]
+- Project Structure: [既存の内容を表示]
+- カスタムセクション: [セクション名一覧]
+
+【更新されるセクション】
+- Tech Stack: ${FRAMEWORK} 検出結果を反映
+- Quick Commands: 検出コマンドを反映
+- TDD Workflow: 最新テンプレート
+- Quality Standards: 最新テンプレート
+- Documentation: agent_docs/参照を追加
+- Available Commands: 最新テンプレート
+
+================================================================================
+```
+
+#### 4.2.5 ユーザー確認
+
+AskUserQuestion で確認:
+
+```yaml
+questions:
+  - question: "上記のマージ内容で CLAUDE.md を更新しますか？"
+    header: "Merge"
+    options:
+      - label: "はい、マージする"
+        description: "既存のOverview/Project Structure/カスタムセクションを保持"
+      - label: "いいえ、全て新規作成"
+        description: "既存内容を破棄し、テンプレートから新規作成"
+      - label: "キャンセル"
+        description: "CLAUDE.md を変更しない"
+    multiSelect: false
+```
+
+**「はい、マージする」** → マージしたCLAUDE.mdを生成
+**「いいえ、全て新規作成」** → 4.3 へ
+**「キャンセル」** → Step 4.5 へスキップ
+
+---
+
+### 4.3 テンプレートから生成（短縮版、約100行）
 
 検出結果に基づいて変数を置換し、CLAUDE.md を生成:
 
@@ -289,47 +382,101 @@ ${PROJECT_STRUCTURE}
 
 ## Step 4.5: agent_docs/ 生成
 
-### 4.5.1 ディレクトリ作成
+### 4.5.0 既存チェック
 
-Bash ツールで以下を実行:
+まず、agent_docs/ が既に存在するか確認:
+
+```bash
+ls agent_docs/*.md 2>/dev/null | head -5
+```
+
+**agent_docs/ が存在する場合**:
+```
+agent_docs/ は既にインストールされています。スキップします。
+```
+→ Step 5 へ進む
+
+**agent_docs/ が存在しない場合**:
+→ 以下の手順で生成
+
+### 4.5.1 ディレクトリ作成
 
 ```bash
 mkdir -p agent_docs
 ```
 
-### 4.5.2 共通ファイルのコピー
+### 4.5.2 ファイル生成方法
 
-`templates/_common/agent_docs/tdd_workflow.md` を `agent_docs/` にコピー:
+agent_docs/ のファイルは、フレームワーク検出結果に基づいて Write ツールで直接生成します。
 
-```bash
-cp ${CLAUDESKILLS_PATH}/templates/_common/agent_docs/tdd_workflow.md agent_docs/
+#### tdd_workflow.md（共通）
+
+以下の内容で `agent_docs/tdd_workflow.md` を作成:
+
+```markdown
+# TDD Workflow Guide
+
+## 7フェーズ概要
+
+INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
+
+## 各フェーズの詳細
+
+### INIT（初期化）
+- TDDサイクルの開始宣言
+- Cycle doc作成
+
+### PLAN（計画）
+- スコープ定義
+- テストリスト作成
+
+### RED（失敗するテスト）
+- テストコード作成
+- 失敗を確認
+
+### GREEN（最小実装）
+- テストを通す最小限のコード
+
+### REFACTOR（リファクタリング）
+- コード品質改善
+- テスト維持
+
+### REVIEW（品質検証）
+- 品質チェック実行
+- DISCOVERED管理
+
+### COMMIT（コミット）
+- Git commit
+- ドキュメント更新
+
+## 絶対ルール
+
+「エラーを見つけたら、まずテストを書く」
 ```
 
-### 4.5.3 フレームワーク固有ファイルのコピー
+#### testing_guide.md（フレームワーク固有）
 
-フレームワークに応じて適切なファイルをコピー:
+検出したフレームワークに応じた内容で `agent_docs/testing_guide.md` を作成。
 
-**Laravel の場合**:
-```bash
-cp ${CLAUDESKILLS_PATH}/templates/laravel/agent_docs/*.md agent_docs/
-```
+**Laravel の場合**: PHPUnit/Pest、#[Test]属性、Given/When/Then形式
+**Bedrock/WordPress の場合**: PHPUnit、Brain Monkey、WordPress Test
+**Generic の場合**: プロジェクト固有のテストフレームワーク
 
-**Bedrock/WordPress の場合**:
-```bash
-cp ${CLAUDESKILLS_PATH}/templates/bedrock/agent_docs/*.md agent_docs/
-```
+#### quality_standards.md（フレームワーク固有）
 
-**Generic の場合**:
-テンプレートファイル（*.md.template）から変数置換して生成:
+検出した品質ツールに応じた内容で `agent_docs/quality_standards.md` を作成。
 
-```bash
-# testing_guide.md
-# quality_standards.md
-# commands.md
-# 各ファイルを変数置換して Write ツールで作成
-```
+| フレームワーク | カバレッジ目標 | 静的解析 | フォーマッター |
+|--------------|--------------|---------|--------------|
+| Laravel | 90% | PHPStan Level 8 | Pint |
+| Bedrock | 90% | PHPStan Level 8 | PHPCS |
+| Generic | 90% | 検出ツール | 検出ツール |
 
-### 4.5.4 生成されるファイル
+#### commands.md（フレームワーク固有）
+
+検出したコマンドで `agent_docs/commands.md` を作成。
+
+### 4.5.3 生成されるファイル
 
 ```
 agent_docs/

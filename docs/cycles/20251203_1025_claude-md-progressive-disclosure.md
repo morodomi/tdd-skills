@@ -3,7 +3,7 @@ feature: claude-md-improvement
 cycle: progressive-disclosure-001
 phase: DONE
 created: 2025-12-03 10:25
-updated: 2025-12-03 10:25
+updated: 2025-12-03 11:30
 ---
 
 # CLAUDE.md Progressive Disclosure リファクタリング
@@ -90,14 +90,7 @@ templates/
 
 ### 実装予定（TODO）
 
-- [ ] TC-01: _common/agent_docs/tdd_workflow.md が存在し、7フェーズが記載されている
-- [ ] TC-02: generic/agent_docs/*.md.template が変数プレースホルダーを含む
-- [ ] TC-03: laravel/agent_docs/*.md がLaravel固有コマンドを含む
-- [ ] TC-04: bedrock/agent_docs/*.md がWordPress固有コマンドを含む
-- [ ] TC-05: 各CLAUDE.mdが100行以下である
-- [ ] TC-06: 各CLAUDE.mdがagent_docs/へのポインタを含む
-- [ ] TC-07: tdd-onboardがagent_docs生成ステップを含む
-- [ ] TC-08: このプロジェクトのCLAUDE.mdが300行以下である
+（なし）
 
 ### 実装中（WIP）
 
@@ -105,11 +98,21 @@ templates/
 
 ### 実装中に気づいた追加テスト（DISCOVERED）
 
-（なし）
+- [ ] TC-09: install.sh がagent_docs/をコピーする
+- [ ] TC-10: tdd-init SKILL.md がagent_docs/への参照を含む
 
 ### 完了（DONE）
 
-（なし）
+- [x] TC-01: _common/agent_docs/tdd_workflow.md が存在し、7フェーズが記載されている
+- [x] TC-02: generic/agent_docs/*.md.template が変数プレースホルダーを含む
+- [x] TC-03: laravel/agent_docs/*.md がLaravel固有コマンドを含む
+- [x] TC-04: bedrock/agent_docs/*.md がWordPress固有コマンドを含む
+- [x] TC-05: 各CLAUDE.mdが100行以下である
+- [x] TC-06: 各CLAUDE.mdがagent_docs/へのポインタを含む
+- [x] TC-07: tdd-onboardがagent_docs生成ステップを含む
+- [x] TC-08: このプロジェクトのCLAUDE.mdが300行以下である
+- [x] TC-09: install.sh がagent_docs/をコピーする（追加対応）
+- [x] TC-10: tdd-init SKILL.md がagent_docs/への参照を含む（追加対応）
 
 ---
 
@@ -277,3 +280,10 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 ### 2025-12-03 10:30 - PLAN phase
 - 各ファイルの内容設計完了
 - agent_docs構造確定
+
+### 2025-12-03 11:30 - 追加対応完了
+- install.sh 3ファイル更新（agent_docs/コピー機能追加）
+- tdd-init SKILL.md 3ファイル更新（agent_docs/参照追加）
+- tdd-onboard.md Step 4.5 改善（既存チェック追加）
+- TC-09, TC-10 追加対応完了
+- 全タスク完了

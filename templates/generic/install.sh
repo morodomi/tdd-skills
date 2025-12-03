@@ -185,7 +185,42 @@ fi
 echo ""
 
 ################################################################################
-# 5. docs/tdd/.gitkeep 作成
+# 5. agent_docs/ コピー（Progressive Disclosure）
+################################################################################
+
+echo "agent_docs/ を作成中..."
+
+mkdir -p agent_docs
+
+# 共通ファイルのコピー（tdd_workflow.md）
+COMMON_AGENT_DOCS="$SCRIPT_DIR/../_common/agent_docs"
+if [ -d "$COMMON_AGENT_DOCS" ]; then
+    cp "$COMMON_AGENT_DOCS/tdd_workflow.md" agent_docs/ 2>/dev/null || true
+fi
+
+# Generic用テンプレートファイルのコピー（.templateを除去）
+GENERIC_AGENT_DOCS="$SCRIPT_DIR/agent_docs"
+if [ -d "$GENERIC_AGENT_DOCS" ]; then
+    for template in "$GENERIC_AGENT_DOCS"/*.md.template; do
+        if [ -f "$template" ]; then
+            # .templateを除去してコピー
+            basename_file=$(basename "$template" .template)
+            cp "$template" "agent_docs/$basename_file"
+        fi
+    done
+fi
+
+echo -e "${GREEN}✓ agent_docs/ を作成しました。${NC}"
+echo "  - tdd_workflow.md（TDDワークフロー詳細）"
+echo "  - testing_guide.md（テストガイド - 要カスタマイズ）"
+echo "  - quality_standards.md（品質基準 - 要カスタマイズ）"
+echo "  - commands.md（コマンド一覧 - 要カスタマイズ）"
+echo ""
+echo -e "${YELLOW}重要: agent_docs/*.md をプロジェクト固有の設定に編集してください。${NC}"
+echo ""
+
+################################################################################
+# 5-2. docs/tdd/.gitkeep 作成
 ################################################################################
 
 echo "docs/tdd/.gitkeep を作成中..."
@@ -278,14 +313,12 @@ echo -e "${GREEN}✓ インストール完了！${NC}"
 echo "=========================================="
 echo ""
 echo "インストールされたファイル:"
-echo "  - .claude/skills/tdd-init/SKILL.md"
-echo "  - .claude/skills/tdd-plan/SKILL.md"
-echo "  - .claude/skills/tdd-plan/templates/PLAN.md.template"
-echo "  - .claude/skills/tdd-red/SKILL.md"
-echo "  - .claude/skills/tdd-green/SKILL.md"
-echo "  - .claude/skills/tdd-refactor/SKILL.md"
-echo "  - .claude/skills/tdd-review/SKILL.md"
-echo "  - .claude/skills/tdd-commit/SKILL.md"
+echo "  - .claude/skills/tdd-*/SKILL.md（TDD各フェーズ）"
+echo "  - agent_docs/（Progressive Disclosure用詳細ドキュメント）"
+echo "    - tdd_workflow.md"
+echo "    - testing_guide.md（要カスタマイズ）"
+echo "    - quality_standards.md（要カスタマイズ）"
+echo "    - commands.md（要カスタマイズ）"
 echo "  - docs/tdd/.gitkeep"
 
 if [ ! -f "CLAUDE.md" ]; then

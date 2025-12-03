@@ -582,7 +582,9 @@ Laravelプロジェクトのルートディレクトリに移動してから再�
 
 このSkillは、Laravel開発におけるTDDワークフローの**最初のフェーズ**です。
 
-- 詳細なワークフロー: README.md参照
+- TDDワークフロー詳細: `agent_docs/tdd_workflow.md`参照
+- テストガイド: `agent_docs/testing_guide.md`参照
+- 品質基準: `agent_docs/quality_standards.md`参照
 - プロジェクト設定: CLAUDE.md参照
 - 次のフェーズ: tdd-plan Skill（計画）
 

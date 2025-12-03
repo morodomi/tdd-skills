@@ -192,7 +192,34 @@ fi
 echo ""
 
 ################################################################################
-# 5. docs/tdd/.gitkeep 作成
+# 5. agent_docs/ コピー（Progressive Disclosure）
+################################################################################
+
+echo "agent_docs/ を作成中..."
+
+mkdir -p agent_docs
+
+# 共通ファイルのコピー（tdd_workflow.md）
+COMMON_AGENT_DOCS="$SCRIPT_DIR/../_common/agent_docs"
+if [ -d "$COMMON_AGENT_DOCS" ]; then
+    cp "$COMMON_AGENT_DOCS/tdd_workflow.md" agent_docs/ 2>/dev/null || true
+fi
+
+# Bedrock固有ファイルのコピー
+BEDROCK_AGENT_DOCS="$SCRIPT_DIR/agent_docs"
+if [ -d "$BEDROCK_AGENT_DOCS" ]; then
+    cp "$BEDROCK_AGENT_DOCS"/*.md agent_docs/ 2>/dev/null || true
+fi
+
+echo -e "${GREEN}✓ agent_docs/ を作成しました。${NC}"
+echo "  - tdd_workflow.md（TDDワークフロー詳細）"
+echo "  - testing_guide.md（テストガイド）"
+echo "  - quality_standards.md（品質基準）"
+echo "  - commands.md（コマンド一覧）"
+echo ""
+
+################################################################################
+# 5-2. docs/tdd/.gitkeep 作成
 ################################################################################
 
 echo "docs/tdd/.gitkeep を作成中..."
@@ -280,14 +307,12 @@ echo -e "${GREEN}✓ インストール完了！${NC}"
 echo "=========================================="
 echo ""
 echo "インストールされたファイル:"
-echo "  - .claude/skills/tdd-init/SKILL.md"
-echo "  - .claude/skills/tdd-plan/SKILL.md"
-echo "  - .claude/skills/tdd-plan/templates/PLAN.md.template"
-echo "  - .claude/skills/tdd-red/SKILL.md"
-echo "  - .claude/skills/tdd-green/SKILL.md"
-echo "  - .claude/skills/tdd-refactor/SKILL.md"
-echo "  - .claude/skills/tdd-review/SKILL.md"
-echo "  - .claude/skills/tdd-commit/SKILL.md"
+echo "  - .claude/skills/tdd-*/SKILL.md（TDD各フェーズ）"
+echo "  - agent_docs/（Progressive Disclosure用詳細ドキュメント）"
+echo "    - tdd_workflow.md"
+echo "    - testing_guide.md"
+echo "    - quality_standards.md"
+echo "    - commands.md"
 echo "  - docs/tdd/.gitkeep"
 
 if [ ! -f "CLAUDE.md" ]; then
