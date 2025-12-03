@@ -1,503 +1,161 @@
 # ClaudeSkills - TDD Framework for Claude Code
 
-## Project Overview
+## Overview
 
-**ClaudeSkills**は、Claude Codeを使った開発における厳格なTDD（Test-Driven Development）ワークフローを実現するためのSkills/MCPフレームワークです。
+ClaudeSkillsは、Claude Codeを使った開発における厳格なTDD（Test-Driven Development）ワークフローを実現するためのSkills/MCPフレームワークです。
 
-### Purpose
-
-生成AIとの協働開発において、要望との乖離を防ぎ、厳格なTDDワークフローを強制することで、品質の高いコードを効率的に生成する。
-
-### Target
-
-- 個人開発者（将来的にチーム展開も視野）
-- 複数フレームワーク対応（Laravel/Django/Flask/WordPress）
-- 既存プロジェクト + 新規プロジェクトの両方
-
----
-
-## Project Status
-
-プロジェクトの現状は以下を参照:
-- 完了機能・次期計画: [README.md](README.md)
-- 進行中の作業: `docs/cycles/` ディレクトリ
-- 設計・調査ドキュメント: `docs/` ディレクトリ
-
----
-
-## Documentation Index
-
-プロジェクトの詳細なドキュメントは `docs/` ディレクトリに格納されています。
-※ファイル命名規則: `YYYYMMDD_HHMM_作業内容.md`
-
-### 要件定義・設計
-
-| 作成日時 | ドキュメント | 内容 |
-|---------|-------------|------|
-| 2025-10-22 13:28 | [`20251022_1328_要件定義.md`](docs/20251022_1328_要件定義.md) | プロジェクト要件定義書 |
-
-### 技術調査
-
-| 作成日時 | ドキュメント | 内容 |
-|---------|-------------|------|
-| 2025-10-22 14:43 | [`20251022_1443_SkillsMCP調査.md`](docs/20251022_1443_SkillsMCP調査.md) | Claude Skills/MCP調査結果 |
-| 2025-10-22 16:09 | [`20251022_1609_TDDとSpec駆動比較.md`](docs/20251022_1609_TDDとSpec駆動比較.md) | TDD vs Spec駆動開発の比較 |
-| 2025-10-23 11:24 | [`20251023_1124_インストール戦略比較.md`](docs/20251023_1124_インストール戦略比較.md) | インストール戦略の比較 |
-
-### 実装（未着手）
-
-プロジェクト構造の詳細は [`README.md`](README.md) を参照してください。
-
----
-
-## Key Decisions
-
-### 開発方針
-
-1. **TDDワークフロー継続**
-   - 現在のワークフロー（INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT）を維持
-   - BDDツール（Behat/PHPSpec）は導入しない
-   - Spec駆動のマインドセット（Given/When/Then）は部分的に取り入れる
-
-2. **インストール戦略**
-   - **プロジェクト固有インストール** (`.claude/skills/`) を採用
-   - グローバルインストール (`~/.claude/skills/`) は使わない
-   - テンプレートリポジトリ + `install.sh` で配布
-
-3. **アーキテクチャ**
-   ```
-   Claude Skills (ワークフロー制御・制約)
-     +
-   スラッシュコマンド (ユーザー操作)
-     +
-   MCP (外部ツール統合) ← 将来的に
-     +
-   CLAUDE.md (プロジェクト設定)
-   ```
-
-4. **フレームワーク対応**
-   - Laravel: PHPUnit/Pest, PHPStan, Laravel Pint
-   - Django: pytest, mypy, black
-   - Flask: pytest, mypy, black
-   - WordPress: PHPUnit, WordPress Coding Standards
-
----
-
-## TDD Workflow (このプロジェクト開発用)
-
-このプロジェクト（ClaudeSkills）の開発も、厳格なTDDワークフローに従います。
-
-### 7つのフェーズ
-
-```
-INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
-```
-
-1. **INIT（初期化）**: Cycle doc作成（`docs/cycles/YYYYMMDD_hhmm_<機能名>.md`）
-2. **PLAN（計画）**: Scope Definition, Context & Dependencies, Test List, Implementation Notes記入
-3. **RED（テスト作成）**: テストコード作成（Test List: TODO→WIP）
-4. **GREEN（実装）**: 最小実装（Test List: WIP→DONE、DISCOVERED管理）
-5. **REFACTOR（リファクタリング）**: 品質改善
-6. **REVIEW（品質検証）**: 品質チェック（DISCOVERED追加、完璧主義回避）
-7. **COMMIT（コミット）**: Git commit + Feature doc更新（DOC統合済み）
-
-### Cycle Document構造
-
-```yaml
----
-feature: [機能領域]
-cycle: [サイクル識別子]
-phase: [INIT/PLAN/RED/GREEN/REFACTOR/REVIEW/DONE]
-created: YYYY-MM-DD HH:MM
-updated: YYYY-MM-DD HH:MM
----
-
-## やりたいこと
-## Scope Definition
-## Context & Dependencies
-## Test List
-  ### 実装予定（TODO）
-  ### 実装中（WIP）
-  ### 実装中に気づいた追加テスト（DISCOVERED）
-  ### 完了（DONE）
-## Implementation Notes
-## Progress Log
-```
-
-### DISCOVERED哲学
-
-「完璧なコードは一度に生まれない。小さな改善を積み重ねる」
-
-- 実装中に気づいた追加テスト・改善点はDISCOVEREDに記録
-- 今回のサイクルでは実装せず、次サイクルに回す
-- 完璧主義による開発停滞を防ぐ
-
-### DOC統合
-
-- DOCフェーズは独立せず、COMMITフェーズに統合
-- コミット時にFeature doc更新、Overview doc更新（必要時）を実施
-
-### フェーズごとの制約
-
-各フェーズでClaude Skillsが制約を強制:
-- `PLAN`: 実装コードを書かない（`allowed-tools: Read, Grep, Glob, Edit, Bash`）
-- `RED`: テストコードのみ書く
-- `GREEN`: 最小限の実装のみ
-- `REFACTOR`: テストを維持しながらリファクタ
-- `REVIEW`: DISCOVEREDに記録、フェーズ中断しない
-
----
-
-## Development Guidelines
-
-### 品質基準
-
-このプロジェクトは以下の品質基準を遵守します（諸富氏の判断基準に基づく）：
-
-#### テストカバレッジ
-- 目標: **90%以上**
-- 最低ライン: 80%
-- 測定: `php artisan test --coverage`
-
-#### 静的解析
-- **PHPStan Level 8**（最高レベル）必須
-- エラー許容: 0件
-- 実行: `vendor/bin/phpstan analyse`
-
-#### TDD実践
-- すべての機能でテスト駆動開発を徹底
-- RED → GREEN → REFACTOR サイクルを厳守
-- テストなしの実装は認めない
-
-#### コード規約
-- Laravel Pint（PSR-12）準拠
-- #[Test]属性形式でテストを記述
-- Given/When/Then/Andコメントで意図を明確化
-
-### このプロジェクト自体の開発
-
-このプロジェクト（ClaudeSkills）の開発も、TDDワークフローで進めます。
-
-**開発ルール**:
-
-1. **TDDサイクル厳守**
-   - 機能追加・バグ修正は必ずTDDサイクルを通す
-   - Cycle doc（`docs/cycles/`）を作成してから実装
-
-2. **段階的な実装**
-   - 小さく始める（変更ファイル10個以下を目安）
-   - 動作確認してから拡大
-
-3. **プロジェクト構造の維持**
-   - Cycle doc: `docs/cycles/YYYYMMDD_hhmm_<機能名>.md`
-   - 設計・調査: `docs/YYYYMMDD_hhmm_<内容>.md`
-   - テンプレート: `templates/<framework>/.claude/skills/`
-   - サンプル: `examples/`
-
-### ドキュメント作成ルール
-
-要件定義や実装計画をまとめる際の基本方針:
-
-1. **論点の洗い出しを優先**
-   - ドキュメント作成前に論点を明確化
-   - 不明点はユーザーに確認してから整理
-   - 推測での記述を避ける
-
-2. **ファイル命名規則**
-   - 設計文書: `docs/YYYYMMDD_HHMM_作業内容.md`
-   - 例: `docs/20251022_1430_Laravel用Skills設計.md`
-   - タイムスタンプで時系列を追跡可能に
-
-3. **バージョン管理**
-   - 既存資料に大きな変更を加える場合は新しいファイルとして作成
-   - 更新履歴をたどれるように保持
-   - 元ファイルは削除せず残す
-
-4. **Markdownフォーマット**
-   - 見出し構造を明確に（h2, h3を適切に使用）
-   - コードブロックには言語指定
-   - 表形式で比較・一覧を整理
-
-5. **絵文字の使用禁止**
-   - ドキュメント内で絵文字を使用しない
-   - 状態表示は記号（✅ ❌ ⏸️）ではなくテキスト（完了、未完了、保留）で表現
-   - 見出しやリストに装飾的な絵文字を使用しない
-
-### チケット管理方針
-
-**基本方針**: docs/ 中心、GitHub Issue補助
-
-#### パターン1: docs/ 管理（推奨）
-
-**使うケース**:
-- TDDサイクル内の機能開発・バグ修正
-- 設計・調査・実装計画
-- 自分専用のメモ・記録
-
-**命名規則**:
-```bash
-# 機能開発（TDDサイクル）
-docs/cycles/YYYYMMDD_hhmm_<機能名>.md
-
-# 設計・調査（cyclesに入らない）
-docs/YYYYMMDD_hhmm_<内容>.md
-```
-
-**利点**:
-- Cycle docと同じディレクトリで管理しやすい
-- コミット履歴で追跡可能
-- Claude Codeが読み込みやすい
-
-#### パターン2: GitHub Issue管理
-
-**使うケース**:
-- 将来のバックログ管理
-- チーム共有が必要なタスク（将来的）
-- 外部からの報告・要望
-
-**運用方法**:
-```bash
-# Issue作成
-gh issue create --title "機能名" --body "詳細: docs/YYYYMMDD_hhmm_*.md 参照"
-
-# Issue番号をCycle docに記録
----
-feature: [機能領域]
-cycle: [サイクル識別子]
-issue: #123  # GitHub Issue番号
----
-```
-
-**利点**:
-- ラベル・マイルストーンで整理可能
-- 外部からの参照が容易
-- プロジェクト管理しやすい
-
-#### 使い分け基準
-
-| 状況 | 推奨 | 理由 |
-|------|------|------|
-| TDDサイクル内の作業 | **docs/** | Cycle docと一緒に管理 |
-| 設計・調査 | **docs/** | コード近くで参照しやすい |
-| バグ修正（すぐ着手） | **docs/** | TDDサイクルで即対応 |
-| バグ修正（あとで対応） | **Issue** | バックログ管理 |
-| 機能要望（あとで検討） | **Issue** | 優先度付け・議論 |
-| チーム共有タスク | **Issue** | 可視化・担当者管理 |
+**目的**: 生成AIとの協働開発において、要望との乖離を防ぎ、厳格なTDDワークフローを強制する。
 
 ---
 
 ## Tech Stack
 
-### このプロジェクト
-
 - **配布形式**: Bash scripts, Markdown (Claude Skills)
 - **対象言語**: PHP, Python
-- **対象フレームワーク**: Laravel, Django, Flask, WordPress
-- **ツール統合**: PHPStan, PHPUnit/Pest, pytest, mypy, etc.
-
-### Claude Code統合
-
-- **Claude Skills**: ワークフロー制御、フェーズごとの制約
-- **Slash Commands**: ユーザー操作のエントリーポイント
-- **MCP (将来)**: PHPStan, PHPUnit等の外部ツール統合
-- **CLAUDE.md**: プロジェクト固有の設定
+- **対象フレームワーク**: Laravel, Django, Flask, WordPress (Bedrock)
+- **ツール統合**: PHPStan, PHPUnit/Pest, pytest, mypy
 
 ---
 
-## Commit & Pull Request Guidelines
+## Quick Commands
 
-### コミットメッセージ規則
+```bash
+# テンプレートを既存プロジェクトにインストール
+./install.sh /path/to/project
 
-**フォーマット**: 短い命令形主体（日本語可）
-
-```
-# 良い例
-feat: tdd-plan Skillを追加
-fix: install.shのパス解決を修正
-docs: インストール手順を更新
-refactor: Skills構造を整理
-
-# 課題連携
-feat(#123): Laravel用テンプレートを追加
-fix(#456): CLAUDE.mdのタイポを修正
+# インストール後のセットアップ
+/tdd-onboard
 ```
 
-**プレフィックス**:
-- `feat`: 新機能
-- `fix`: バグ修正
-- `docs`: ドキュメントのみの変更
-- `refactor`: リファクタリング
-- `test`: テスト追加・修正
-- `chore`: ビルド、補助ツール等の変更
+---
 
-**課題連携**: `(#id)` を付与して課題番号を参照
+## Project Structure
 
-### Pull Request作成ガイドライン
-
-**PR説明に含めるべき内容**:
-
-1. **スコープ概要**
-   - 何を変更したか（簡潔に）
-   - なぜ変更したか（背景・理由）
-
-2. **実行テスト記録**
-   ```bash
-   # 実施したテスト例
-   ./templates/laravel/install.sh
-   # → 正常にインストール完了
-
-   # 動作確認
-   cat .claude/skills/tdd-plan/SKILL.md
-   # → 期待通りの内容
-   ```
-
-3. **変更の影響範囲**
-   - スキーマ変更: なし
-   - 環境変数変更: なし
-   - 依存関係追加: なし
-
-4. **スクリーンショット（該当する場合）**
-   - ドキュメント変更時: 変更前後の比較
-   - テンプレート追加時: ディレクトリ構造のスクリーンショット
-
-### レビュープロセス
-
-1. **Draft PR作成**
-   - WIP（作業中）の段階でDraft PRを作成
-   - 大きな方向性を早期に確認
-
-2. **フィードバック対応**
-   - レビューコメントへの対応状況を追跡コメントで共有
-   - 修正内容を簡潔に説明
-
-3. **Ready for Review**
-   - すべてのフィードバックに対応後、Ready for Reviewに切り替え
-   - 自己レビューを実施してからマージ可能状態に
-
-### 特記事項の明示
-
-**以下の変更がある場合は本文で明示**:
-
-- **スキーマ変更**: データベース構造の変更（このプロジェクトでは該当しない見込み）
-- **シード変更**: 初期データの変更
-- **環境変数変更**: `.env` に新しい変数を追加した場合
-- **依存関係変更**: 新しいツール・ライブラリを追加した場合
-- **破壊的変更**: 既存のインストール済みプロジェクトに影響がある場合
+```
+ClaudeSkills/
+├── templates/
+│   ├── _common/agent_docs/    # 共通ドキュメント
+│   ├── generic/               # 汎用テンプレート
+│   ├── laravel/               # Laravel用
+│   └── bedrock/               # WordPress用
+├── .claude/
+│   ├── commands/              # Slash Commands
+│   └── skills/                # Skills
+├── docs/
+│   └── cycles/                # TDDサイクルドキュメント
+├── install.sh                 # インストーラ
+└── CLAUDE.md                  # このファイル
+```
 
 ---
 
-## Next Steps
+## TDD Workflow
 
-### Immediate (次の作業)
+このプロジェクト自体もTDDワークフローで開発する。
 
-1. **プロジェクト構造の確立**
-   ```bash
-   mkdir -p templates/laravel/.claude/skills
-   mkdir -p templates/laravel/.claude/commands
-   ```
+```
+INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
+```
 
-2. **最初のSkill作成**
-   - `templates/laravel/.claude/skills/tdd-plan/SKILL.md`
-   - 「実装コードを書かない」制約をテスト
+**絶対ルール**: エラーを見つけたら、まずテストを書く
 
-3. **install.sh作成**
-   - テンプレートを既存プロジェクトにコピーするスクリプト
-
-### Short-term (1-2週間)
-
-4. 全フェーズのSkills作成（tdd-init, tdd-red, tdd-green, etc.）
-5. スラッシュコマンド作成
-6. 既存Laravelプロジェクトでテスト
-
-### Mid-term (1ヶ月)
-
-7. MCP統合（PHPStan, PHPUnit）
-8. 他フレームワーク対応（Django, Flask, WordPress）
-9. ドキュメント整備（README, チュートリアル）
-
-### Long-term
-
-10. 公開リポジトリ化
-11. コミュニティフィードバック収集
-12. 継続的な改善
+詳細: `docs/` 内のサイクルドキュメント参照
 
 ---
 
-## Notes for Claude Code
+## Quality Standards
 
-### プロジェクトの性質
+| 指標 | 目標 |
+|------|------|
+| カバレッジ | 90%以上（最低80%） |
+| 静的解析 | エラー0件 |
 
-このプロジェクトは**メタプロジェクト**です:
-- Claude Codeの振る舞いを制御するためのツールを開発している
-- したがって、このプロジェクト自体の開発では**まだSkillsを使っていない**
-- 将来的にはこのプロジェクト自体もTDD Skillsで開発する予定
+---
 
-### 現在のフェーズでの注意点
+## Documentation
 
-1. **調査・設計フェーズ**
-   - ドキュメント作成が主な作業
-   - 実装は小さく段階的に
+### 要件・設計
 
-2. **ユーザーの意図**
-   - ユーザーは検討・熟考を重視している
-   - 実装を急がず、設計を固めることを優先
+| ドキュメント | 内容 |
+|-------------|------|
+| `docs/20251022_1328_要件定義.md` | プロジェクト要件定義 |
+| `docs/20251022_1443_SkillsMCP調査.md` | Skills/MCP調査 |
+| `docs/20251107_0000_Claude_Code統合機構調査.md` | 統合機構調査 |
 
-3. **ドキュメント管理**
-   - すべての調査・決定事項をドキュメント化
-   - このCLAUDE.mdを常に最新に保つ
+### Progressive Disclosure
 
-### メタルール & 重要ガイドライン
+CLAUDE.mdは短く保ち（300行以下推奨）、詳細は`agent_docs/`に分離する方式を採用。
 
-**Claude Codeへの明示的な指示**:
+参考: https://www.humanlayer.dev/blog/writing-a-good-claude-md
 
-1. **不確実性への対処**
-   - コードの動作、ファイル場所、システム状態について不確実な場合は**推測せず、ユーザーに明確化を求める**
-   - 「おそらく〜」「〜だと思います」などの曖昧な表現を避ける
+---
 
-2. **変更の主張**
-   - コード変更が効果を持つと主張しない（実際の変更を確認できない限り）
-   - 実際に変更したファイルと内容を明示的に報告
+## Key Decisions
 
-3. **ファイル作成の制限**
-   - **求められたことを実行し、それ以上でもそれ以下でもない**
-   - 絶対に必要でない限り、新規ファイルを作成しない
-   - **既存ファイルの編集を新規作成より優先する**
-   - ユーザーが明示的に要求しない限り、ドキュメントファイル（*.md）やREADMEファイルを積極的に作成しない
+1. **TDDワークフロー継続**: 7フェーズ（INIT→COMMIT）
+2. **インストール戦略**: プロジェクト固有インストール（`.claude/skills/`）
+3. **Progressive Disclosure**: CLAUDE.md短縮 + agent_docs/分離
 
-4. **絵文字の使用**
-   - ユーザーが明示的に要求した場合のみ使用
-   - 通常のコミュニケーションでは絵文字を避ける
+---
 
-5. **確立されたパターンへの準拠**
-   - 既存のコードベース規約に合わせる
-   - 新しいパターンを導入する前にユーザーに確認
+## Development Guidelines
 
-6. **変更時のドキュメント更新**
-   - 重要な決定事項や変更があった場合、このCLAUDE.mdを更新
-   - コメントやドキュメントを最新に保つ
+### このプロジェクトの開発ルール
 
-### 開発時の重要原則
+1. **TDDサイクル厳守**: 機能追加・バグ修正は必ずCycle doc作成から
+2. **段階的な実装**: 小さく始める（変更ファイル10個以下）
+3. **ドキュメント優先**: 設計・調査はドキュメント化してから実装
 
-1. **段階的アプローチ**
-   - 小さく始めて、動作確認してから拡大
-   - 一度に多くの機能を実装しない
+### ファイル命名規則
 
-2. **テスト駆動（将来）**
-   - 実装フェーズに入ったら、テストファーストを徹底
-   - 全テストが通過してからコミット
+- Cycle doc: `docs/cycles/YYYYMMDD_HHMM_機能名.md`
+- 設計・調査: `docs/YYYYMMDD_HHMM_内容.md`
 
-3. **設計優先**
-   - 現在のフェーズでは実装よりも設計・調査を優先
-   - ユーザーの承認を得てから次のステップへ進む
+---
+
+## Git Conventions
+
+### コミットメッセージ
+
+```
+feat: 新機能
+fix: バグ修正
+docs: ドキュメント
+refactor: リファクタリング
+test: テスト
+chore: その他
+```
+
+### コミット前チェック
+
+1. テスト実行（すべて通過）
+2. 静的解析（エラー0件）
+3. コードフォーマット
+
+---
+
+## Available Commands
+
+- `/tdd-onboard`: 初期セットアップ
+- `/test-agent`: カバレッジ向上
+- `/code-review`: コードレビュー
+
+---
+
+## Meta Rules for Claude Code
+
+1. **不確実性への対処**: 推測せず、ユーザーに確認
+2. **ファイル作成の制限**: 既存ファイルの編集を優先
+3. **テストファースト**: 実装前にテストを書く
 
 ---
 
 ## References
 
-- [anthropics/skills](https://github.com/anthropics/skills) - 公式Skillsリポジトリ
+- [anthropics/skills](https://github.com/anthropics/skills)
 - [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 
 ---
 
-*最終更新: 2025-11-14*
+*最終更新: 2025-12-03*

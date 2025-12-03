@@ -1,0 +1,49 @@
+# ${PROJECT_NAME} Testing Guide
+
+## テストディレクトリ構造
+
+```
+tests/
+├── unit/              # 純粋なロジック（外部依存なし）
+│   └── *${TEST_FILE_SUFFIX}
+├── integration/       # 外部依存を含む統合テスト
+│   └── *${TEST_FILE_SUFFIX}
+└── ${TEST_CONFIG_FILE}
+```
+
+---
+
+## テストの書き方
+
+### 基本構造
+
+```${LANGUAGE}
+${TEST_EXAMPLE}
+```
+
+---
+
+## 命名規則
+
+- ファイル名: `${TEST_FILE_PATTERN}`
+- テスト名: `${TEST_NAME_CONVENTION}`
+
+---
+
+## よく使うアサーション
+
+```${LANGUAGE}
+${ASSERTION_EXAMPLES}
+```
+
+---
+
+## モック
+
+```${LANGUAGE}
+${MOCK_EXAMPLE}
+```
+
+---
+
+*詳細: ${TEST_DOCS_URL}*
