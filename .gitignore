@@ -10,6 +10,7 @@
 # Personal settings
 CLAUDE.local.md
 .claude/local/
+.claude/settings.local.json
 
 # Temporary files
 *.tmp
