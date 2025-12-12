@@ -172,6 +172,16 @@ if [ -f "$SCRIPT_DIR/../../.claude/commands/tdd-onboard.md" ]; then
 else
     echo -e "${YELLOW}⚠ 警告: グローバルtdd-onboardコマンドが見つかりません。スキップします。${NC}"
 fi
+
+# プロジェクト固有のworktreeコマンドをインストール
+echo "プロジェクト固有のコマンドをインストール中..."
+mkdir -p .claude/commands
+if [ -f "$SCRIPT_DIR/.claude/commands/worktree.md" ]; then
+    cp "$SCRIPT_DIR/.claude/commands/worktree.md" .claude/commands/
+    echo -e "${GREEN}✓ /worktree コマンドを .claude/commands/ にインストールしました。${NC}"
+else
+    echo -e "${YELLOW}⚠ 警告: worktree.md が見つかりません。スキップします。${NC}"
+fi
 echo ""
 
 ################################################################################
@@ -236,11 +246,11 @@ echo ""
 if [ ! -f "CLAUDE.md" ]; then
     echo "CLAUDE.md を作成中..."
 
-    if [ -f "$SCRIPT_DIR/CLAUDE.md.template" ]; then
-        cp "$SCRIPT_DIR/CLAUDE.md.template" CLAUDE.md
+    if [ -f "$SCRIPT_DIR/CLAUDE.md.example" ]; then
+        cp "$SCRIPT_DIR/CLAUDE.md.example" CLAUDE.md
         echo -e "${GREEN}✓ CLAUDE.md を作成しました。${NC}"
     else
-        echo -e "${YELLOW}⚠ 警告: CLAUDE.md.template が見つかりません。スキップします。${NC}"
+        echo -e "${YELLOW}⚠ 警告: CLAUDE.md.example が見つかりません。スキップします。${NC}"
     fi
 else
     echo -e "${BLUE}ℹ CLAUDE.md は既に存在するため、スキップしました。${NC}"

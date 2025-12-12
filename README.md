@@ -24,6 +24,7 @@ bash /path/to/ClaudeSkills/templates/generic/install.sh   # 汎用
 bash /path/to/ClaudeSkills/templates/laravel/install.sh   # Laravel
 bash /path/to/ClaudeSkills/templates/flask/install.sh     # Flask
 bash /path/to/ClaudeSkills/templates/hugo/install.sh      # Hugo
+bash /path/to/ClaudeSkills/templates/bedrock/install.sh   # WordPress (Bedrock)
 ```
 
 ### 基本的な使い方

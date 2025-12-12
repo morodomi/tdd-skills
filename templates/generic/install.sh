@@ -165,6 +165,16 @@ if [ -f "$SCRIPT_DIR/../../.claude/commands/tdd-onboard.md" ]; then
 else
     echo -e "${YELLOW}⚠ 警告: グローバルtdd-onboardコマンドが見つかりません。スキップします。${NC}"
 fi
+
+# プロジェクト固有のworktreeコマンドをインストール
+echo "プロジェクト固有のコマンドをインストール中..."
+mkdir -p .claude/commands
+if [ -f "$SCRIPT_DIR/.claude/commands/worktree.md" ]; then
+    cp "$SCRIPT_DIR/.claude/commands/worktree.md" .claude/commands/
+    echo -e "${GREEN}✓ /worktree コマンドを .claude/commands/ にインストールしました。${NC}"
+else
+    echo -e "${YELLOW}⚠ 警告: worktree.md が見つかりません。スキップします。${NC}"
+fi
 echo ""
 
 ################################################################################
