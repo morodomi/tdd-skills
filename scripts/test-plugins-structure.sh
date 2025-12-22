@@ -145,7 +145,29 @@ else
 fi
 echo ""
 
-# TC-07: marketplace.json exists and is valid
+# TC-07: tdd-ts plugin.json exists and is valid
+echo "--- tdd-ts ---"
+TS_PLUGIN="$PLUGINS_DIR/tdd-ts/.claude-plugin/plugin.json"
+if [ -f "$TS_PLUGIN" ]; then
+    test_pass "plugin.json exists"
+    if python3 -c "import json; json.load(open('$TS_PLUGIN'))" 2>/dev/null; then
+        test_pass "plugin.json is valid JSON"
+    else
+        test_fail "plugin.json is invalid JSON"
+    fi
+else
+    test_fail "plugin.json not found"
+fi
+
+# TC-07b: tdd-ts has ts-quality skill
+if [ -f "$PLUGINS_DIR/tdd-ts/skills/ts-quality/SKILL.md" ]; then
+    test_pass "ts-quality skill exists"
+else
+    test_fail "ts-quality skill not found"
+fi
+echo ""
+
+# TC-08: marketplace.json exists and is valid
 echo "--- marketplace ---"
 MARKETPLACE=".claude-plugin/marketplace.json"
 if [ -f "$MARKETPLACE" ]; then

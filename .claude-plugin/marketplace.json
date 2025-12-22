@@ -28,6 +28,11 @@
       "name": "tdd-hugo",
       "source": "./plugins/tdd-hugo",
       "description": "Hugo SSG quality tools: hugo build, htmltest, template metrics"
+    },
+    {
+      "name": "tdd-ts",
+      "source": "./plugins/tdd-ts",
+      "description": "TypeScript quality tools: tsc, ESLint, Prettier, Jest/Vitest"
     }
   ]
 }

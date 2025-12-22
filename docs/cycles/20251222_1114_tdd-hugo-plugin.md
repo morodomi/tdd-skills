@@ -1,7 +1,7 @@
 ---
 feature: tdd-hugo-plugin
 cycle: tdd-hugo-001
-phase: REVIEW
+phase: DONE
 created: 2025-12-22 11:14
 updated: 2025-12-22 11:14
 ---
@@ -168,4 +168,14 @@ allowed-tools: Bash, Read, Grep, Glob
 - Plugin構造テスト: 17 passed
 - Skills構造テスト: 28 passed
 - 全品質基準クリア
+
+### 2025-12-22 11:20 - COMMIT
+
+- コミット: `37ee147`
+- 7 files, +469 lines
+- Closes #8
+
+---
+
+## 完了
 
