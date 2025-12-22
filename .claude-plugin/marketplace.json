@@ -33,6 +33,11 @@
       "name": "tdd-ts",
       "source": "./plugins/tdd-ts",
       "description": "TypeScript quality tools: tsc, ESLint, Prettier, Jest/Vitest"
+    },
+    {
+      "name": "tdd-flutter",
+      "source": "./plugins/tdd-flutter",
+      "description": "Flutter/Dart quality tools: dart analyze, dart format, flutter test"
     }
   ]
 }

@@ -167,7 +167,29 @@ else
 fi
 echo ""
 
-# TC-08: marketplace.json exists and is valid
+# TC-08: tdd-flutter plugin.json exists and is valid
+echo "--- tdd-flutter ---"
+FLUTTER_PLUGIN="$PLUGINS_DIR/tdd-flutter/.claude-plugin/plugin.json"
+if [ -f "$FLUTTER_PLUGIN" ]; then
+    test_pass "plugin.json exists"
+    if python3 -c "import json; json.load(open('$FLUTTER_PLUGIN'))" 2>/dev/null; then
+        test_pass "plugin.json is valid JSON"
+    else
+        test_fail "plugin.json is invalid JSON"
+    fi
+else
+    test_fail "plugin.json not found"
+fi
+
+# TC-08b: tdd-flutter has flutter-quality skill
+if [ -f "$PLUGINS_DIR/tdd-flutter/skills/flutter-quality/SKILL.md" ]; then
+    test_pass "flutter-quality skill exists"
+else
+    test_fail "flutter-quality skill not found"
+fi
+echo ""
+
+# TC-09: marketplace.json exists and is valid
 echo "--- marketplace ---"
 MARKETPLACE=".claude-plugin/marketplace.json"
 if [ -f "$MARKETPLACE" ]; then
