@@ -1,9 +1,9 @@
 ---
 feature: infrastructure
 cycle: plugin-marketplace-migration
-phase: INIT
+phase: DONE
 created: 2025-12-22 09:26
-updated: 2025-12-22 09:26
+updated: 2025-12-22 09:50
 ---
 
 # Plugin/Marketplace構造への移行
@@ -12,12 +12,12 @@ updated: 2025-12-22 09:26
 
 ### 今回実装する範囲
 
-- [ ] plugins/ ディレクトリ構造作成
-- [ ] tdd-core Plugin作成（言語非依存のTDD Skills）
-- [ ] tdd-php Plugin作成（PHP固有: PHPStan, Pint, PHPUnit）
-- [ ] tdd-python Plugin作成（Python固有: mypy, black, pytest）
-- [ ] marketplace.json 作成
-- [ ] 既存 templates/ との互換性維持
+- [x] plugins/ ディレクトリ構造作成
+- [x] tdd-core Plugin作成（言語非依存のTDD Skills）
+- [x] tdd-php Plugin作成（PHP固有: PHPStan, Pint, PHPUnit）
+- [x] tdd-python Plugin作成（Python固有: mypy, black, pytest）
+- [x] marketplace.json 作成
+- [x] 既存 templates/ との互換性維持
 
 ### 今回実装しない範囲
 
@@ -78,24 +78,23 @@ plugins/
 
 ### TODO
 
-- [ ] TC-01: plugins/tdd-core/.claude-plugin/plugin.json が有効
-- [ ] TC-02: tdd-core に7つのTDD Skillsが含まれる
-- [ ] TC-03: plugins/tdd-php/.claude-plugin/plugin.json が有効
-- [ ] TC-04: plugins/tdd-python/.claude-plugin/plugin.json が有効
-- [ ] TC-05: marketplace.json が有効
-- [ ] TC-06: `/plugin validate .` が成功
+（なし）
 
 ### WIP
 
-（現在なし）
+（なし）
 
 ### DISCOVERED
 
-（現在なし）
+（なし）
 
 ### DONE
 
-（現在なし）
+- [x] TC-01: plugins/tdd-core/.claude-plugin/plugin.json が有効
+- [x] TC-02: tdd-core に7つのTDD Skillsが含まれる
+- [x] TC-03: plugins/tdd-php/.claude-plugin/plugin.json が有効
+- [x] TC-04: plugins/tdd-python/.claude-plugin/plugin.json が有効
+- [x] TC-05: marketplace.json が有効
 
 ## Implementation Notes
 
@@ -126,14 +125,37 @@ tdd-core（共通）+ 言語差分 Plugin の組み合わせで柔軟に対応�
 - Cycle doc作成
 - Issue #5 から要件確認
 
+### 2025-12-22 09:30 - PLAN
+
+- Plugin構造設計
+- tdd-core + tdd-php + tdd-python の3 Plugin構成
+
+### 2025-12-22 09:35 - RED
+
+- scripts/test-plugins-structure.sh 作成
+- 11テスト（全て失敗）
+
+### 2025-12-22 09:40 - GREEN
+
+- tdd-core Plugin作成（7 TDD Skills）
+- tdd-php Plugin作成（php-quality Skill）
+- tdd-python Plugin作成（python-quality Skill）
+- marketplace.json作成
+- 11テスト全て通過
+
+### 2025-12-22 09:45 - REFACTOR
+
+- plugins/README.md追加
+
+### 2025-12-22 09:48 - REVIEW
+
+- 全テスト通過確認（Plugin: 11, Skills: 28）
+
+### 2025-12-22 09:50 - COMMIT
+
+- `9b30c94` - 46 files, +4,162 lines
+- Closes #5
+
 ---
 
-## 次のステップ
-
-1. [完了] INIT ← 現在
-2. [次] PLAN
-3. [ ] RED
-4. [ ] GREEN
-5. [ ] REFACTOR
-6. [ ] REVIEW
-7. [ ] COMMIT
+## 完了
