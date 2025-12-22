@@ -1,0 +1,27 @@
+{
+  "name": "tdd-skills",
+  "description": "TDD workflow skills for Claude Code. Language-agnostic core + language-specific quality tools.",
+  "version": "1.0.0",
+  "author": {
+    "name": "morodomi"
+  },
+  "repository": "https://github.com/morodomi/tdd-skills",
+  "license": "MIT",
+  "plugins": [
+    {
+      "name": "tdd-core",
+      "path": "tdd-core",
+      "description": "TDD 7-phase workflow: INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT"
+    },
+    {
+      "name": "tdd-php",
+      "path": "tdd-php",
+      "description": "PHP quality tools: PHPStan, Pint, PHPUnit/Pest"
+    },
+    {
+      "name": "tdd-python",
+      "path": "tdd-python",
+      "description": "Python quality tools: pytest, mypy, Black/isort"
+    }
+  ]
+}
