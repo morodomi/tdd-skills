@@ -18,6 +18,11 @@
       "name": "tdd-python",
       "source": "./plugins/tdd-python",
       "description": "Python quality tools: pytest, mypy, Black/isort"
+    },
+    {
+      "name": "tdd-js",
+      "source": "./plugins/tdd-js",
+      "description": "JavaScript quality tools: ESLint, Prettier, Jest/Vitest"
     }
   ]
 }
