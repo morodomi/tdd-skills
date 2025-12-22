@@ -83,6 +83,6 @@ claude
 
 ## Links
 
-- [紹介記事（note.com）](https://note.com/morodomi/n/n15d42cea3d30)
+- [紹介記事（note.com）](https://note.com/morodomi/n/n5b089a48fe7b)
 - [Claude Code Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
 - [anthropics/skills](https://github.com/anthropics/skills)
