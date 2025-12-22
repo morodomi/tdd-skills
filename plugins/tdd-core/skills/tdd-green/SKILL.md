@@ -1,21 +1,25 @@
 ---
 name: tdd-green
-description: REDの次。「実装して」「green」で起動。テストを通す最小実装のみ。
-allowed-tools: Read, Write, Edit, Grep, Glob, Bash
+description: テストを通すための最小限の実装を行う。REDの次フェーズ。「実装して」「green」で起動。
 ---
 
 # TDD GREEN Phase
 
 テストを通すための最小限の実装を行う。
 
-## Checklist
+## Progress Checklist
 
-1. [ ] 最新Cycle doc確認
-2. [ ] WIPのテストを確認
-3. [ ] 最小限の実装を作成
-4. [ ] テスト実行→成功確認
-5. [ ] Cycle doc更新（WIP→DONE）
-6. [ ] REFACTORフェーズへ誘導
+コピーして進捗を追跡:
+
+```
+GREEN Progress:
+- [ ] 最新Cycle doc確認
+- [ ] WIPのテストを確認
+- [ ] 最小限の実装を作成
+- [ ] テスト実行→成功確認
+- [ ] Cycle doc更新（WIP→DONE）
+- [ ] REFACTORフェーズへ誘導
+```
 
 ## 禁止事項
 
@@ -37,48 +41,29 @@ WIPのテストケースを確認。
 
 **原則**: テストを通すために必要な最小限のコードのみ
 
-```php
-// ダメな例: 余計な機能を追加
-public function login($email, $password, $rememberMe = false) { ... }
-
-// 良い例: テストに必要な分だけ
-public function login($email, $password) { ... }
-```
-
 ### Step 3: テスト実行→成功確認
 
 ```bash
-# PHP/Laravel
-php artisan test --filter=TestName
-
-# Python
-pytest tests/test_xxx.py -v
+php artisan test --filter=TestName  # PHP
+pytest tests/test_xxx.py -v          # Python
 ```
 
 **期待**: テストが**成功**すること（GREEN状態）
 
-### Step 4: Cycle doc更新
+### Step 4: 次のテストまたはREFACTOR
 
-```markdown
-### DONE
-- [x] TC-01: [テストケース名] ← GREEN確認済み
-```
-
-### Step 5: 次のテストまたはREFACTOR
-
-**Test Listに残りがある場合**: REDフェーズに戻る
-**全テスト完了の場合**: REFACTORフェーズへ
+- Test Listに残りあり → REDフェーズに戻る
+- 全テスト完了 → REFACTORフェーズへ
 
 ```
 ================================================================================
 GREEN完了
 ================================================================================
 テスト成功を確認しました。
-
 次: REFACTORフェーズ（コード改善）
 ================================================================================
 ```
 
 ## Reference
 
-- 詳細ワークフロー: `reference.md`
+- 詳細: [reference.md](reference.md)

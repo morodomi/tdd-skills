@@ -1,21 +1,25 @@
 ---
 name: tdd-refactor
-description: GREENの次。「リファクタして」で起動。テスト維持しながら品質改善。
-allowed-tools: Read, Write, Edit, Grep, Glob, Bash
+description: テストを維持しながらコード品質を改善する。GREENの次フェーズ。「リファクタして」「refactor」で起動。
 ---
 
 # TDD REFACTOR Phase
 
 テストを維持しながらコード品質を改善する。
 
-## Checklist
+## Progress Checklist
 
-1. [ ] 最新Cycle doc確認
-2. [ ] 現在のテストが全てPASSすることを確認
-3. [ ] リファクタリング実施
-4. [ ] テスト実行→成功確認（テストが壊れていないこと）
-5. [ ] Cycle doc更新
-6. [ ] REVIEWフェーズへ誘導
+コピーして進捗を追跡:
+
+```
+REFACTOR Progress:
+- [ ] 最新Cycle doc確認
+- [ ] 現在のテストが全てPASSすることを確認
+- [ ] リファクタリング実施
+- [ ] テスト実行→成功確認
+- [ ] Cycle doc更新
+- [ ] REVIEWフェーズへ誘導
+```
 
 ## 禁止事項
 
@@ -34,18 +38,13 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 ### Step 2: テスト確認
 
 ```bash
-# PHP/Laravel
-php artisan test
-
-# Python
-pytest
+php artisan test  # PHP
+pytest            # Python
 ```
 
 全テストがPASSすることを確認してから開始。
 
 ### Step 3: リファクタリング
-
-**改善項目**:
 
 | 項目 | 例 |
 |------|-----|
@@ -53,15 +52,10 @@ pytest
 | 定数化 | マジックナンバー除去 |
 | メソッド分割 | 長いメソッドの分割 |
 | ネーミング | 変数・メソッド名の改善 |
-| 型安全 | 型ヒントの追加 |
 
 ### Step 4: テスト実行→成功確認
 
-```bash
-php artisan test  # または pytest
-```
-
-**期待**: 全テストが**成功**すること（リファクタリングでテストが壊れていない）
+**期待**: 全テストが**成功**すること
 
 ### Step 5: 完了→REVIEW誘導
 
@@ -69,14 +63,11 @@ php artisan test  # または pytest
 ================================================================================
 REFACTOR完了
 ================================================================================
-コード品質を改善しました。テストは全てPASSしています。
-
+コード品質を改善しました。テストは全てPASS。
 次: REVIEWフェーズ（品質検証）
 ================================================================================
 ```
 
-tdd-review Skillを起動。
-
 ## Reference
 
-- 詳細ワークフロー: `reference.md`
+- 詳細: [reference.md](reference.md)
