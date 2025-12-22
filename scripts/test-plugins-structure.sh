@@ -123,7 +123,29 @@ else
 fi
 echo ""
 
-# TC-06: marketplace.json exists and is valid
+# TC-06: tdd-hugo plugin.json exists and is valid
+echo "--- tdd-hugo ---"
+HUGO_PLUGIN="$PLUGINS_DIR/tdd-hugo/.claude-plugin/plugin.json"
+if [ -f "$HUGO_PLUGIN" ]; then
+    test_pass "plugin.json exists"
+    if python3 -c "import json; json.load(open('$HUGO_PLUGIN'))" 2>/dev/null; then
+        test_pass "plugin.json is valid JSON"
+    else
+        test_fail "plugin.json is invalid JSON"
+    fi
+else
+    test_fail "plugin.json not found"
+fi
+
+# TC-06b: tdd-hugo has hugo-quality skill
+if [ -f "$PLUGINS_DIR/tdd-hugo/skills/hugo-quality/SKILL.md" ]; then
+    test_pass "hugo-quality skill exists"
+else
+    test_fail "hugo-quality skill not found"
+fi
+echo ""
+
+# TC-07: marketplace.json exists and is valid
 echo "--- marketplace ---"
 MARKETPLACE=".claude-plugin/marketplace.json"
 if [ -f "$MARKETPLACE" ]; then

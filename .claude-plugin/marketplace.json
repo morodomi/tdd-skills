@@ -23,6 +23,11 @@
       "name": "tdd-js",
       "source": "./plugins/tdd-js",
       "description": "JavaScript quality tools: ESLint, Prettier, Jest/Vitest"
+    },
+    {
+      "name": "tdd-hugo",
+      "source": "./plugins/tdd-hugo",
+      "description": "Hugo SSG quality tools: hugo build, htmltest, template metrics"
     }
   ]
 }
