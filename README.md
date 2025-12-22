@@ -1,104 +1,63 @@
-# ClaudeSkills
+# TDD Skills
 
-Claude Code で厳格な TDD ワークフローを実現するフレームワーク
+Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
-## Overview
+## Installation
 
-**ClaudeSkills** は、Claude Code との協働開発において TDD（Test-Driven Development）サイクルを強制する Skills のコレクションです。
+```bash
+# マーケットプレイスを登録
+/plugin marketplace add morodomi/tdd-skills
+
+# TDDワークフローをインストール
+/plugin install tdd-core@tdd-skills
+
+# 言語別品質ツール（いずれかを選択）
+/plugin install tdd-php@tdd-skills      # PHP
+/plugin install tdd-python@tdd-skills   # Python
+```
+
+## TDD Workflow
 
 ```
 INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 ```
 
-## Installation
-
-### Plugin（推奨）
-
-```bash
-# 1. マーケットプレイスを登録（初回のみ）
-/plugin marketplace add morodomi/tdd-skills
-
-# 2. プラグインをインストール
-/plugin install tdd-core@tdd-skills          # TDDワークフロー（必須）
-/plugin install tdd-php@tdd-skills           # PHP: PHPStan, Pint, PHPUnit
-/plugin install tdd-python@tdd-skills        # Python: pytest, mypy, Black
-```
-
-### Template（レガシー）
-
-```bash
-# プロジェクトディレクトリで実行
-bash <(curl -s https://raw.githubusercontent.com/morodomi/tdd-skills/main/templates/laravel/install.sh)
-```
+| Phase | Skill | Description |
+|-------|-------|-------------|
+| INIT | tdd-init | サイクルドキュメント作成 |
+| PLAN | tdd-plan | 設計・計画 |
+| RED | tdd-red | 失敗するテスト作成 |
+| GREEN | tdd-green | 最小限の実装 |
+| REFACTOR | tdd-refactor | コード改善 |
+| REVIEW | tdd-review | 品質チェック |
+| COMMIT | tdd-commit | Git commit |
 
 ## Plugins
 
 | Plugin | Description |
 |--------|-------------|
-| **tdd-core** | TDD 7フェーズワークフロー |
-| **tdd-php** | PHP品質ツール（PHPStan, Pint, PHPUnit/Pest） |
-| **tdd-python** | Python品質ツール（pytest, mypy, Black/isort） |
-
-## TDD Skills
-
-| Skill | Phase | Description |
-|-------|-------|-------------|
-| tdd-init | INIT | サイクルドキュメント作成 |
-| tdd-plan | PLAN | 設計・計画 |
-| tdd-red | RED | 失敗するテスト作成 |
-| tdd-green | GREEN | 最小限の実装 |
-| tdd-refactor | REFACTOR | コード改善 |
-| tdd-review | REVIEW | 品質チェック |
-| tdd-commit | COMMIT | Git commit |
-
-## Commands
-
-| Command | Description |
-|---------|-------------|
-| `/tdd-onboard` | 初期セットアップ |
-| `/worktree` | 並行開発環境構築 |
-| `/code-review` | 3観点コードレビュー |
-| `/test-agent` | カバレッジ向上 |
+| **tdd-core** | TDD 7フェーズワークフロー（言語非依存） |
+| **tdd-php** | PHPStan, Pint, PHPUnit/Pest |
+| **tdd-python** | pytest, mypy, Black/isort |
 
 ## Usage
 
 ```bash
-# Claude Code を起動
 claude
 
-# TDDサイクル開始
 > ログイン機能を追加したい
 
-# Claude が TDD フェーズを案内:
-# 1. INIT: docs/cycles/ にサイクルドキュメント作成
-# 2. PLAN: 設計
-# 3. RED: テスト作成
-# 4. GREEN: 実装
-# 5. REFACTOR: 改善
-# 6. REVIEW: 品質チェック
-# 7. COMMIT: コミット
+# Claudeが自動的にTDDサイクルを案内
+# 1. docs/cycles/ にサイクルドキュメント作成
+# 2. テスト作成 → 実装 → リファクタ → コミット
 ```
 
-## Project Structure
+## Quality Standards
 
-```
-ClaudeSkills/
-├── .claude-plugin/       # Marketplace定義
-│   └── marketplace.json
-├── plugins/              # Claude Code Plugins
-│   ├── tdd-core/         # TDDワークフロー
-│   ├── tdd-php/          # PHP品質ツール
-│   └── tdd-python/       # Python品質ツール
-├── templates/            # Legacy templates
-└── docs/                 # Documentation
-```
-
-## Documentation
-
-- [Plugin README](plugins/README.md)
-- [汎用インストールガイド](docs/GENERIC_INSTALLATION.md)
-- [Bedrock/WordPress](docs/BEDROCK_INSTALLATION.md)
-- [MCP統合](docs/MCP_INSTALLATION.md)
+| 項目 | 目標 |
+|------|------|
+| カバレッジ | 90%以上 |
+| 静的解析 | エラー0件 |
 
 ## License
 
@@ -106,9 +65,5 @@ ClaudeSkills/
 
 ## References
 
+- [Claude Code Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
 - [anthropics/skills](https://github.com/anthropics/skills)
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
-
----
-
-*Made with Claude Code + TDD*
