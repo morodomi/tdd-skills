@@ -1,15 +1,28 @@
 # 汎用 ClaudeSkills インストールガイド
 
-**最終更新**: 2025-11-04
+**最終更新**: 2025-12-22
 **対象**: 任意のプログラミング言語/フレームワーク
 
 ---
 
-## 概要
+## Plugin インストール（推奨）
 
-このガイドは、**言語/フレームワークに依存しない汎用TDDテンプレート**のインストール方法を説明します。
+```bash
+# TDDワークフロー
+/plugin install tdd-core@tdd-skills
 
-Node.js、Python、PHP、Go、Rust等、任意のプロジェクトで使用できます。
+# 言語別品質ツール
+/plugin install tdd-php@tdd-skills      # PHP
+/plugin install tdd-python@tdd-skills   # Python
+```
+
+詳細: [plugins/README.md](../plugins/README.md)
+
+---
+
+## Template インストール（レガシー）
+
+以下はTemplate方式のインストール手順です。新規プロジェクトにはPlugin方式を推奨します。
 
 ---
 

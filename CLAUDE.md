@@ -1,67 +1,42 @@
-# ClaudeSkills - TDD Framework for Claude Code
+# ClaudeSkills
 
-## Overview
-
-ClaudeSkillsは、Claude Codeを使った開発における厳格なTDD（Test-Driven Development）ワークフローを実現するためのSkills/MCPフレームワークです。
-
-**目的**: 生成AIとの協働開発において、要望との乖離を防ぎ、厳格なTDDワークフローを強制する。
-
----
+Claude Codeを使った開発における厳格なTDDワークフローを実現するフレームワーク。
 
 ## Tech Stack
 
-- **配布形式**: Bash scripts, Markdown (Claude Skills)
+- **配布形式**: Claude Code Plugins, Bash scripts
 - **対象言語**: PHP, Python
-- **対象フレームワーク**: Laravel, Django, Flask, WordPress (Bedrock)
-- **ツール統合**: PHPStan, PHPUnit/Pest, pytest, mypy
-
----
-
-## Quick Commands
-
-```bash
-# テンプレートを既存プロジェクトにインストール
-./install.sh /path/to/project
-
-# インストール後のセットアップ
-/tdd-onboard
-```
-
----
+- **品質ツール**: PHPStan, PHPUnit/Pest, pytest, mypy, Black
 
 ## Project Structure
 
 ```
 ClaudeSkills/
-├── templates/
-│   ├── _common/agent_docs/    # 共通ドキュメント
-│   ├── generic/               # 汎用テンプレート
-│   ├── laravel/               # Laravel用
-│   └── bedrock/               # WordPress用
+├── plugins/                  # Claude Code Plugins（推奨）
+│   ├── tdd-core/             # TDD 7フェーズワークフロー
+│   ├── tdd-php/              # PHP品質ツール
+│   └── tdd-python/           # Python品質ツール
+├── templates/                # Legacy templates
+│   ├── generic/
+│   ├── laravel/
+│   ├── flask/
+│   ├── hugo/
+│   └── bedrock/
 ├── .claude/
-│   ├── commands/              # Slash Commands
-│   └── skills/                # Skills
-├── docs/
-│   └── cycles/                # TDDサイクルドキュメント
-├── install.sh                 # インストーラ
-└── CLAUDE.md                  # このファイル
+│   ├── commands/             # Slash Commands
+│   └── skills/               # Project Skills
+├── scripts/                  # Test scripts
+└── docs/                     # Documentation
+    └── cycles/               # TDDサイクルドキュメント
 ```
 
----
-
 ## TDD Workflow
-
-このプロジェクト自体もTDDワークフローで開発する。
 
 ```
 INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 ```
 
 **絶対ルール**: エラーを見つけたら、まずテストを書く
-
-詳細: `docs/` 内のサイクルドキュメント参照
-
----
 
 ## Quality Standards
 
@@ -70,52 +45,18 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | カバレッジ | 90%以上（最低80%） |
 | 静的解析 | エラー0件 |
 
----
-
-## Documentation
-
-### 要件・設計
-
-| ドキュメント | 内容 |
-|-------------|------|
-| `docs/20251022_1328_要件定義.md` | プロジェクト要件定義 |
-| `docs/20251022_1443_SkillsMCP調査.md` | Skills/MCP調査 |
-| `docs/20251107_0000_Claude_Code統合機構調査.md` | 統合機構調査 |
-
-### Progressive Disclosure
-
-CLAUDE.mdは短く保ち（300行以下推奨）、詳細は`agent_docs/`に分離する方式を採用。
-
-参考: https://www.humanlayer.dev/blog/writing-a-good-claude-md
-
----
-
-## Key Decisions
-
-1. **TDDワークフロー継続**: 7フェーズ（INIT→COMMIT）
-2. **インストール戦略**: プロジェクト固有インストール（`.claude/skills/`）
-3. **Progressive Disclosure**: CLAUDE.md短縮 + agent_docs/分離
-
----
-
-## Development Guidelines
-
-### このプロジェクトの開発ルール
+## Development Rules
 
 1. **TDDサイクル厳守**: 機能追加・バグ修正は必ずCycle doc作成から
-2. **段階的な実装**: 小さく始める（変更ファイル10個以下）
-3. **ドキュメント優先**: 設計・調査はドキュメント化してから実装
+2. **段階的な実装**: 変更ファイル10個以下
+3. **テストファースト**: 実装前にテストを書く
 
-### ファイル命名規則
+## File Naming
 
 - Cycle doc: `docs/cycles/YYYYMMDD_HHMM_機能名.md`
 - 設計・調査: `docs/YYYYMMDD_HHMM_内容.md`
 
----
-
 ## Git Conventions
-
-### コミットメッセージ
 
 ```
 feat: 新機能
@@ -126,36 +67,25 @@ test: テスト
 chore: その他
 ```
 
-### コミット前チェック
+## Commands
 
-1. テスト実行（すべて通過）
-2. 静的解析（エラー0件）
-3. コードフォーマット
+| Command | Description |
+|---------|-------------|
+| `/tdd-onboard` | 初期セットアップ |
+| `/test-agent` | カバレッジ向上 |
+| `/code-review` | コードレビュー |
 
----
+## Test Scripts
 
-## Available Commands
+```bash
+# Plugin構造テスト
+bash scripts/test-plugins-structure.sh
 
-- `/tdd-onboard`: 初期セットアップ
-- `/test-agent`: カバレッジ向上
-- `/code-review`: コードレビュー
-
----
-
-## Meta Rules for Claude Code
-
-1. **不確実性への対処**: 推測せず、ユーザーに確認
-2. **ファイル作成の制限**: 既存ファイルの編集を優先
-3. **テストファースト**: 実装前にテストを書く
-
----
+# Skills構造テスト
+bash scripts/test-skills-structure.sh
+```
 
 ## References
 
 - [anthropics/skills](https://github.com/anthropics/skills)
-- [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code)
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-
----
-
-*最終更新: 2025-12-03*
+- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)

@@ -1,7 +1,25 @@
 # Bedrock/WordPress用 ClaudeSkills インストールガイド
 
-**最終更新**: 2025-11-04
+**最終更新**: 2025-12-22
 **対象**: WordPress Bedrock環境
+
+---
+
+## Plugin インストール（推奨）
+
+```bash
+# TDDワークフロー + PHP品質ツール
+/plugin install tdd-core@tdd-skills
+/plugin install tdd-php@tdd-skills
+```
+
+詳細: [plugins/README.md](../plugins/README.md)
+
+---
+
+## Template インストール（レガシー）
+
+以下はTemplate方式のインストール手順です。
 
 ---
 
