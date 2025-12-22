@@ -15,20 +15,20 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 ### Plugin（推奨）
 
 ```bash
-# TDDワークフロー（必須）
-/plugin install tdd-core@tdd-skills
+# 1. マーケットプレイスを登録（初回のみ）
+/plugin marketplace add morodomi/tdd-skills
 
-# 言語別品質ツール（いずれかを選択）
-/plugin install tdd-php@tdd-skills      # PHP: PHPStan, Pint, PHPUnit
-/plugin install tdd-python@tdd-skills   # Python: pytest, mypy, Black
+# 2. プラグインをインストール
+/plugin install tdd-core@tdd-skills          # TDDワークフロー（必須）
+/plugin install tdd-php@tdd-skills           # PHP: PHPStan, Pint, PHPUnit
+/plugin install tdd-python@tdd-skills        # Python: pytest, mypy, Black
 ```
 
 ### Template（レガシー）
 
 ```bash
 # プロジェクトディレクトリで実行
-bash /path/to/ClaudeSkills/templates/laravel/install.sh
-bash /path/to/ClaudeSkills/templates/flask/install.sh
+bash <(curl -s https://raw.githubusercontent.com/morodomi/tdd-skills/main/templates/laravel/install.sh)
 ```
 
 ## Plugins
@@ -83,16 +83,13 @@ claude
 
 ```
 ClaudeSkills/
+├── .claude-plugin/       # Marketplace定義
+│   └── marketplace.json
 ├── plugins/              # Claude Code Plugins
 │   ├── tdd-core/         # TDDワークフロー
 │   ├── tdd-php/          # PHP品質ツール
 │   └── tdd-python/       # Python品質ツール
 ├── templates/            # Legacy templates
-│   ├── generic/
-│   ├── laravel/
-│   ├── flask/
-│   ├── hugo/
-│   └── bedrock/
 └── docs/                 # Documentation
 ```
 

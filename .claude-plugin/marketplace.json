@@ -10,17 +10,17 @@
   "plugins": [
     {
       "name": "tdd-core",
-      "path": "tdd-core",
+      "path": "plugins/tdd-core",
       "description": "TDD 7-phase workflow: INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT"
     },
     {
       "name": "tdd-php",
-      "path": "tdd-php",
+      "path": "plugins/tdd-php",
       "description": "PHP quality tools: PHPStan, Pint, PHPUnit/Pest"
     },
     {
       "name": "tdd-python",
-      "path": "tdd-python",
+      "path": "plugins/tdd-python",
       "description": "Python quality tools: pytest, mypy, Black/isort"
     }
   ]
