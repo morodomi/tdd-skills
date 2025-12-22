@@ -2,6 +2,16 @@
 
 Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
+## Why?
+
+AIにコードを任せると、こんな問題が起きがち：
+
+- テストは「書いて」と言わないと書かない
+- 品質チェックは人間が手動で実行
+- セッションが切れると何をやっていたか忘れる
+
+**tdd-skills** は、Claude Code に TDD を「強制」することでこれらを解決します。
+
 ## Installation
 
 ```bash
@@ -12,8 +22,12 @@ Claude Code で厳格な TDD ワークフローを実現するプラグイン
 /plugin install tdd-core@tdd-skills
 
 # 言語別品質ツール（いずれかを選択）
-/plugin install tdd-php@tdd-skills      # PHP
+/plugin install tdd-php@tdd-skills      # PHP / Laravel
 /plugin install tdd-python@tdd-skills   # Python
+/plugin install tdd-ts@tdd-skills       # TypeScript
+/plugin install tdd-js@tdd-skills       # JavaScript
+/plugin install tdd-hugo@tdd-skills     # Hugo SSG
+/plugin install tdd-flutter@tdd-skills  # Flutter / Dart
 ```
 
 ## TDD Workflow
@@ -34,11 +48,15 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ## Plugins
 
-| Plugin | Description |
-|--------|-------------|
-| **tdd-core** | TDD 7フェーズワークフロー（言語非依存） |
-| **tdd-php** | PHPStan, Pint, PHPUnit/Pest |
-| **tdd-python** | pytest, mypy, Black/isort |
+| Plugin | Target | Tools |
+|--------|--------|-------|
+| **tdd-core** | 全言語共通 | TDD 7フェーズワークフロー |
+| **tdd-php** | PHP / Laravel | PHPStan, Pint, PHPUnit/Pest |
+| **tdd-python** | Python | pytest, mypy, Black |
+| **tdd-ts** | TypeScript | tsc, ESLint, Jest/Vitest |
+| **tdd-js** | JavaScript | ESLint, Prettier, Jest |
+| **tdd-hugo** | Hugo SSG | hugo build, htmltest |
+| **tdd-flutter** | Flutter / Dart | dart analyze, flutter test |
 
 ## Usage
 
@@ -63,7 +81,8 @@ claude
 
 [MIT](LICENSE)
 
-## References
+## Links
 
+- [紹介記事（note.com）](https://note.com/morodomi/n/n15d42cea3d30)
 - [Claude Code Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
 - [anthropics/skills](https://github.com/anthropics/skills)
