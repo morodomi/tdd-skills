@@ -160,22 +160,46 @@ docs/README.md が存在しない場合、Write ツールで作成:
 ```markdown
 # Documentation Index
 
+## プロジェクト状況
+
+現在の状況は [STATUS.md](STATUS.md) を参照。
+
 ## TDD サイクル
 
 サイクルドキュメントは `docs/cycles/` に格納されています。
 
 **命名規則**: `YYYYMMDD_HHMM_機能名.md`
 
-## 最新のサイクル
-
-| 日時 | 機能名 | フェーズ |
-|------|--------|---------|
-| （/tdd-onboard で自動更新） | | |
-
 ## ドキュメント一覧
 
 - 設計・調査は `docs/` 直下に格納
 - TDD サイクルは `docs/cycles/` に格納
+```
+
+### 3.3 docs/STATUS.md 作成
+
+docs/STATUS.md が存在しない場合、Write ツールで作成:
+
+```markdown
+# Project Status
+
+最終更新: ${DATE}
+
+## 進行中
+
+なし
+
+## バックログ
+
+GitHub Issues を参照: `gh issue list`
+
+## 最近完了
+
+なし
+
+---
+
+*このファイルは tdd-commit で自動更新されます*
 ```
 
 ---

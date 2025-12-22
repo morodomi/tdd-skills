@@ -1,7 +1,7 @@
 ---
 name: tdd-commit
 description: REVIEWの次。「コミットして」で起動。変更をGitコミット。
-allowed-tools: Read, Grep, Glob, Bash
+allowed-tools: Read, Write, Grep, Glob, Bash
 ---
 
 # TDD COMMIT Phase
@@ -15,7 +15,8 @@ allowed-tools: Read, Grep, Glob, Bash
 3. [ ] コミットメッセージ生成
 4. [ ] git add & git commit
 5. [ ] Cycle doc更新（phase: DONE）
-6. [ ] サイクル完了
+6. [ ] docs/STATUS.md 更新
+7. [ ] サイクル完了
 
 ## Workflow
 
@@ -73,7 +74,46 @@ phase: DONE
 - コミット完了: [commit hash]
 ```
 
-### Step 5: サイクル完了
+### Step 5: docs/STATUS.md 更新
+
+GitHub Issuesとサイクル状況を取得し、STATUS.mdを更新:
+
+```bash
+# Issues取得
+gh issue list --limit 10 --json number,title,labels
+
+# 完了したサイクル取得
+ls -t docs/cycles/*.md | head -5
+```
+
+**STATUS.md フォーマット**:
+
+```markdown
+# Project Status
+
+最終更新: YYYY-MM-DD HH:MM
+
+## 進行中
+
+なし（または現在のサイクル名）
+
+## バックログ
+
+| # | タイトル | ラベル |
+|---|---------|--------|
+| 12 | ユーザー登録機能 | enhancement |
+| 15 | パスワードリセット | enhancement |
+
+## 最近完了
+
+- [機能名] (YYYY-MM-DD) - commit hash
+
+---
+
+*このファイルは tdd-commit で自動更新されます*
+```
+
+### Step 6: サイクル完了
 
 ```
 ================================================================================
