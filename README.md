@@ -30,6 +30,12 @@ AIにコードを任せると、こんな問題が起きがち：
 /plugin install tdd-flutter@tdd-skills  # Flutter / Dart
 ```
 
+## Update
+
+```bash
+/plugin marketplace update tdd-skills
+```
+
 ## TDD Workflow
 
 ```
