@@ -14,10 +14,11 @@ description: 新しいTDDサイクルを開始し、Cycle docを作成する。�
 ```
 INIT Progress:
 - [ ] プロジェクト状況確認（docs/STATUS.md）
+- [ ] 環境情報収集
 - [ ] 既存サイクル確認
 - [ ] ユーザーに「やりたいこと」を質問
 - [ ] 機能名を生成して確認
-- [ ] Cycle doc作成
+- [ ] Cycle doc作成（環境情報含む）
 - [ ] PLANフェーズへ誘導
 ```
 
@@ -37,7 +38,25 @@ cat docs/STATUS.md 2>/dev/null
 
 存在しない場合は `tdd-onboard` を推奨。
 
-### Step 2: 既存サイクル確認
+### Step 2: 環境情報収集
+
+実行環境のバージョンを収集（AIの知識が古い問題を防止）:
+
+```bash
+# 言語バージョン（すべて実行）
+python --version 2>/dev/null
+php -v 2>/dev/null | head -1
+node -v 2>/dev/null
+
+# 主要パッケージ（すべて実行）
+echo "=== Python ===" && pip list 2>/dev/null | head -10
+echo "=== PHP ===" && composer show 2>/dev/null | head -10
+echo "=== Node ===" && npm list --depth=0 2>/dev/null | head -10
+```
+
+収集した情報はCycle docのEnvironmentセクションに記録。
+
+### Step 3: 既存サイクル確認
 
 ```bash
 ls -t docs/cycles/*.md 2>/dev/null | head -1
@@ -45,18 +64,18 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 
 進行中のサイクルがあれば継続を推奨。
 
-### Step 3: やりたいことを質問
+### Step 4: やりたいことを質問
 
 ```
 どんな機能を実装しますか？
 例: ユーザーがログインできるようにしたい
 ```
 
-### Step 4: 機能名生成
+### Step 5: 機能名生成
 
 ユーザーの回答から機能名を生成（10-20文字）。確認後、Cycle docを作成。
 
-### Step 5: Cycle doc作成
+### Step 6: Cycle doc作成
 
 ```bash
 date +"%Y%m%d_%H%M"
@@ -65,7 +84,7 @@ mkdir -p docs/cycles
 
 テンプレート: [templates/cycle.md](templates/cycle.md)
 
-### Step 6: 完了→PLAN誘導
+### Step 7: 完了→PLAN誘導
 
 ```
 ================================================================================

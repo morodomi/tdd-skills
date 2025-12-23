@@ -27,6 +27,15 @@ updated: YYYY-MM-DD HH:MM
 ### 変更予定ファイル（目安: 10以下）
 - [ファイルパス]（新規/編集）
 
+## Environment
+
+### Runtime
+- Language: [Python 3.12.0 / PHP 8.3.0 / Node 20.0.0]
+
+### Dependencies（主要）
+- [パッケージ名]: [バージョン]
+- [パッケージ名]: [バージョン]
+
 ## Context & Dependencies
 
 ### 参照ドキュメント
