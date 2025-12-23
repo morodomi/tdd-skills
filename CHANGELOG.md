@@ -5,7 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2024-12-23
+## [1.2.0] - 2025-12-23
+
+### Added
+
+- plugins/tdd-core/agents/ ディレクトリに7つのレビューエージェント
+  - correctness-reviewer: 論理エラー、エッジケース、例外処理
+  - performance-reviewer: O記法、N+1問題、メモリ使用
+  - security-reviewer: 入力検証、認証・認可、SQLi/XSS
+  - guidelines-reviewer: コーディング規約、命名規則
+  - scope-reviewer: スコープ妥当性、ファイル数
+  - architecture-reviewer: 設計整合性、パターン
+  - risk-reviewer: 影響範囲、破壊的変更
+- quality-gate スキル: 4エージェント並行レビュー + 信頼スコア
+  - 閾値80でBLOCK、50-79でWARN、49以下でPASS
+
+### Changed
+
+- plan-review: 3エージェント並行呼び出し方式に変更
+- tdd-review: code-review → quality-gate 参照に変更
+- 構造テスト: エージェント/quality-gateテスト追加
+
+### Removed
+
+- code-review スキル（quality-gate に統合）
+
+## [1.1.0] - 2025-12-23
 
 ### Added
 
@@ -28,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - .claude/commands/code-review.md（code-review スキルに移行）
 - .claude/commands/test-agent.md（Laravel固有のため削除）
 
-## [1.0.1] - 2024-12-23
+## [1.0.1] - 2025-12-23
 
 ### Added
 
@@ -45,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tdd-init: 複数言語環境での環境情報収集の論理エラー修正
 - tdd-plan: Progress Checklist と Step 数の整合性修正
 
-## [1.0.0] - 2024-12-22
+## [1.0.0] - 2025-12-22
 
 ### Added
 
