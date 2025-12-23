@@ -98,4 +98,3 @@ INIT完了
 ## Reference
 
 - 詳細: [reference.md](reference.md)
-- テンプレート: [templates/cycle.md](templates/cycle.md)
