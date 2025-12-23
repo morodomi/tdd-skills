@@ -55,6 +55,41 @@ if [ "$SKILL_COUNT" -eq 7 ]; then
 else
     test_fail "tdd-core has $SKILL_COUNT/7 TDD skills"
 fi
+
+# TC-02b: tdd-core has agents directory with 7 reviewers
+AGENTS_DIR="$PLUGINS_DIR/tdd-core/agents"
+if [ -d "$AGENTS_DIR" ]; then
+    test_pass "agents directory exists"
+else
+    test_fail "agents directory not found"
+fi
+
+AGENT_FILES="correctness-reviewer performance-reviewer security-reviewer guidelines-reviewer scope-reviewer architecture-reviewer risk-reviewer"
+AGENT_COUNT=0
+for agent in $AGENT_FILES; do
+    if [ -f "$AGENTS_DIR/$agent.md" ]; then
+        ((AGENT_COUNT++))
+    fi
+done
+if [ "$AGENT_COUNT" -eq 7 ]; then
+    test_pass "tdd-core has 7 reviewer agents"
+else
+    test_fail "tdd-core has $AGENT_COUNT/7 reviewer agents"
+fi
+
+# TC-02c: quality-gate skill exists (replaces code-review)
+if [ -f "$PLUGINS_DIR/tdd-core/skills/quality-gate/SKILL.md" ]; then
+    test_pass "quality-gate skill exists"
+else
+    test_fail "quality-gate skill not found"
+fi
+
+# TC-02d: code-review skill should NOT exist (replaced by quality-gate)
+if [ ! -d "$PLUGINS_DIR/tdd-core/skills/code-review" ]; then
+    test_pass "code-review skill removed (replaced by quality-gate)"
+else
+    test_fail "code-review skill still exists (should be removed)"
+fi
 echo ""
 
 # TC-03: tdd-php plugin.json exists and is valid
