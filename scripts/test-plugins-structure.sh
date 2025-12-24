@@ -90,6 +90,50 @@ if [ ! -d "$PLUGINS_DIR/tdd-core/skills/code-review" ]; then
 else
     test_fail "code-review skill still exists (should be removed)"
 fi
+
+# TC-02e: tdd-onboard has pre-commit hook step (Step 6)
+ONBOARD_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/SKILL.md"
+if grep -q "Step 6.*Pre-commit Hook" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard has Step 6 (Pre-commit Hook)"
+else
+    test_fail "tdd-onboard missing Step 6 (Pre-commit Hook)"
+fi
+
+# TC-02f: tdd-onboard Step 6 has .git check
+if grep -q "ls -d .git" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard Step 6 has .git check"
+else
+    test_fail "tdd-onboard Step 6 missing .git check"
+fi
+
+# TC-02g: tdd-onboard Step 6 has hook check
+if grep -q ".husky/pre-commit\|.git/hooks/pre-commit" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard Step 6 has hook check"
+else
+    test_fail "tdd-onboard Step 6 missing hook check"
+fi
+
+# TC-02h: tdd-onboard Progress Checklist has hook item
+if grep -A20 "Progress Checklist" "$ONBOARD_SKILL" 2>/dev/null | grep -q "Pre-commit Hook"; then
+    test_pass "tdd-onboard Checklist has hook item"
+else
+    test_fail "tdd-onboard Checklist missing hook item"
+fi
+
+# TC-02i: tdd-commit has pre-commit hook step (Step 2)
+COMMIT_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-commit/SKILL.md"
+if grep -q "Step 2.*Pre-commit Hook\|Step 2.*Hook" "$COMMIT_SKILL" 2>/dev/null; then
+    test_pass "tdd-commit has Step 2 (Pre-commit Hook)"
+else
+    test_fail "tdd-commit missing Step 2 (Pre-commit Hook)"
+fi
+
+# TC-02j: tdd-commit Progress Checklist has hook item
+if grep -A20 "Progress Checklist" "$COMMIT_SKILL" 2>/dev/null | grep -qi "hook"; then
+    test_pass "tdd-commit Checklist has hook item"
+else
+    test_fail "tdd-commit Checklist missing hook item"
+fi
 echo ""
 
 # TC-03: tdd-php plugin.json exists and is valid

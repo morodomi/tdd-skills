@@ -18,6 +18,7 @@ Onboard Progress:
 - [ ] docs/ 構造作成（cycles/, README.md, STATUS.md）
 - [ ] CLAUDE.md 生成（既存あればマージ）
 - [ ] agent_docs/ 生成
+- [ ] Pre-commit Hook確認（推奨）
 - [ ] 初期Cycle doc作成
 - [ ] Next Steps 表示
 ```
@@ -73,11 +74,26 @@ agent_docs/
 └── commands.md
 ```
 
-### Step 6: 初期Cycle doc作成
+### Step 6: Pre-commit Hook確認（推奨）
+
+Git環境とpre-commit hookを確認:
+
+```bash
+ls -d .git 2>/dev/null
+ls .husky/pre-commit .git/hooks/pre-commit 2>/dev/null
+```
+
+| 状態 | 対応 |
+|------|------|
+| .gitなし | 警告表示、スキップ |
+| hookあり | 確認メッセージ |
+| hookなし | セットアップ推奨 |
+
+### Step 7: 初期Cycle doc作成
 
 `docs/cycles/YYYYMMDD_0000_project-setup.md` を作成。
 
-### Step 7: 完了
+### Step 8: 完了
 
 ```
 ==========================================

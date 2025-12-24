@@ -217,7 +217,32 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ---
 
-## Step 6: 初期Cycle doc
+## Step 6: Pre-commit Hook確認
+
+### 検出対象
+
+| ツール | パス |
+|--------|------|
+| husky | `.husky/pre-commit` |
+| native | `.git/hooks/pre-commit` |
+| pre-commit framework | `.pre-commit-config.yaml` |
+
+### 推奨メッセージ
+
+**hookなしの場合:**
+```
+⚠️ Pre-commit hookが設定されていません。
+
+テスト自動実行のため、以下のいずれかを推奨:
+- husky: npx husky-init && npm install
+- native: cp .git/hooks/pre-commit.sample .git/hooks/pre-commit
+
+詳細: https://typicode.github.io/husky/
+```
+
+---
+
+## Step 7: 初期Cycle doc
 
 ```markdown
 ---
