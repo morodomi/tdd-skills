@@ -326,6 +326,66 @@ else
 fi
 echo ""
 
+# TC-10: tdd-flask plugin.json exists and is valid
+echo "--- tdd-flask ---"
+FLASK_PLUGIN="$PLUGINS_DIR/tdd-flask/.claude-plugin/plugin.json"
+if [ -f "$FLASK_PLUGIN" ]; then
+    test_pass "plugin.json exists"
+    if python3 -c "import json; json.load(open('$FLASK_PLUGIN'))" 2>/dev/null; then
+        test_pass "plugin.json is valid JSON"
+    else
+        test_fail "plugin.json is invalid JSON"
+    fi
+else
+    test_fail "plugin.json not found"
+fi
+
+# TC-10b: tdd-flask has flask-quality skill
+if [ -f "$PLUGINS_DIR/tdd-flask/skills/flask-quality/SKILL.md" ]; then
+    test_pass "flask-quality skill exists"
+else
+    test_fail "flask-quality skill not found"
+fi
+
+# TC-10c: flask-quality SKILL.md has pytest-flask
+FLASK_SKILL="$PLUGINS_DIR/tdd-flask/skills/flask-quality/SKILL.md"
+if grep -q "pytest-flask" "$FLASK_SKILL" 2>/dev/null; then
+    test_pass "SKILL.md has pytest-flask"
+else
+    test_fail "SKILL.md missing pytest-flask"
+fi
+
+# TC-10d: flask-quality SKILL.md has test_client
+if grep -q "test_client" "$FLASK_SKILL" 2>/dev/null; then
+    test_pass "SKILL.md has test_client"
+else
+    test_fail "SKILL.md missing test_client"
+fi
+
+# TC-10e: flask-quality reference.md has conftest.py template
+FLASK_REF="$PLUGINS_DIR/tdd-flask/skills/flask-quality/reference.md"
+if grep -q "conftest.py" "$FLASK_REF" 2>/dev/null; then
+    test_pass "reference.md has conftest.py template"
+else
+    test_fail "reference.md missing conftest.py template"
+fi
+
+# TC-10f: flask-quality reference.md has Flask 3.x patterns
+if grep -qi "Flask 3\|create_app\|App Factory" "$FLASK_REF" 2>/dev/null; then
+    test_pass "reference.md has Flask 3.x patterns"
+else
+    test_fail "reference.md missing Flask 3.x patterns"
+fi
+
+# TC-10g: tdd-flask README.md has Installation section
+FLASK_README="$PLUGINS_DIR/tdd-flask/README.md"
+if grep -qi "Installation" "$FLASK_README" 2>/dev/null; then
+    test_pass "README.md has Installation section"
+else
+    test_fail "README.md missing Installation section"
+fi
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="
