@@ -61,6 +61,7 @@ claude
 /plugin install tdd-js@tdd-skills       # JavaScript
 /plugin install tdd-hugo@tdd-skills     # Hugo SSG
 /plugin install tdd-flutter@tdd-skills  # Flutter / Dart
+/plugin install tdd-flask@tdd-skills    # Flask
 ```
 
 ## Update
@@ -96,6 +97,7 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | **tdd-js** | JavaScript | ESLint, Prettier, Jest |
 | **tdd-hugo** | Hugo SSG | hugo build, htmltest |
 | **tdd-flutter** | Flutter / Dart | dart analyze, flutter test |
+| **tdd-flask** | Flask | pytest-flask, mypy, Black |
 
 ## Usage
 
@@ -115,6 +117,43 @@ claude
 |------|------|
 | カバレッジ | 90%以上 |
 | 静的解析 | エラー0件 |
+
+## Cross-Platform Compatibility
+
+これらのスキルは Claude Code 以外の AI コーディングツールでも利用可能です。
+
+| CLI Tool | Compatibility | Notes |
+|----------|---------------|-------|
+| **Claude Code** | Native | `.claude/skills/` |
+| **GitHub Copilot CLI** | Auto-detect | `.claude/skills/` を自動認識 |
+| **OpenAI Codex CLI** | Compatible | 同じ SKILL.md 形式 |
+| **Gemini CLI** | Via Extensions | 変換ツールで対応可能 |
+
+### GitHub Copilot CLI
+
+```bash
+# .claude/skills/ を自動で認識
+# 追加設定不要
+```
+
+### OpenAI Codex CLI
+
+```bash
+codex --enable skills
+# ~/.codex/skills/ にスキルを配置
+```
+
+### Gemini CLI
+
+```bash
+# GEMINI.md または Extensions として利用
+# Claude Skills → Gemini Extensions 変換ツールあり
+```
+
+**参考:**
+- [GitHub Copilot Agent Skills](https://github.blog/changelog/2025-12-18-github-copilot-now-supports-agent-skills/)
+- [OpenAI Codex Skills](https://developers.openai.com/codex/skills/)
+- [Gemini CLI Extensions](https://blog.google/technology/developers/gemini-cli-extensions/)
 
 ## License
 
