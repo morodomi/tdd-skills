@@ -38,6 +38,11 @@
       "name": "tdd-flutter",
       "source": "./plugins/tdd-flutter",
       "description": "Flutter/Dart quality tools: dart analyze, dart format, flutter test"
+    },
+    {
+      "name": "tdd-flask",
+      "source": "./plugins/tdd-flask",
+      "description": "Flask quality tools: pytest-flask, mypy, Black/isort"
     }
   ]
 }
