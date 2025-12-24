@@ -91,12 +91,12 @@ else
     test_fail "code-review skill still exists (should be removed)"
 fi
 
-# TC-02e: tdd-onboard has pre-commit hook step (Step 6)
+# TC-02e: tdd-onboard has pre-commit hook step (Step 7)
 ONBOARD_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/SKILL.md"
-if grep -q "Step 6.*Pre-commit Hook" "$ONBOARD_SKILL" 2>/dev/null; then
-    test_pass "tdd-onboard has Step 6 (Pre-commit Hook)"
+if grep -q "Step 7.*Pre-commit Hook" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard has Step 7 (Pre-commit Hook)"
 else
-    test_fail "tdd-onboard missing Step 6 (Pre-commit Hook)"
+    test_fail "tdd-onboard missing Step 7 (Pre-commit Hook)"
 fi
 
 # TC-02f: tdd-onboard Step 6 has .git check
@@ -133,6 +133,49 @@ if grep -A20 "Progress Checklist" "$COMMIT_SKILL" 2>/dev/null | grep -qi "hook";
     test_pass "tdd-commit Checklist has hook item"
 else
     test_fail "tdd-commit Checklist missing hook item"
+fi
+
+# TC-02k: tdd-onboard has hierarchical CLAUDE.md step (Step 5)
+if grep -q "Step 5.*階層CLAUDE.md\|Step 5.*CLAUDE.md推奨" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard has Step 5 (階層CLAUDE.md)"
+else
+    test_fail "tdd-onboard missing Step 5 (階層CLAUDE.md)"
+fi
+
+# TC-02l: tdd-onboard Step 5 has directory check command
+if grep -q "ls -d tests src docs" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard Step 5 has directory check"
+else
+    test_fail "tdd-onboard Step 5 missing directory check"
+fi
+
+# TC-02m: tdd-onboard Progress Checklist has hierarchical CLAUDE.md item
+if grep -A20 "Progress Checklist" "$ONBOARD_SKILL" 2>/dev/null | grep -qi "階層CLAUDE.md\|CLAUDE.md推奨"; then
+    test_pass "tdd-onboard Checklist has 階層CLAUDE.md item"
+else
+    test_fail "tdd-onboard Checklist missing 階層CLAUDE.md item"
+fi
+
+# TC-02n: tdd-onboard reference.md has tests/ template
+ONBOARD_REF="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/reference.md"
+if grep -q "tests/CLAUDE.md\|tests/ CLAUDE.md" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md has tests/ template"
+else
+    test_fail "tdd-onboard reference.md missing tests/ template"
+fi
+
+# TC-02o: tdd-onboard reference.md has depth limit (第1階層)
+if grep -qi "第1階層\|1階層\|サブディレクトリは非推奨" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md has depth limit"
+else
+    test_fail "tdd-onboard reference.md missing depth limit"
+fi
+
+# TC-02p: tdd-onboard reference.md has size limit (30-50行)
+if grep -q "30-50行\|30行\|50行" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md has size limit"
+else
+    test_fail "tdd-onboard reference.md missing size limit"
 fi
 echo ""
 

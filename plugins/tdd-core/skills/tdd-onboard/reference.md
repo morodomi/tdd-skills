@@ -171,7 +171,90 @@ ${PROJECT_STRUCTURE}
 
 ---
 
-## Step 5: agent_docs/
+## Step 5: 階層CLAUDE.md推奨
+
+### 制約事項（Context肥大化対策）
+
+| 制約 | 基準 |
+|------|------|
+| 深さ制限 | 第1階層まで（tests/, src/, docs/） |
+| サイズ制限 | 各30-50行以内 |
+| 合計予算 | 全CLAUDE.md合計 500行以内目安 |
+
+**推奨パターン**:
+```
+✅ 推奨
+project/
+├── CLAUDE.md              # 必須: プロジェクト全体
+├── tests/CLAUDE.md        # 任意: テスト規約
+├── src/CLAUDE.md          # 任意: 実装規約
+└── docs/CLAUDE.md         # 任意: ドキュメント規約
+```
+
+**非推奨パターン（サブディレクトリは非推奨）**:
+```
+❌ 非推奨
+tests/Unit/CLAUDE.md        # 深すぎる
+tests/Feature/CLAUDE.md     # 深すぎる
+src/Services/CLAUDE.md      # 深すぎる
+```
+
+### tests/CLAUDE.md テンプレート
+
+```markdown
+# Tests
+
+## 命名規則
+
+- ファイル: `*Test.php` / `test_*.py`
+- メソッド: `test_機能_条件_期待結果()`
+
+## テスト構造
+
+- Given/When/Then形式
+- 1テスト1アサーション推奨
+
+## モックパターン
+
+- 外部API: 必ずモック
+- DB: トランザクション使用
+```
+
+### src/CLAUDE.md テンプレート
+
+```markdown
+# Source
+
+## アーキテクチャ
+
+- レイヤー: Controller → Service → Repository
+- DI: 必須
+
+## コーディング規約
+
+- 早期リターン推奨
+- マジックナンバー禁止
+```
+
+### docs/CLAUDE.md テンプレート
+
+```markdown
+# Documentation
+
+## ファイル命名
+
+- Cycle doc: `YYYYMMDD_HHMM_機能名.md`
+- 調査: `YYYYMMDD_HHMM_内容.md`
+
+## 形式
+
+- Markdown形式
+- コードブロックは言語指定必須
+```
+
+---
+
+## Step 6: agent_docs/
 
 ### tdd_workflow.md
 
@@ -217,7 +300,7 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ---
 
-## Step 6: Pre-commit Hook確認
+## Step 7: Pre-commit Hook確認
 
 ### 検出対象
 
@@ -242,7 +325,7 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ---
 
-## Step 7: 初期Cycle doc
+## Step 8: 初期Cycle doc
 
 ```markdown
 ---

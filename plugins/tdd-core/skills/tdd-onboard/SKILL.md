@@ -17,6 +17,7 @@ Onboard Progress:
 - [ ] 検出結果をユーザーに確認
 - [ ] docs/ 構造作成（cycles/, README.md, STATUS.md）
 - [ ] CLAUDE.md 生成（既存あればマージ）
+- [ ] 階層CLAUDE.md推奨（任意）
 - [ ] agent_docs/ 生成
 - [ ] Pre-commit Hook確認（推奨）
 - [ ] 初期Cycle doc作成
@@ -62,7 +63,28 @@ mkdir -p docs/cycles
 
 テンプレートとマージ戦略は [reference.md](reference.md) を参照。
 
-### Step 5: agent_docs/ 生成
+### Step 5: 階層CLAUDE.md推奨（任意）
+
+主要ディレクトリにCLAUDE.mdを配置することを推奨:
+
+```bash
+ls -d tests src docs 2>/dev/null
+```
+
+| ディレクトリ | 推奨内容 | サイズ目安 |
+|-------------|----------|-----------|
+| tests/ | テスト規約、命名、モックパターン | 30-50行 |
+| src/ | アーキテクチャ、コーディング規約 | 30-50行 |
+| docs/ | ドキュメント規約 | 30-50行 |
+
+**制約**:
+- 第1階層のみ（サブディレクトリは非推奨）
+- 各ファイル30-50行以内
+- そのディレクトリ固有の内容のみ
+
+テンプレートは [reference.md](reference.md) を参照。
+
+### Step 6: agent_docs/ 生成
 
 存在しない場合に作成:
 
@@ -74,7 +96,7 @@ agent_docs/
 └── commands.md
 ```
 
-### Step 6: Pre-commit Hook確認（推奨）
+### Step 7: Pre-commit Hook確認（推奨）
 
 Git環境とpre-commit hookを確認:
 
@@ -89,11 +111,11 @@ ls .husky/pre-commit .git/hooks/pre-commit 2>/dev/null
 | hookあり | 確認メッセージ |
 | hookなし | セットアップ推奨 |
 
-### Step 7: 初期Cycle doc作成
+### Step 8: 初期Cycle doc作成
 
 `docs/cycles/YYYYMMDD_0000_project-setup.md` を作成。
 
-### Step 8: 完了
+### Step 9: 完了
 
 ```
 ==========================================
