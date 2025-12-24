@@ -12,6 +12,39 @@ AIにコードを任せると、こんな問題が起きがち：
 
 **tdd-skills** は、Claude Code に TDD を「強制」することでこれらを解決します。
 
+## Getting Started
+
+### 1. プラグインインストール
+
+```bash
+claude
+
+> /plugin marketplace add morodomi/tdd-skills
+> /plugin install tdd-core@tdd-skills
+> /plugin install tdd-php@tdd-skills  # 言語に合わせて選択
+```
+
+### 2. プロジェクトセットアップ
+
+```bash
+> TDDセットアップ
+# または「onboard」
+
+# 自動で以下を実行:
+# - フレームワーク検出
+# - CLAUDE.md 生成
+# - docs/ 構造作成
+```
+
+### 3. 開発開始
+
+```bash
+> ログイン機能を追加したい
+
+# 自動的にTDDサイクルが始まる:
+# INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
+```
+
 ## Installation
 
 ```bash
