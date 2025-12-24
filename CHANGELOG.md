@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-12-24
+
+### Changed
+
+- tdd-plan: Test Listにカテゴリ一覧追加（正常系、境界値、エッジケース、異常系、権限、外部依存、セキュリティ）
+- tdd-plan: テスト数の目安追加（5-10ケース/機能）
+- tdd-red: Step 1.5を廃止、Step 2「カテゴリ別チェック」に変更
+- tdd-red: ステップ番号を整理（1→5の連番）
+
+### Removed
+
+- .claude/skills/ ディレクトリ（plugins/に移行済み）
+- templates/ ディレクトリ（plugins/に移行済み）
+- tests/ ディレクトリ（scripts/に移行済み）
+- examples/ ディレクトリ（不要）
+- docs/の古い設計ドキュメント（2025年10月〜11月）
+- docs/*_INSTALLATION.md（レガシーインストールガイド）
+
 ## [1.2.0] - 2025-12-23
 
 ### Added
