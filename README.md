@@ -54,7 +54,7 @@ claude
 # TDDワークフローをインストール
 /plugin install tdd-core@tdd-skills
 
-# 言語別品質ツール（いずれかを選択）
+# 言語別品質ツール（プロジェクトに合わせて選択）
 /plugin install tdd-php@tdd-skills      # PHP / Laravel
 /plugin install tdd-python@tdd-skills   # Python
 /plugin install tdd-ts@tdd-skills       # TypeScript
@@ -62,6 +62,10 @@ claude
 /plugin install tdd-hugo@tdd-skills     # Hugo SSG
 /plugin install tdd-flutter@tdd-skills  # Flutter / Dart
 /plugin install tdd-flask@tdd-skills    # Flask
+
+# 複数言語プロジェクト（例: Laravel + Alpine.js）
+/plugin install tdd-php@tdd-skills
+/plugin install tdd-js@tdd-skills
 ```
 
 ## Update
@@ -78,7 +82,7 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 | Phase | Skill | Description |
 |-------|-------|-------------|
-| INIT | tdd-init | サイクルドキュメント作成 |
+| INIT | tdd-init | サイクルドキュメント作成、スコープ確認 |
 | PLAN | tdd-plan | 設計・計画 |
 | RED | tdd-red | 失敗するテスト作成 |
 | GREEN | tdd-green | 最小限の実装 |

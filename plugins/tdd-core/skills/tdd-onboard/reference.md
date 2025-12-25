@@ -110,8 +110,11 @@ GitHub Issues を参照: `gh issue list`
 
 ## Tech Stack
 
-- **Language**: ${LANGUAGE}
-- **Framework**: ${FRAMEWORK}
+| Layer | Language | Framework | Plugin |
+|-------|----------|-----------|--------|
+| Backend | ${BACKEND_LANGUAGE} | ${BACKEND_FRAMEWORK} | ${BACKEND_PLUGIN} |
+| Frontend | ${FRONTEND_LANGUAGE} | ${FRONTEND_FRAMEWORK} | ${FRONTEND_PLUGIN} |
+
 - **Test**: ${TEST_TOOL}
 - **Static Analysis**: ${STATIC_ANALYSIS}
 - **Formatter**: ${FORMATTER}
@@ -368,7 +371,12 @@ updated: ${DATE}
 | 変数名 | 説明 | 例 |
 |--------|------|-----|
 | `${PROJECT_NAME}` | プロジェクト名 | my-app |
-| `${FRAMEWORK}` | フレームワーク | Laravel, Flask |
+| `${BACKEND_LANGUAGE}` | バックエンド言語 | PHP, Python |
+| `${BACKEND_FRAMEWORK}` | バックエンドFW | Laravel, Flask |
+| `${BACKEND_PLUGIN}` | バックエンドプラグイン | tdd-php, tdd-flask |
+| `${FRONTEND_LANGUAGE}` | フロントエンド言語 | JavaScript, TypeScript |
+| `${FRONTEND_FRAMEWORK}` | フロントエンドFW | Alpine.js, Vue |
+| `${FRONTEND_PLUGIN}` | フロントエンドプラグイン | tdd-js, tdd-ts |
 | `${TEST_TOOL}` | テストツール | PHPUnit, pytest |
 | `${TEST_COMMAND}` | テスト実行 | php artisan test |
 | `${COVERAGE_COMMAND}` | カバレッジ | php artisan test --coverage |

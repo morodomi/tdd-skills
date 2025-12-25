@@ -25,6 +25,42 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 どうしますか？
 ```
 
+### スコープ（Layer）確認の詳細
+
+AskUserQuestion で確認:
+
+```
+この機能のスコープを選択してください:
+1. Backend（PHP/Python サーバーサイド）
+2. Frontend（JavaScript/TypeScript クライアントサイド）
+3. Both（フルスタック）
+```
+
+**プラグインマッピング:**
+
+| Layer | Framework | Plugin |
+|-------|-----------|--------|
+| Backend | Laravel | tdd-php |
+| Backend | Flask | tdd-flask |
+| Backend | Django | tdd-python |
+| Backend | WordPress | tdd-php |
+| Backend | Generic PHP | tdd-php |
+| Backend | Generic Python | tdd-python |
+| Frontend | JavaScript | tdd-js |
+| Frontend | TypeScript | tdd-ts |
+| Frontend | Alpine.js | tdd-js |
+| Both | Laravel + JS | tdd-php, tdd-js |
+
+**Cycle doc への記録:**
+
+```markdown
+## Environment
+
+### Scope
+- Layer: Backend
+- Plugin: tdd-php
+```
+
 ### 機能名生成の詳細
 
 **ガイドライン**:

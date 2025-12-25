@@ -29,6 +29,10 @@ updated: YYYY-MM-DD HH:MM
 
 ## Environment
 
+### Scope
+- Layer: [Backend / Frontend / Both]
+- Plugin: [tdd-php / tdd-flask / tdd-python / tdd-js / tdd-ts]
+
 ### Runtime
 - Language: [Python 3.12.0 / PHP 8.3.0 / Node 20.0.0]
 

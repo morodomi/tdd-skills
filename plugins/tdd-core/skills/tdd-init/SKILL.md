@@ -17,8 +17,9 @@ INIT Progress:
 - [ ] 環境情報収集
 - [ ] 既存サイクル確認
 - [ ] ユーザーに「やりたいこと」を質問
+- [ ] スコープ（Layer）確認
 - [ ] 機能名を生成して確認
-- [ ] Cycle doc作成（環境情報含む）
+- [ ] Cycle doc作成（環境・スコープ含む）
 - [ ] PLANフェーズへ誘導
 ```
 
@@ -71,11 +72,23 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 例: ユーザーがログインできるようにしたい
 ```
 
-### Step 5: 機能名生成
+### Step 5: スコープ（Layer）確認
+
+AskUserQuestion でスコープを確認:
+
+| Layer | 説明 | Plugin |
+|-------|------|--------|
+| Backend | PHP/Python 等 | tdd-php, tdd-python, tdd-flask |
+| Frontend | JavaScript/TypeScript | tdd-js, tdd-ts |
+| Both | フルスタック | 複数プラグイン |
+
+詳細: [reference.md](reference.md)
+
+### Step 6: 機能名生成
 
 ユーザーの回答から機能名を生成（10-20文字）。確認後、Cycle docを作成。
 
-### Step 6: Cycle doc作成
+### Step 7: Cycle doc作成
 
 ```bash
 date +"%Y%m%d_%H%M"
@@ -84,7 +97,7 @@ mkdir -p docs/cycles
 
 テンプレート: [templates/cycle.md](templates/cycle.md)
 
-### Step 7: 完了→PLAN誘導
+### Step 8: 完了→PLAN誘導
 
 ```
 ================================================================================

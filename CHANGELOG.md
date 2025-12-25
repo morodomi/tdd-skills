@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2025-12-25
+
+### Added
+
+- tdd-init: スコープ（Layer）確認ステップ（Step 5）
+  - Backend / Frontend / Both の選択
+  - 言語プラグインマッピング（Laravel→tdd-php等）
+- tdd-onboard: CLAUDE.mdテンプレートに複数プラグイン対応
+  - Backend/Frontend のLayer別テーブル形式
+- quality-gate: Cycle docからプラグイン参照ステップ（Step 2）
+  - 言語プラグインのTesting Strategy参照
+- tdd-php: Testing Strategy追加
+  - No RefreshDatabase推奨パターン
+  - Factory + `fake()->unique()` で一意性保証
+- Cycle docテンプレート: Scopeセクション追加（Layer/Plugin）
+
+### Changed
+
+- tdd-init: ステップ番号整理（Step 5-8）
+- quality-gate: ステップ番号整理（Step 2-5）
+
 ## [1.3.0] - 2025-12-24
 
 ### Added
