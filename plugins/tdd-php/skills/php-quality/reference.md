@@ -70,3 +70,32 @@ parameters:
 対応:
 ./vendor/bin/pint --dirty  # 変更ファイルのみ修正
 ```
+
+## Testing Strategy
+
+### Default: No RefreshDatabase
+
+- Factory + `fake()->unique()` で一意性保証
+- TestCase で `migrate:fresh --seed` を初回のみ実行
+- 高速・並列実行可能
+
+```php
+// tests/TestCase.php
+abstract class TestCase extends BaseTestCase
+{
+    protected static bool $migrated = false;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        if (!static::$migrated) {
+            $this->artisan('migrate:fresh', ['--seed' => true]);
+            static::$migrated = true;
+        }
+    }
+}
+```
+
+### Exception: RefreshDatabase
+
+複雑な状態テストでのみ使用。使用時は `$this->seed()` も実行。
