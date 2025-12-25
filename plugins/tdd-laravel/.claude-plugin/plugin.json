@@ -1,0 +1,10 @@
+{
+  "name": "tdd-laravel",
+  "description": "Laravel-specific quality tools for TDD workflow. Pest Laravel Plugin, HTTP tests, Eloquent patterns.",
+  "version": "1.0.0",
+  "author": {
+    "name": "morodomi"
+  },
+  "repository": "https://github.com/morodomi/tdd-skills",
+  "license": "MIT"
+}
