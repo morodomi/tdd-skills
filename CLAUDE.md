@@ -67,13 +67,13 @@ test: テスト
 chore: その他
 ```
 
-## Commands
+## Skills（トリガーワード）
 
-| Command | Description |
-|---------|-------------|
-| `/tdd-onboard` | 初期セットアップ |
-| `/test-agent` | カバレッジ向上 |
-| `/code-review` | コードレビュー |
+| Skill | トリガー | Description |
+|-------|---------|-------------|
+| tdd-onboard | 「TDDセットアップ」「onboard」 | 初期セットアップ |
+| tdd-init | 「機能追加」「TDDを始めたい」 | サイクル開始 |
+| quality-gate | 「quality-gate」 | 4エージェント並行レビュー |
 
 ## Test Scripts
 
