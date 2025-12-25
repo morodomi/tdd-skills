@@ -11,7 +11,7 @@ description: コード変更を4観点で並行レビュー。信頼スコア80�
 
 ```
 quality-gate Progress:
-- [ ] 対象確認（git diff or 指定ファイル）
+- [ ] 対象範囲決定（引数解釈）
 - [ ] スコープ/プラグイン確認
 - [ ] 4エージェント並行起動
 - [ ] 結果統合・スコア判定
@@ -20,11 +20,22 @@ quality-gate Progress:
 
 ## Workflow
 
-### Step 1: 対象確認
+### Step 1: 対象範囲決定
+
+引数に応じて対象範囲を決定:
+
+| 引数 | 対象 |
+|------|------|
+| なし | 差分のみ（`git diff HEAD`） |
+| `全部` `--all` | 全ファイル |
+| ディレクトリ名 | 特定ディレクトリ |
 
 ```bash
-git diff --stat
+# デフォルト
+git diff HEAD --name-only
 ```
+
+詳細: [reference.md](reference.md#対象範囲指定step-1)
 
 ### Step 2: スコープ/プラグイン確認
 
