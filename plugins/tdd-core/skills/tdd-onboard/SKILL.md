@@ -70,19 +70,7 @@ tests/, src/, docs/ に CLAUDE.md 配置を推奨（各30-50行）。
 
 ### Step 6: .claude/ 構造生成
 
-存在しない場合に作成:
-
-```
-.claude/
-├── rules/
-│   ├── tdd-workflow.md
-│   ├── testing-guide.md
-│   ├── quality.md
-│   ├── commands.md
-│   └── security.md
-└── hooks/
-    └── recommended.md
-```
+存在しない場合に作成。rules/: tdd-workflow, testing-guide, quality, commands, security, git-safety, git-conventions。hooks/: recommended。詳細は [reference.md](reference.md)。
 
 ### Step 7: Pre-commit Hook確認（推奨）
 
