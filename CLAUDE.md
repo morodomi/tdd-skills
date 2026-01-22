@@ -23,6 +23,8 @@ ClaudeSkills/
 │   ├── hugo/
 │   └── bedrock/
 ├── .claude/
+│   ├── rules/                # 常時適用ルール
+│   ├── hooks/                # 推奨Hooks設定
 │   ├── commands/             # Slash Commands
 │   └── skills/               # Project Skills
 ├── scripts/                  # Test scripts
@@ -84,6 +86,23 @@ bash scripts/test-plugins-structure.sh
 # Skills構造テスト
 bash scripts/test-skills-structure.sh
 ```
+
+## Claude Code Configuration
+
+| ディレクトリ | 内容 |
+|-------------|------|
+| .claude/rules/ | 常時適用ルール |
+| .claude/hooks/ | 推奨Hooks設定 |
+
+### Rules
+
+- security.md - セキュリティチェック
+- git-safety.md - Git安全規則
+- git-conventions.md - Git規約
+
+### Hooks
+
+- recommended.md - 推奨フック設定
 
 ## References
 
