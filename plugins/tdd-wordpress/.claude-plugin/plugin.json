@@ -1,7 +1,7 @@
 {
   "name": "tdd-wordpress",
   "description": "WordPress-specific quality tools for TDD workflow. PHPStan for WordPress, WPCS, WP_UnitTestCase patterns.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": {
     "name": "morodomi"
   },

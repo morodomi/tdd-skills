@@ -1,7 +1,7 @@
 {
   "name": "tdd-flask",
   "description": "Flask quality tools for TDD workflow. pytest-flask, mypy, Black/isort integration.",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": {
     "name": "morodomi"
   },

@@ -1,5 +1,5 @@
 {
   "name": "tdd-hugo",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Hugo SSG quality tools: hugo build, htmltest, template metrics"
 }

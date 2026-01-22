@@ -1,5 +1,5 @@
 {
   "name": "tdd-flutter",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Flutter/Dart quality tools: dart analyze, dart format, flutter test"
 }

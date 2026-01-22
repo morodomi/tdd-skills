@@ -9,7 +9,7 @@ issue: "#26"
 
 # マイグレーションガイド作成
 
-## Status: REVIEW
+## Status: DONE
 
 ## やりたいこと
 
