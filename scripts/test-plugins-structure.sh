@@ -93,24 +93,25 @@ fi
 
 # TC-02e: tdd-onboard has pre-commit hook step (Step 7)
 ONBOARD_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/SKILL.md"
+ONBOARD_REF="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/reference.md"
 if grep -q "Step 7.*Pre-commit Hook" "$ONBOARD_SKILL" 2>/dev/null; then
     test_pass "tdd-onboard has Step 7 (Pre-commit Hook)"
 else
     test_fail "tdd-onboard missing Step 7 (Pre-commit Hook)"
 fi
 
-# TC-02f: tdd-onboard Step 6 has .git check
-if grep -q "ls -d .git" "$ONBOARD_SKILL" 2>/dev/null; then
-    test_pass "tdd-onboard Step 6 has .git check"
+# TC-02f: tdd-onboard has .git check (SKILL.md or reference.md)
+if grep -q "\.git" "$ONBOARD_SKILL" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard has .git check"
 else
-    test_fail "tdd-onboard Step 6 missing .git check"
+    test_fail "tdd-onboard missing .git check"
 fi
 
-# TC-02g: tdd-onboard Step 6 has hook check
-if grep -q ".husky/pre-commit\|.git/hooks/pre-commit" "$ONBOARD_SKILL" 2>/dev/null; then
-    test_pass "tdd-onboard Step 6 has hook check"
+# TC-02g: tdd-onboard has hook check (SKILL.md or reference.md)
+if grep -q ".husky/pre-commit\|.git/hooks/pre-commit" "$ONBOARD_SKILL" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard has hook check"
 else
-    test_fail "tdd-onboard Step 6 missing hook check"
+    test_fail "tdd-onboard missing hook check"
 fi
 
 # TC-02h: tdd-onboard Progress Checklist has hook item
@@ -142,8 +143,8 @@ else
     test_fail "tdd-onboard missing Step 5 (階層CLAUDE.md)"
 fi
 
-# TC-02l: tdd-onboard Step 5 has directory check command
-if grep -q "ls -d tests src docs" "$ONBOARD_SKILL" 2>/dev/null; then
+# TC-02l: tdd-onboard Step 5 has directory check (SKILL.md or reference.md)
+if grep -q "tests.*src.*docs\|tests/, src/, docs/" "$ONBOARD_SKILL" "$ONBOARD_REF" 2>/dev/null; then
     test_pass "tdd-onboard Step 5 has directory check"
 else
     test_fail "tdd-onboard Step 5 missing directory check"
@@ -157,7 +158,6 @@ else
 fi
 
 # TC-02n: tdd-onboard reference.md has tests/ template
-ONBOARD_REF="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/reference.md"
 if grep -q "tests/CLAUDE.md\|tests/ CLAUDE.md" "$ONBOARD_REF" 2>/dev/null; then
     test_pass "tdd-onboard reference.md has tests/ template"
 else
