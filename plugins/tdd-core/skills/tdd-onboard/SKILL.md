@@ -79,7 +79,8 @@ tests/, src/, docs/ に CLAUDE.md 配置を推奨（各30-50行）。
     ├── testing-guide.md
     ├── quality.md
     ├── commands.md
-    └── git-safety.md
+    ├── git-safety.md
+    └── git-conventions.md
 ```
 
 ### Step 7: Pre-commit Hook確認（推奨）
