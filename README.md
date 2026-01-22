@@ -70,6 +70,12 @@ claude
 /plugin install tdd-js@tdd-skills
 ```
 
+## Migration
+
+v1.x から v2.0 へアップグレードする場合は [Migration Guide](docs/MIGRATION.md) を参照してください。
+
+**主な変更**: `agent_docs/` → `.claude/rules/`, `.claude/hooks/` 構造に変更
+
 ## Update
 
 ```bash

@@ -9,7 +9,7 @@ issue: "#25"
 
 # tdd-onboard SKILL.md/reference.md 更新
 
-## Status: REVIEW
+## Status: DONE
 
 ## やりたいこと
 
