@@ -78,7 +78,8 @@ tests/, src/, docs/ に CLAUDE.md 配置を推奨（各30-50行）。
     ├── tdd-workflow.md
     ├── testing-guide.md
     ├── quality.md
-    └── commands.md
+    ├── commands.md
+    └── security.md
 ```
 
 ### Step 7: Pre-commit Hook確認（推奨）
