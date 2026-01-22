@@ -161,6 +161,27 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ---
 
+## Claude Code Configuration
+
+| ディレクトリ | 内容 |
+|-------------|------|
+| .claude/rules/ | 常時適用ルール |
+| .claude/hooks/ | 推奨Hooks設定 |
+
+### Rules
+
+- tdd-workflow.md - TDDサイクル必須
+- quality.md - 品質基準
+- security.md - セキュリティチェック
+- testing-guide.md - テストガイド
+- commands.md - クイックコマンド
+
+### Hooks
+
+- recommended.md - 推奨フック設定
+
+---
+
 ## Project Structure
 
 \`\`\`
