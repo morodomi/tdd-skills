@@ -55,13 +55,15 @@ claude
 /plugin install tdd-core@tdd-skills
 
 # 言語別品質ツール（プロジェクトに合わせて選択）
-/plugin install tdd-php@tdd-skills      # PHP / Laravel
-/plugin install tdd-python@tdd-skills   # Python
-/plugin install tdd-ts@tdd-skills       # TypeScript
-/plugin install tdd-js@tdd-skills       # JavaScript
-/plugin install tdd-hugo@tdd-skills     # Hugo SSG
-/plugin install tdd-flutter@tdd-skills  # Flutter / Dart
-/plugin install tdd-flask@tdd-skills    # Flask
+/plugin install tdd-php@tdd-skills       # PHP
+/plugin install tdd-laravel@tdd-skills   # Laravel
+/plugin install tdd-wordpress@tdd-skills # WordPress / Bedrock
+/plugin install tdd-python@tdd-skills    # Python
+/plugin install tdd-flask@tdd-skills     # Flask
+/plugin install tdd-ts@tdd-skills        # TypeScript
+/plugin install tdd-js@tdd-skills        # JavaScript
+/plugin install tdd-hugo@tdd-skills      # Hugo SSG
+/plugin install tdd-flutter@tdd-skills   # Flutter / Dart
 
 # 複数言語プロジェクト（例: Laravel + Alpine.js）
 /plugin install tdd-php@tdd-skills
@@ -95,13 +97,15 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | Plugin | Target | Tools |
 |--------|--------|-------|
 | **tdd-core** | 全言語共通 | TDD 7フェーズワークフロー |
-| **tdd-php** | PHP / Laravel | PHPStan, Pint, PHPUnit/Pest |
+| **tdd-php** | PHP | PHPStan, Pint, PHPUnit/Pest |
+| **tdd-laravel** | Laravel | Larastan, Pint, Pest |
+| **tdd-wordpress** | WordPress / Bedrock | phpstan-wordpress, WPCS, PHPUnit |
 | **tdd-python** | Python | pytest, mypy, Black |
+| **tdd-flask** | Flask | pytest-flask, mypy, Black |
 | **tdd-ts** | TypeScript | tsc, ESLint, Jest/Vitest |
 | **tdd-js** | JavaScript | ESLint, Prettier, Jest |
 | **tdd-hugo** | Hugo SSG | hugo build, htmltest |
 | **tdd-flutter** | Flutter / Dart | dart analyze, flutter test |
-| **tdd-flask** | Flask | pytest-flask, mypy, Black |
 
 ## Usage
 
