@@ -18,7 +18,7 @@ Onboard Progress:
 - [ ] docs/ 構造作成（cycles/, README.md, STATUS.md）
 - [ ] CLAUDE.md 生成（既存あればマージ）
 - [ ] 階層CLAUDE.md推奨（任意）
-- [ ] .claude/rules/ 生成
+- [ ] .claude/ 構造生成（rules/, hooks/）
 - [ ] Pre-commit Hook確認（推奨）
 - [ ] 初期Cycle doc作成
 - [ ] Next Steps 表示
@@ -68,18 +68,20 @@ mkdir -p docs/cycles
 tests/, src/, docs/ に CLAUDE.md 配置を推奨（各30-50行）。
 詳細は [reference.md](reference.md) を参照。
 
-### Step 6: .claude/rules/ 生成
+### Step 6: .claude/ 構造生成
 
 存在しない場合に作成:
 
 ```
 .claude/
-└── rules/
-    ├── tdd-workflow.md
-    ├── testing-guide.md
-    ├── quality.md
-    ├── commands.md
-    └── security.md
+├── rules/
+│   ├── tdd-workflow.md
+│   ├── testing-guide.md
+│   ├── quality.md
+│   ├── commands.md
+│   └── security.md
+└── hooks/
+    └── recommended.md
 ```
 
 ### Step 7: Pre-commit Hook確認（推奨）
@@ -94,6 +96,4 @@ hookなし → セットアップ推奨。詳細は [reference.md](reference.md)
 
 セットアップ完了メッセージを表示。次: tdd-init で開発開始。
 
-## Reference
-
-テンプレートと詳細手順: [reference.md](reference.md)
+## Reference: [reference.md](reference.md)
