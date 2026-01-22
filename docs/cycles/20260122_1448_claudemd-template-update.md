@@ -1,6 +1,6 @@
 # CLAUDE.md テンプレート更新
 
-## Status: REVIEW
+## Status: DONE
 
 ## INIT
 

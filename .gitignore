@@ -18,3 +18,4 @@ CLAUDE.local.md
 
 # Logs
 *.log
+.worktrees
