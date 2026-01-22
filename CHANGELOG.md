@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-01-22
+
+### BREAKING CHANGES
+
+- `agent_docs/` ディレクトリを `.claude/rules/`, `.claude/hooks/` 構造に変更
+  - 詳細: [Migration Guide](docs/MIGRATION.md)
+
+### Added
+
+- `.claude/rules/security.md`: セキュリティチェックリスト
+- `.claude/rules/git-safety.md`: Git安全規則
+- `.claude/rules/git-conventions.md`: Git規約
+- `.claude/hooks/recommended.md`: 推奨Hooks設定（Claude Code公式形式）
+- CLAUDE.md テンプレートに Configuration セクション追加
+- docs/MIGRATION.md: v1.x → v2.0 マイグレーションガイド
+
+### Changed
+
+- tdd-onboard: Step 6 を `.claude/` 構造生成に変更
+- tdd-onboard: SKILL.md を Progressive Disclosure パターンで圧縮（87行）
+- テストスクリプト: SKILL.md + reference.md 両方をチェックするよう更新
+
 ## [1.4.1] - 2025-12-25
 
 ### Added

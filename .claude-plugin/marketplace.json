@@ -43,6 +43,16 @@
       "name": "tdd-flask",
       "source": "./plugins/tdd-flask",
       "description": "Flask quality tools: pytest-flask, mypy, Black/isort"
+    },
+    {
+      "name": "tdd-laravel",
+      "source": "./plugins/tdd-laravel",
+      "description": "Laravel quality tools: Larastan, Pint, Pest"
+    },
+    {
+      "name": "tdd-wordpress",
+      "source": "./plugins/tdd-wordpress",
+      "description": "WordPress quality tools: phpstan-wordpress, WPCS, PHPUnit"
     }
   ]
 }

@@ -95,4 +95,4 @@ TDDサイクル完了
 ## Reference
 
 - 詳細: [reference.md](reference.md)
-- Gitコンベンション: `agent_docs/git_conventions.md`
+- Gitコンベンション: `.claude/rules/git-conventions.md`

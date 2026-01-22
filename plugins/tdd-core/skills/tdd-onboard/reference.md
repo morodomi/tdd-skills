@@ -161,6 +161,29 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ---
 
+## Claude Code Configuration
+
+| ディレクトリ | 内容 |
+|-------------|------|
+| .claude/rules/ | 常時適用ルール |
+| .claude/hooks/ | 推奨Hooks設定 |
+
+### Rules
+
+- tdd-workflow.md - TDDサイクル必須
+- quality.md - 品質基準
+- security.md - セキュリティチェック
+- testing-guide.md - テストガイド
+- commands.md - クイックコマンド
+- git-safety.md - Git安全規則
+- git-conventions.md - Git規約
+
+### Hooks
+
+- recommended.md - 推奨フック設定
+
+---
+
 ## Project Structure
 
 \`\`\`
@@ -257,48 +280,240 @@ src/Services/CLAUDE.md      # 深すぎる
 
 ---
 
-## Step 6: agent_docs/
+## Step 6: .claude/rules/
 
-### tdd_workflow.md
+### tdd-workflow.md
 
 ```markdown
-# TDD Workflow Guide
+# TDD Workflow
 
-## 7フェーズ概要
+## 7フェーズ
 
 INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
-## 各フェーズの詳細
+## 各フェーズ
 
-### INIT（初期化）
-- TDDサイクルの開始宣言
-- Cycle doc作成
-
-### PLAN（計画）
-- スコープ定義
-- テストリスト作成
-
-### RED（失敗するテスト）
-- テストコード作成
-- 失敗を確認
-
-### GREEN（最小実装）
-- テストを通す最小限のコード
-
-### REFACTOR（リファクタリング）
-- コード品質改善
-- テスト維持
-
-### REVIEW（品質検証）
-- 品質チェック実行
-
-### COMMIT（コミット）
-- Git commit
-- STATUS.md更新
+| Phase | 内容 |
+|-------|------|
+| INIT | サイクル開始、Cycle doc作成 |
+| PLAN | スコープ定義、テストリスト作成 |
+| RED | 失敗するテスト作成 |
+| GREEN | 最小限の実装 |
+| REFACTOR | コード品質改善 |
+| REVIEW | 品質チェック |
+| COMMIT | Git commit |
 
 ## 絶対ルール
 
-「エラーを見つけたら、まずテストを書く」
+エラーを見つけたら、まずテストを書く
+```
+
+### testing-guide.md
+
+```markdown
+# Testing Guide
+
+## 命名規則
+
+- ファイル: `*Test.php` / `test_*.py`
+- メソッド: `test_機能_条件_期待結果()`
+
+## 構造
+
+Given/When/Then形式を推奨
+
+## モック
+
+- 外部API: 必ずモック
+- DB: トランザクション使用
+```
+
+### quality.md
+
+```markdown
+# Quality Standards
+
+## 目標
+
+| 指標 | 目標 |
+|------|------|
+| カバレッジ | 90%以上（最低80%） |
+| 静的解析 | エラー0件 |
+
+## チェック
+
+- テスト: 全PASS
+- 静的解析: エラー0
+- フォーマット: 規約準拠
+```
+
+### commands.md
+
+```markdown
+# Quick Commands
+
+## テスト
+
+\`\`\`bash
+# PHP
+php artisan test
+
+# Python
+pytest
+\`\`\`
+
+## カバレッジ
+
+\`\`\`bash
+# PHP
+php artisan test --coverage
+
+# Python
+pytest --cov
+\`\`\`
+```
+
+### security.md
+
+```markdown
+# Security Rules
+
+## コミット前チェック（必須）
+
+1. [ ] ハードコードされた秘密鍵がないか
+2. [ ] 入力検証が適切か
+3. [ ] SQLインジェクション対策
+4. [ ] XSS対策
+5. [ ] CSRF保護
+6. [ ] 認証・認可確認
+7. [ ] レート制限
+8. [ ] エラーメッセージが情報漏洩しないか
+
+## 秘密鍵管理
+
+- ハードコード禁止
+- 環境変数を使用
+- .envファイルは.gitignoreに追加
+
+## 問題発見時
+
+1. 即座に作業停止
+2. security-reviewerエージェント使用
+3. CRITICAL問題を優先修正
+4. 公開された秘密鍵はローテーション
+```
+
+### git-safety.md
+
+```markdown
+# Git Safety Rules
+
+## 禁止事項
+
+- `--no-verify` の使用禁止
+- `main`/`master` への直接push禁止
+- `--force` push禁止（force-with-leaseは許可）
+- 秘密鍵・認証情報のコミット禁止
+
+## 推奨フロー
+
+1. `develop` or `feature/*` ブランチで作業
+2. PR経由で `main` にマージ
+3. pre-commit hook を必ず通す
+
+## ブランチ保護
+
+| ブランチ | push | force push | 直接commit |
+|---------|------|------------|-----------|
+| main    | X    | X          | X         |
+| develop | !    | X          | !         |
+| feature/* | OK | X          | OK        |
+```
+
+### git-conventions.md
+
+```markdown
+# Git Conventions
+
+## コミットメッセージ形式
+
+\`\`\`
+<type>: <subject>
+\`\`\`
+
+## Type一覧
+
+| Type | 説明 | 例 |
+|------|------|-----|
+| feat | 新機能 | feat: ログイン機能追加 |
+| fix | バグ修正 | fix: パスワード検証エラー修正 |
+| docs | ドキュメント | docs: README更新 |
+| refactor | リファクタリング | refactor: 認証ロジック整理 |
+| test | テスト | test: ログインテスト追加 |
+| chore | その他 | chore: 依存関係更新 |
+
+## 良いコミットメッセージ
+
+\`\`\`
+feat: ユーザーログイン機能
+
+- メールアドレスとパスワードでログイン
+- セッション管理
+
+Closes #123
+\`\`\`
+```
+
+---
+
+## Step 6.5: .claude/hooks/
+
+### recommended.md
+
+```markdown
+# Recommended Hooks
+
+~/.claude/settings.json に追加:
+
+\`\`\`json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$TOOL_INPUT\" | grep -qF -- '--no-verify'; then echo 'BLOCK: --no-verify is prohibited' >&2; exit 2; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Session ended: Remember to run tests'"
+          }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`
+
+## 使い方
+
+1. 上記をコピー
+2. ~/.claude/settings.json に追加
+3. Claude Code再起動
+
+## 注意
+
+- exit 2: ブロック（Claudeにフィードバック）
+- exit 0: 許可
+- TOOL_INPUT: JSON形式で渡される
 ```
 
 ---

@@ -18,7 +18,7 @@ Onboard Progress:
 - [ ] docs/ 構造作成（cycles/, README.md, STATUS.md）
 - [ ] CLAUDE.md 生成（既存あればマージ）
 - [ ] 階層CLAUDE.md推奨（任意）
-- [ ] agent_docs/ 生成
+- [ ] .claude/ 構造生成（rules/, hooks/）
 - [ ] Pre-commit Hook確認（推奨）
 - [ ] 初期Cycle doc作成
 - [ ] Next Steps 表示
@@ -65,51 +65,16 @@ mkdir -p docs/cycles
 
 ### Step 5: 階層CLAUDE.md推奨（任意）
 
-主要ディレクトリにCLAUDE.mdを配置することを推奨:
+tests/, src/, docs/ に CLAUDE.md 配置を推奨（各30-50行）。
+詳細は [reference.md](reference.md) を参照。
 
-```bash
-ls -d tests src docs 2>/dev/null
-```
+### Step 6: .claude/ 構造生成
 
-| ディレクトリ | 推奨内容 | サイズ目安 |
-|-------------|----------|-----------|
-| tests/ | テスト規約、命名、モックパターン | 30-50行 |
-| src/ | アーキテクチャ、コーディング規約 | 30-50行 |
-| docs/ | ドキュメント規約 | 30-50行 |
-
-**制約**:
-- 第1階層のみ（サブディレクトリは非推奨）
-- 各ファイル30-50行以内
-- そのディレクトリ固有の内容のみ
-
-テンプレートは [reference.md](reference.md) を参照。
-
-### Step 6: agent_docs/ 生成
-
-存在しない場合に作成:
-
-```
-agent_docs/
-├── tdd_workflow.md
-├── testing_guide.md
-├── quality_standards.md
-└── commands.md
-```
+存在しない場合に作成。rules/: tdd-workflow, testing-guide, quality, commands, security, git-safety, git-conventions。hooks/: recommended。詳細は [reference.md](reference.md)。
 
 ### Step 7: Pre-commit Hook確認（推奨）
 
-Git環境とpre-commit hookを確認:
-
-```bash
-ls -d .git 2>/dev/null
-ls .husky/pre-commit .git/hooks/pre-commit 2>/dev/null
-```
-
-| 状態 | 対応 |
-|------|------|
-| .gitなし | 警告表示、スキップ |
-| hookあり | 確認メッセージ |
-| hookなし | セットアップ推奨 |
+hookなし → セットアップ推奨。詳細は [reference.md](reference.md) を参照。
 
 ### Step 8: 初期Cycle doc作成
 
@@ -117,17 +82,6 @@ ls .husky/pre-commit .git/hooks/pre-commit 2>/dev/null
 
 ### Step 9: 完了
 
-```
-==========================================
-TDD 環境セットアップ完了
-==========================================
-検出結果: ${FRAMEWORK} / ${TEST_TOOL}
-作成ファイル: CLAUDE.md, docs/, agent_docs/
+セットアップ完了メッセージを表示。次: tdd-init で開発開始。
 
-次: テスト実行 → カバレッジ確認 → tdd-init で開発開始
-==========================================
-```
-
-## Reference
-
-テンプレートと詳細手順: [reference.md](reference.md)
+## Reference: [reference.md](reference.md)
