@@ -88,4 +88,4 @@ RED完了
 ## Reference
 
 - 詳細: [reference.md](reference.md)
-- テストガイド: `agent_docs/testing_guide.md`
+- テストガイド: `.claude/rules/testing-guide.md`

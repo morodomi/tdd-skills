@@ -257,48 +257,97 @@ src/Services/CLAUDE.md      # 深すぎる
 
 ---
 
-## Step 6: agent_docs/
+## Step 6: .claude/rules/
 
-### tdd_workflow.md
+### tdd-workflow.md
 
 ```markdown
-# TDD Workflow Guide
+# TDD Workflow
 
-## 7フェーズ概要
+## 7フェーズ
 
 INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
-## 各フェーズの詳細
+## 各フェーズ
 
-### INIT（初期化）
-- TDDサイクルの開始宣言
-- Cycle doc作成
-
-### PLAN（計画）
-- スコープ定義
-- テストリスト作成
-
-### RED（失敗するテスト）
-- テストコード作成
-- 失敗を確認
-
-### GREEN（最小実装）
-- テストを通す最小限のコード
-
-### REFACTOR（リファクタリング）
-- コード品質改善
-- テスト維持
-
-### REVIEW（品質検証）
-- 品質チェック実行
-
-### COMMIT（コミット）
-- Git commit
-- STATUS.md更新
+| Phase | 内容 |
+|-------|------|
+| INIT | サイクル開始、Cycle doc作成 |
+| PLAN | スコープ定義、テストリスト作成 |
+| RED | 失敗するテスト作成 |
+| GREEN | 最小限の実装 |
+| REFACTOR | コード品質改善 |
+| REVIEW | 品質チェック |
+| COMMIT | Git commit |
 
 ## 絶対ルール
 
-「エラーを見つけたら、まずテストを書く」
+エラーを見つけたら、まずテストを書く
+```
+
+### testing-guide.md
+
+```markdown
+# Testing Guide
+
+## 命名規則
+
+- ファイル: `*Test.php` / `test_*.py`
+- メソッド: `test_機能_条件_期待結果()`
+
+## 構造
+
+Given/When/Then形式を推奨
+
+## モック
+
+- 外部API: 必ずモック
+- DB: トランザクション使用
+```
+
+### quality.md
+
+```markdown
+# Quality Standards
+
+## 目標
+
+| 指標 | 目標 |
+|------|------|
+| カバレッジ | 90%以上（最低80%） |
+| 静的解析 | エラー0件 |
+
+## チェック
+
+- テスト: 全PASS
+- 静的解析: エラー0
+- フォーマット: 規約準拠
+```
+
+### commands.md
+
+```markdown
+# Quick Commands
+
+## テスト
+
+\`\`\`bash
+# PHP
+php artisan test
+
+# Python
+pytest
+\`\`\`
+
+## カバレッジ
+
+\`\`\`bash
+# PHP
+php artisan test --coverage
+
+# Python
+pytest --cov
+\`\`\`
 ```
 
 ---
