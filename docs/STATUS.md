@@ -29,18 +29,16 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Labels |
 |---|-------|--------|
-| 28 | tdd-init リスク判定（Question-Driven Design Phase 1） | enhancement |
 | 29 | 全体調整・フィードバック反映（Phase 4） | enhancement |
-| 30 | tdd-plan 質問連動（Phase 2） | enhancement |
 | 31 | Verification Gates（Phase 3） | enhancement |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-23 | tdd-plan-risk-integration | DONE |
 | 2026-01-23 | tdd-init-risk-assessment | DONE |
 | 2026-01-22 | v2-release-prep | DONE |
-| 2026-01-22 | migration-guide | DONE |
 
 ## Quality Metrics
 
