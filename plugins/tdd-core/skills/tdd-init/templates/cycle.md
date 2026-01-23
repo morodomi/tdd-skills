@@ -1,31 +1,31 @@
 # Cycle Doc Template
 
-以下をコピーして `docs/cycles/YYYYMMDD_HHMM_<機能名>.md` を作成。
+Copy and create `docs/cycles/YYYYMMDD_HHMM_<feature-name>.md`.
 
 ---
 
 ```markdown
 ---
-feature: [機能領域]
-cycle: [サイクル識別子]
+feature: [feature-area]
+cycle: [cycle-identifier]
 phase: INIT
 created: YYYY-MM-DD HH:MM
 updated: YYYY-MM-DD HH:MM
 ---
 
-# [機能名]
+# [Feature Name]
 
 ## Scope Definition
 
-### 今回実装する範囲
-- [ ] [実装項目1]
-- [ ] [実装項目2]
+### In Scope
+- [ ] [Implementation item 1]
+- [ ] [Implementation item 2]
 
-### 今回実装しない範囲
-- ❌ [項目]（理由: [理由]）
+### Out of Scope
+- [Item] (Reason: [reason])
 
-### 変更予定ファイル（目安: 10以下）
-- [ファイルパス]（新規/編集）
+### Files to Change (target: 10 or less)
+- [file-path] (new/edit)
 
 ## Environment
 
@@ -37,65 +37,65 @@ updated: YYYY-MM-DD HH:MM
 ### Runtime
 - Language: [Python 3.12.0 / PHP 8.3.0 / Node 20.0.0]
 
-### Dependencies（主要）
-- [パッケージ名]: [バージョン]
-- [パッケージ名]: [バージョン]
+### Dependencies (key packages)
+- [package]: [version]
+- [package]: [version]
 
-### Risk Interview（BLOCK時のみ）
-- リスクタイプ: [セキュリティ / 外部連携 / データ変更]
-- [質問1]: [回答]
-- [質問2]: [回答]
-- [質問3]: [回答]
+### Risk Interview (BLOCK only)
+- Risk type: [Security / External API / Data Changes]
+- [Question 1]: [Answer]
+- [Question 2]: [Answer]
+- [Question 3]: [Answer]
 
 ## Context & Dependencies
 
-### 参照ドキュメント
-- [docs/xxx.md] - [理由]
+### Reference Documents
+- [docs/xxx.md] - [reason]
 
-### 依存する既存機能
-- [機能]: [ファイルパス]
+### Dependent Features
+- [Feature]: [file-path]
 
-### 関連Issue/PR
-- Issue #[番号]: [タイトル]
+### Related Issues/PRs
+- Issue #[number]: [title]
 
 ## Test List
 
 ### TODO
-- [ ] TC-01: [テストケース]
-- [ ] TC-02: [テストケース]
+- [ ] TC-01: [test case]
+- [ ] TC-02: [test case]
 
 ### WIP
-（現在なし）
+(none)
 
 ### DISCOVERED
-（現在なし）
+(none)
 
 ### DONE
-（現在なし）
+(none)
 
 ## Implementation Notes
 
-### やりたいこと
-[ユーザー入力]
+### Goal
+[User input]
 
-### 背景
-[PLANで記入]
+### Background
+[Fill in PLAN]
 
-### 設計方針
-[PLANで記入]
+### Design Approach
+[Fill in PLAN]
 
 ## Progress Log
 
 ### YYYY-MM-DD HH:MM - INIT
-- Cycle doc作成
-- Scope定義準備完了
+- Cycle doc created
+- Scope definition ready
 
 ---
 
-## 次のステップ
+## Next Steps
 
-1. [完了] INIT ← 現在
-2. [次] PLAN
+1. [Done] INIT <- Current
+2. [Next] PLAN
 3. [ ] RED
 4. [ ] GREEN
 5. [ ] REFACTOR

@@ -1,164 +1,164 @@
 # tdd-init Reference
 
-SKILL.mdの詳細情報。必要時のみ参照。
+Detailed information for SKILL.md. Refer only when needed.
 
-## リスクスコア判定の詳細
+## Risk Score Assessment Details
 
-### スコア閾値（plan-review/quality-gateと統一）
+### Score Thresholds (unified with plan-review/quality-gate)
 
-| スコア | 判定 | アクション |
-|--------|------|-----------|
-| 0-29 | PASS | 確認表示のみで自動進行 |
-| 30-59 | WARN | スコープ確認（Step 5） |
-| 60-100 | BLOCK | 詳細質問で深掘り |
+| Score | Result | Action |
+|-------|--------|--------|
+| 0-29 | PASS | Show confirmation, auto-proceed |
+| 30-59 | WARN | Scope confirmation (Step 5) |
+| 60-100 | BLOCK | Deep-dive with questions |
 
-### キーワード別スコア
+### Keyword Scores
 
-| カテゴリ | キーワード | スコア |
-|----------|-----------|--------|
-| セキュリティ | ログイン, 認証, 認可, パスワード, セッション, 権限, トークン | +60 |
-| 外部依存 | API, 外部連携, 決済, webhook, サードパーティ | +60 |
-| データ影響 | DB変更, マイグレーション, スキーマ, テーブル追加 | +60 |
-| 影響範囲 | リファクタリング, 大規模, 全体, アーキテクチャ | +40 |
-| 限定的 | テスト追加, ドキュメント, コメント, README | +10 |
-| 見た目のみ | UI修正, 色, 文言, typo, CSS, スタイル | +10 |
-| デフォルト | 上記以外 | 0 |
+| Category | Keywords | Score |
+|----------|----------|-------|
+| Security | login, auth, authorization, password, session, permission, token | +60 |
+| External Dependency | API, external integration, payment, webhook, third-party | +60 |
+| Data Impact | DB change, migration, schema, table creation | +60 |
+| Scope Impact | refactoring, large-scale, system-wide, architecture | +40 |
+| Limited | test addition, documentation, comment, README | +10 |
+| UI Only | UI fix, color, text, typo, CSS, style | +10 |
+| Default | None of the above | 0 |
 
-### 判定ロジック
-
-```
-1. ユーザー入力をキーワードで部分一致検索
-2. 同一カテゴリ内は最大1回のみ加算（重複なし）
-3. 異なるカテゴリは合算（上限100）
-4. 該当なしはデフォルト0（PASS）
-
-計算例:
-- 「typo修正」= +10 → PASS
-- 「バグ修正」= 0 → PASS（キーワードなし）
-- 「リファクタリング」= +40 → WARN
-- 「認証機能」= +60 → BLOCK
-- 「認証+パスワード」= +60 → BLOCK（同一カテゴリ）
-- 「認証+API」= +100 → BLOCK（異カテゴリ合算、上限）
-```
-
-### 複数リスクタイプ該当時の処理
-
-複数カテゴリに該当する場合、**全てのリスクタイプの質問を順次実行**する。
+### Assessment Logic
 
 ```
-例: 「ログイン機能でAPI連携してDBも変更」
-→ セキュリティ質問（認証方式、2FA等）
-→ 外部連携質問（API認証、エラー処理等）
-→ データ変更質問（既存データ影響、ロールバック等）
+1. Partial match search user input against keywords
+2. Same category: max 1 addition (no duplicates)
+3. Different categories: sum up (max 100)
+4. No match: default 0 (PASS)
+
+Examples:
+- "typo fix" = +10 → PASS
+- "bug fix" = 0 → PASS (no keyword match)
+- "refactoring" = +40 → WARN
+- "auth feature" = +60 → BLOCK
+- "auth + password" = +60 → BLOCK (same category)
+- "auth + API" = +100 → BLOCK (different categories, capped)
 ```
 
-Cycle docには全ての回答を記録する。
+### Multiple Risk Types
 
-### BLOCK（60以上）時のリスクタイプ別質問
+When multiple categories match, **execute all risk-type questions sequentially**.
 
-検出キーワードに応じて、以下のAskUserQuestionを実行:
+```
+Example: "Login feature with API integration and DB changes"
+→ Security questions (auth method, 2FA, etc.)
+→ External API questions (API auth, error handling, etc.)
+→ Data change questions (existing data impact, rollback, etc.)
+```
 
-#### セキュリティ関連（ログイン, 認証, 権限, パスワード）
+Record all answers in the Cycle doc.
+
+### Risk-Type Questions (BLOCK: 60+)
+
+Execute AskUserQuestion based on detected keywords:
+
+#### Security (login, auth, permission, password)
 
 ```yaml
 questions:
-  - question: "認証方式はどれを使用しますか？"
+  - question: "Which authentication method will you use?"
     header: "Auth"
     options:
-      - label: "セッション"
-        description: "サーバーサイドセッション管理"
+      - label: "Session"
+        description: "Server-side session management"
       - label: "JWT"
-        description: "トークンベース認証"
+        description: "Token-based authentication"
       - label: "OAuth"
-        description: "外部プロバイダ連携"
-      - label: "既存拡張"
-        description: "現行認証システムを拡張"
+        description: "External provider integration"
+      - label: "Extend existing"
+        description: "Extend current auth system"
     multiSelect: false
-  - question: "対象ユーザーは？"
+  - question: "Target users?"
     header: "Users"
     options:
-      - label: "一般ユーザー"
-        description: "通常の利用者"
-      - label: "管理者"
-        description: "管理機能を持つユーザー"
-      - label: "両方"
-        description: "権限レベルで分離"
+      - label: "Regular users"
+        description: "Standard end users"
+      - label: "Admins"
+        description: "Users with admin privileges"
+      - label: "Both"
+        description: "Separated by permission level"
     multiSelect: false
-  - question: "2FA（二要素認証）は必要ですか？"
+  - question: "Is 2FA (two-factor authentication) required?"
     header: "2FA"
     options:
-      - label: "必要"
-        description: "初期リリースから実装"
-      - label: "不要"
-        description: "パスワードのみ"
-      - label: "後で検討"
-        description: "将来的に追加予定"
+      - label: "Required"
+        description: "Implement from initial release"
+      - label: "Not required"
+        description: "Password only"
+      - label: "Consider later"
+        description: "Plan to add in future"
     multiSelect: false
 ```
 
-#### 外部連携関連（API, webhook, 決済, サードパーティ）
+#### External Integration (API, webhook, payment, third-party)
 
 ```yaml
 questions:
-  - question: "API認証方式は？"
+  - question: "API authentication method?"
     header: "API Auth"
     options:
-      - label: "APIキー"
-        description: "静的なキーで認証"
+      - label: "API Key"
+        description: "Static key authentication"
       - label: "OAuth2"
-        description: "トークンベース"
-      - label: "署名付きリクエスト"
-        description: "HMAC等で署名"
+        description: "Token-based"
+      - label: "Signed request"
+        description: "HMAC signature, etc."
     multiSelect: false
-  - question: "エラー処理の方針は？"
+  - question: "Error handling strategy?"
     header: "Errors"
     options:
-      - label: "リトライ"
-        description: "失敗時に再試行"
-      - label: "フォールバック"
-        description: "代替処理に切り替え"
-      - label: "即時エラー"
-        description: "ユーザーに通知"
-    multiSelect: true  # リトライ+フォールバック併用が一般的なため
-  - question: "レート制限への対応は？"
+      - label: "Retry"
+        description: "Retry on failure"
+      - label: "Fallback"
+        description: "Switch to alternative"
+      - label: "Immediate error"
+        description: "Notify user"
+    multiSelect: true  # Retry + fallback combination is common
+  - question: "Rate limiting approach?"
     header: "Rate Limit"
     options:
-      - label: "キューイング"
-        description: "リクエストをキューで管理"
-      - label: "バックオフ"
-        description: "指数バックオフで再試行"
-      - label: "不要"
-        description: "制限に達しない想定"
+      - label: "Queuing"
+        description: "Manage requests in queue"
+      - label: "Backoff"
+        description: "Exponential backoff retry"
+      - label: "Not needed"
+        description: "Won't hit limits"
     multiSelect: false
 ```
 
-#### データ変更関連（DB, マイグレーション, スキーマ）
+#### Data Changes (DB, migration, schema)
 
 ```yaml
 questions:
-  - question: "既存データへの影響は？"
+  - question: "Impact on existing data?"
     header: "Data Impact"
     options:
-      - label: "影響なし"
-        description: "新規テーブル/カラムのみ"
-      - label: "データ変換必要"
-        description: "既存データのマイグレーション"
-      - label: "データ削除あり"
-        description: "一部データの削除・統合"
+      - label: "No impact"
+        description: "New tables/columns only"
+      - label: "Data conversion needed"
+        description: "Migrate existing data"
+      - label: "Data deletion"
+        description: "Delete/merge some data"
     multiSelect: false
-  - question: "ロールバック方法は？"
+  - question: "Rollback method?"
     header: "Rollback"
     options:
-      - label: "自動ロールバック"
-        description: "ダウンマイグレーション対応"
-      - label: "手動復旧"
-        description: "バックアップから復元"
-      - label: "前方互換"
-        description: "新旧両方で動作"
+      - label: "Auto rollback"
+        description: "Down migration supported"
+      - label: "Manual recovery"
+        description: "Restore from backup"
+      - label: "Forward compatible"
+        description: "Works with old and new"
     multiSelect: false
 ```
 
-### Cycle docへの記録形式
+### Recording Format in Cycle Doc
 
 ```markdown
 ## Environment
@@ -166,50 +166,50 @@ questions:
 ### Scope
 - Layer: Backend
 - Plugin: tdd-php
-- Risk: 65 (BLOCK)  # ← スコア形式
+- Risk: 65 (BLOCK)  # ← Score format
 
-### Risk Details（BLOCK時のみ）
-- 検出キーワード: 認証, API
-- 合計スコア: 65（認証+60, 重複なし）
-- 影響範囲: 3-5ファイル
-- 外部依存: DB変更あり
+### Risk Details (BLOCK only)
+- Detected keywords: auth, API
+- Total score: 65 (auth +60, no duplicates)
+- Impact scope: 3-5 files
+- External dependency: DB changes
 ```
 
-## 詳細ワークフロー
+## Detailed Workflow
 
-### 既存サイクル確認の詳細
+### Checking Existing Cycles
 
 ```bash
-# 最新のCycle docを検索
+# Find latest Cycle doc
 ls -t docs/cycles/*.md 2>/dev/null | head -1
 ```
 
-**進行中サイクルがある場合**:
+**If an active cycle exists**:
 
 ```
-⚠️ 既存のTDDサイクルが進行中です。
+⚠️ An existing TDD cycle is in progress.
 
-最新: docs/cycles/20251028_1530_XXX.md
+Latest: docs/cycles/20251028_1530_XXX.md
 
-選択肢:
-1. [推奨] 既存サイクルを継続
-2. 新規サイクルを開始（並行開発）
+Options:
+1. [Recommended] Continue existing cycle
+2. Start new cycle (parallel development)
 
-どうしますか？
+What would you like to do?
 ```
 
-### スコープ（Layer）確認の詳細
+### Scope (Layer) Confirmation Details
 
-AskUserQuestion で確認:
+Use AskUserQuestion:
 
 ```
-この機能のスコープを選択してください:
-1. Backend（PHP/Python サーバーサイド）
-2. Frontend（JavaScript/TypeScript クライアントサイド）
-3. Both（フルスタック）
+Select the scope for this feature:
+1. Backend (PHP/Python server-side)
+2. Frontend (JavaScript/TypeScript client-side)
+3. Both (Full stack)
 ```
 
-**プラグインマッピング:**
+**Plugin Mapping:**
 
 | Layer | Framework | Plugin |
 |-------|-----------|--------|
@@ -224,7 +224,7 @@ AskUserQuestion で確認:
 | Frontend | Alpine.js | tdd-js |
 | Both | Laravel + JS | tdd-php, tdd-js |
 
-**Cycle doc への記録:**
+**Recording in Cycle doc:**
 
 ```markdown
 ## Environment
@@ -234,68 +234,68 @@ AskUserQuestion で確認:
 - Plugin: tdd-php
 ```
 
-### 機能名生成の詳細
+### Feature Name Generation
 
-**ガイドライン**:
-- 10〜20文字程度
-- 「〜機能」「〜追加」などの接尾辞
+**Guidelines**:
+- 3-5 words
+- Descriptive suffix like "feature", "implementation"
 
-**例**:
-| やりたいこと | 機能名 |
-|------------|--------|
-| ユーザーがログインできるようにしたい | ユーザーログイン機能 |
-| データをCSV形式でエクスポートしたい | CSVエクスポート機能 |
-| 検索機能を追加したい | 検索機能追加 |
-| パスワードリセットメールを送信する | パスワードリセット機能 |
+**Examples**:
+| What you want to do | Feature name |
+|--------------------|--------------|
+| Allow users to log in | User login feature |
+| Export data as CSV | CSV export feature |
+| Add search functionality | Search implementation |
+| Send password reset emails | Password reset feature |
 
-**不明確な場合**:
+**If unclear**:
 
 ```
-機能名をより具体的に教えてください。
+Please be more specific about the feature name.
 
-良い例: ユーザー認証機能、データ検索機能
-悪い例: 機能、新しいやつ、あれ
+Good examples: User authentication, Data search
+Bad examples: Feature, New thing, That one
 ```
 
 ## Error Handling
 
-### Gitリポジトリでない場合
+### Not a Git Repository
 
 ```
-⚠️ このディレクトリはGitリポジトリではありません。
+⚠️ This directory is not a Git repository.
 
-TDDサイクルの完了時にコミット操作が必要になるため、
-Gitリポジトリでの使用を推奨します。
+Git operations are required at the end of TDD cycle.
+Recommend using within a Git repository.
 
-続行しますか？
+Continue anyway?
 ```
 
-### ディレクトリ作成失敗
+### Directory Creation Failed
 
 ```
-エラー: docs/cycles ディレクトリの作成に失敗しました。
+Error: Failed to create docs/cycles directory.
 
-対応:
-1. 権限確認: ls -la ./
-2. 手動作成: mkdir -p docs/cycles
+Solutions:
+1. Check permissions: ls -la ./
+2. Create manually: mkdir -p docs/cycles
 ```
 
-## プロジェクト固有のカスタマイズ
+## Project-Specific Customization
 
-### 検証の追加例
+### Additional Validations
 
 ```bash
 # Node.js
 if [ ! -f "package.json" ]; then
-  echo "警告: package.json が見つかりません"
+  echo "Warning: package.json not found"
 fi
 
 # Python
 if [ ! -f "requirements.txt" ]; then
-  echo "警告: requirements.txt が見つかりません"
+  echo "Warning: requirements.txt not found"
 fi
 ```
 
-### Cycle docテンプレートの拡張
+### Extending Cycle Doc Template
 
-プロジェクト固有のセクションを `templates/cycle.md` に追加可能。
+Add project-specific sections to `templates/cycle.md`.

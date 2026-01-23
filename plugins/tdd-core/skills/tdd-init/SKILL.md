@@ -1,98 +1,99 @@
 ---
 name: tdd-init
-description: 新しいTDDサイクルを開始し、Cycle docを作成する。「新機能を開発したい」「TDDを始めたい」「機能追加」で起動。
+description: Start a new TDD cycle and create a Cycle doc. Triggers on "new feature", "start TDD", "add feature".
 ---
 
 # TDD INIT Phase
 
-新しいTDDサイクルを開始し、Cycle docを作成する。
+Start a new TDD cycle and create a Cycle doc.
 
 ## Progress Checklist
 
 ```
-INIT: STATUS確認 → 環境収集 → 既存確認 → 質問 → リスク判定 → スコープ → 機能名 → Cycle doc → PLAN誘導
+INIT: STATUS check → Environment → Existing cycle → Questions → Risk assessment → Scope → Feature name → Cycle doc → Guide to PLAN
 ```
 
-## 禁止事項
+## Restrictions
 
-- 実装計画の詳細作成（PLANで行う）
-- テストコード作成（REDで行う）
-- 実装コード作成（GREENで行う）
+- No detailed implementation planning (done in PLAN)
+- No test code (done in RED)
+- No implementation code (done in GREEN)
 
 ## Workflow
 
-### Step 1: プロジェクト状況確認
+### Step 1: Check Project Status
 
 ```bash
 cat docs/STATUS.md 2>/dev/null
 ```
 
-存在しない場合は `tdd-onboard` を推奨。
+If not found, recommend `tdd-onboard`.
 
-### Step 2: 環境情報収集
+### Step 2: Collect Environment Info
 
-言語バージョン・主要パッケージを収集し、Cycle docのEnvironmentに記録。
-詳細コマンド: [reference.md](reference.md)
+Collect language versions and key packages for Cycle doc Environment section.
+Details: [reference.md](reference.md)
 
-### Step 3: 既存サイクル確認
+### Step 3: Check Existing Cycles
 
 ```bash
 ls -t docs/cycles/*.md 2>/dev/null | head -1
 ```
 
-進行中のサイクルがあれば継続を推奨。
+If an active cycle exists, recommend continuing it.
 
-### Step 4: やりたいことを質問
+### Step 4: Ask What to Implement
 
-「どんな機能を実装しますか？」と質問。例: ログイン機能、CSV出力など。
+Ask "What feature do you want to implement?" e.g., login, CSV export.
 
-### Step 4.5: リスクスコア判定
+### Step 4.5: Risk Score Assessment
 
-ユーザー入力からリスクスコア（0-100）を算出:
+Calculate risk score (0-100) from user input:
 
-| スコア | 判定 | 分岐処理 |
-|--------|------|----------|
-| 0-29 | PASS | 確認表示のみで自動進行 |
-| 30-59 | WARN | スコープ確認（Step 5） |
-| 60-100 | BLOCK | リスクタイプ別質問（Step 4.6） |
+| Score | Result | Action |
+|-------|--------|--------|
+| 0-29 | PASS | Show confirmation, auto-proceed |
+| 30-59 | WARN | Scope confirmation (Step 5) |
+| 60-100 | BLOCK | Risk-type questions (Step 4.6) |
 
-キーワード別スコアは[reference.md](reference.md)参照。
-Cycle docに `Risk: [スコア] ([判定])` を記録。
+Keyword scores: [reference.md](reference.md)
+Record `Risk: [score] ([result])` in Cycle doc.
 
-### Step 4.6: リスクタイプ別質問（BLOCK時のみ）
+### Step 4.6: Risk-Type Questions (BLOCK only)
 
-検出キーワードに応じてAskUserQuestionで詳細確認（複数該当時は全て実行）:
+Use AskUserQuestion based on detected keywords (run all if multiple types match):
 
-| リスクタイプ | 質問内容 |
-|-------------|----------|
-| セキュリティ | 認証方式、対象ユーザー、2FA |
-| 外部連携 | API認証、エラー処理、レート制限 |
-| データ変更 | 既存データ影響、ロールバック |
+| Risk Type | Questions |
+|-----------|-----------|
+| Security | Auth method, target users, 2FA |
+| External API | API auth, error handling, rate limiting |
+| Data Changes | Existing data impact, rollback |
 
-質問テンプレート詳細: [reference.md](reference.md)
-回答はCycle docの `Risk Interview` セクションに記録。
+Question templates: [reference.md](reference.md)
+Record answers in Cycle doc `Risk Interview` section.
 
-### Step 5: スコープ（Layer）確認
+### Step 5: Scope (Layer) Confirmation
 
-AskUserQuestion でスコープを確認:
+Use AskUserQuestion to confirm scope:
 
-| Layer | 説明 | Plugin |
-|-------|------|--------|
-| Backend | PHP/Python 等 | tdd-php, tdd-python, tdd-flask |
+| Layer | Description | Plugin |
+|-------|-------------|--------|
+| Backend | PHP/Python etc. | tdd-php, tdd-python, tdd-flask |
 | Frontend | JavaScript/TypeScript | tdd-js, tdd-ts |
-| Both | フルスタック | 複数プラグイン |
+| Both | Full stack | Multiple plugins |
 
-詳細: [reference.md](reference.md)
+Details: [reference.md](reference.md)
 
-### Step 6: 機能名生成→Cycle doc作成
+### Step 6: Generate Feature Name & Create Cycle Doc
 
-機能名を生成（10-20文字）し、テンプレートからCycle docを作成。
-テンプレート: [templates/cycle.md](templates/cycle.md)
+Generate feature name (3-5 words) and create Cycle doc from template.
+Template: [templates/cycle.md](templates/cycle.md)
 
-### Step 7: 完了→PLAN誘導
+### Step 7: Complete & Guide to PLAN
 
-`INIT完了` を表示し、PLANフェーズへ誘導。
+Display `INIT Complete` and guide to PLAN phase.
 
 ## Reference
 
-- 詳細: [reference.md](reference.md)
+- Details: [reference.md](reference.md)
+- Japanese: [reference.ja.md](reference.ja.md)
