@@ -35,15 +35,15 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-23 | tdd-init-docs-english | DONE |
 | 2026-01-23 | question-driven-init | DONE |
 | 2026-01-23 | phase4-adjustments | DONE |
-| 2026-01-23 | verification-gates | DONE |
 
 ## Quality Metrics
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 34 | - |
+| Cycle docs | 39 | - |
 | Open Issues | 10 | 0 |
 | Plugin数 | 10 | - |
 
