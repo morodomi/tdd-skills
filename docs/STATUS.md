@@ -35,9 +35,9 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-23 | question-driven-init | DONE |
 | 2026-01-23 | phase4-adjustments | DONE |
 | 2026-01-23 | verification-gates | DONE |
-| 2026-01-23 | tdd-plan-risk-integration | DONE |
 
 ## Quality Metrics
 

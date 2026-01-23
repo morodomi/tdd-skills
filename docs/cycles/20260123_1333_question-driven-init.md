@@ -1,7 +1,7 @@
 ---
 feature: tdd-core
 cycle: 20260123_1333
-phase: REVIEW
+phase: DONE
 created: 2026-01-23 13:33
 updated: 2026-01-23 13:33
 ---
@@ -128,6 +128,11 @@ SKILL.mdにStep 4.6を追加。検出キーワードに応じて質問を分岐�
 - important指摘対応:
   1. スコア重複ルール明記（同一カテゴリは1回のみ）
   2. 複数リスクタイプ時は全質問実行を明記
+- 追加修正: デフォルト0、計算例6パターン、multiSelect意図明記
+
+### 2026-01-23 14:10 - COMMIT
+- コミット: 7c839aa
+- Phase 5完了
 
 ---
 
@@ -138,5 +143,5 @@ SKILL.mdにStep 4.6を追加。検出キーワードに応じて質問を分岐�
 3. [完了] RED
 4. [完了] GREEN
 5. [完了] REFACTOR
-6. [完了] REVIEW ← 現在
-7. [次] COMMIT
+6. [完了] REVIEW
+7. [完了] COMMIT
