@@ -85,9 +85,9 @@ Riskフィールドなし → WARN（標準設計）として扱う。
 
 変更5ファイル以上/新規ライブラリ/セキュリティ関連の場合に推奨。
 
-### Step 7: 完了→RED誘導
+### Step 7: 完了→自動進行
 
-`PLAN完了` を表示し、REDフェーズへ誘導。
+`PLAN完了` を表示。ユーザー承認後、RED→GREEN→REFACTOR→REVIEWを自動的に実行。
 
 ## Reference
 

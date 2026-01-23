@@ -74,6 +74,13 @@ pytest tests/test_xxx.py -v          # Python
 
 **期待**: テストが**失敗**すること（RED状態）
 
+### Verification Gate
+
+| 結果 | 判定 | アクション |
+|------|------|-----------|
+| テスト失敗 | PASS | GREENへ自動進行 |
+| テスト成功 | BLOCK | 実装コード削除して再試行 |
+
 ### Step 5: 完了→GREEN誘導
 
 ```

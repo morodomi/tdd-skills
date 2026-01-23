@@ -50,6 +50,13 @@ pytest tests/test_xxx.py -v          # Python
 
 **期待**: テストが**成功**すること（GREEN状態）
 
+### Verification Gate
+
+| 結果 | 判定 | アクション |
+|------|------|-----------|
+| テスト成功 | PASS | REFACTORへ自動進行 |
+| テスト失敗 | BLOCK | 実装修正して再試行 |
+
 ### Step 4: 次のテストまたはREFACTOR
 
 - Test Listに残りあり → REDフェーズに戻る
