@@ -54,6 +54,40 @@ SKILL.mdの詳細情報。必要時のみ参照。
 
 Cycle docには全ての回答を記録する。
 
+### Brainstorm（深掘り）質問（BLOCK: 60以上）
+
+リスクタイプ別質問の前に、まず問題の本質を明確化:
+
+```yaml
+questions:
+  - question: "本当に解決したい問題は何ですか？"
+    header: "Problem"
+    options:
+      - label: "ユーザー要望"
+        description: "ユーザーから明確なリクエストがあった"
+      - label: "技術的負債"
+        description: "既存コードが問題を起こしている"
+      - label: "ビジネス要件"
+        description: "ビジネス目標達成に必要"
+      - label: "パフォーマンス問題"
+        description: "現行システムが遅い"
+    multiSelect: false
+  - question: "代替アプローチは検討しましたか？"
+    header: "Alternatives"
+    options:
+      - label: "はい、これが最善"
+        description: "代替案を評価した上でこれを選択"
+      - label: "いいえ、もっと検討したい"
+        description: "他の選択肢を議論したい"
+      - label: "部分的な解決策がある"
+        description: "既存機能の拡張で対応可能"
+    multiSelect: false
+```
+
+**目的**: 問題を十分に理解せずに実装を始めることで生じる過剰設計を防止。
+
+参考: [superpowers/brainstorming](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md)
+
 ### BLOCK（60以上）時のリスクタイプ別質問
 
 検出キーワードに応じて、以下のAskUserQuestionを実行:

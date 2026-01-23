@@ -59,9 +59,13 @@ Calculate risk score (0-100) from user input:
 Keyword scores: [reference.md](reference.md)
 Record `Risk: [score] ([result])` in Cycle doc.
 
-### Step 4.6: Risk-Type Questions (BLOCK only)
+### Step 4.6: Brainstorm & Risk Questions (BLOCK only)
 
-Use AskUserQuestion based on detected keywords (run all if multiple types match):
+**First, clarify the problem** (Brainstorm):
+- What problem are you really trying to solve?
+- Have you considered alternative approaches?
+
+**Then, risk-type questions** based on detected keywords:
 
 | Risk Type | Questions |
 |-----------|-----------|
@@ -69,8 +73,7 @@ Use AskUserQuestion based on detected keywords (run all if multiple types match)
 | External API | API auth, error handling, rate limiting |
 | Data Changes | Existing data impact, rollback |
 
-Question templates: [reference.md](reference.md)
-Record answers in Cycle doc `Risk Interview` section.
+Templates: [reference.md](reference.md). Record in `Risk Interview` section.
 
 ### Step 5: Scope (Layer) Confirmation
 
@@ -86,8 +89,7 @@ Details: [reference.md](reference.md)
 
 ### Step 6: Generate Feature Name & Create Cycle Doc
 
-Generate feature name (3-5 words) and create Cycle doc from template.
-Template: [templates/cycle.md](templates/cycle.md)
+Generate feature name (3-5 words) and create Cycle doc from [templates/cycle.md](templates/cycle.md).
 
 ### Step 7: Complete & Guide to PLAN
 
@@ -95,5 +97,4 @@ Display `INIT Complete` and guide to PLAN phase.
 
 ## Reference
 
-- Details: [reference.md](reference.md)
-- Japanese: [reference.ja.md](reference.ja.md)
+Details: [reference.md](reference.md) | Japanese: [reference.ja.md](reference.ja.md)

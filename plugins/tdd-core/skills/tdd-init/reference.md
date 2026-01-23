@@ -54,6 +54,40 @@ Example: "Login feature with API integration and DB changes"
 
 Record all answers in the Cycle doc.
 
+### Brainstorm Questions (BLOCK: 60+)
+
+Before diving into risk-type questions, clarify the core problem:
+
+```yaml
+questions:
+  - question: "What problem are you really trying to solve?"
+    header: "Problem"
+    options:
+      - label: "User request"
+        description: "Users explicitly asked for this feature"
+      - label: "Technical debt"
+        description: "Existing code is causing issues"
+      - label: "Business requirement"
+        description: "Required for business goals"
+      - label: "Performance issue"
+        description: "Current system is too slow"
+    multiSelect: false
+  - question: "Have you considered alternative approaches?"
+    header: "Alternatives"
+    options:
+      - label: "Yes, this is the best option"
+        description: "Evaluated alternatives and chose this"
+      - label: "No, need to explore more"
+        description: "Want to discuss other options"
+      - label: "Partial solution exists"
+        description: "Can extend existing functionality"
+    multiSelect: false
+```
+
+**Purpose**: Prevent over-engineering by ensuring the problem is well-understood before implementation.
+
+Reference: [superpowers/brainstorming](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md)
+
 ### Risk-Type Questions (BLOCK: 60+)
 
 Execute AskUserQuestion based on detected keywords:
