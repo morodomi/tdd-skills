@@ -87,7 +87,7 @@ Riskフィールドなし → WARN（標準設計）として扱う。
 
 ### Step 7: 完了→自動進行
 
-`PLAN完了` を表示。ユーザー承認後、RED→GREEN→REFACTOR→REVIEWを自動的に実行。
+`PLAN完了` を表示。ユーザーが続行を確認したら、RED→GREEN→REFACTOR→REVIEWを自動実行。
 
 ## Reference
 
