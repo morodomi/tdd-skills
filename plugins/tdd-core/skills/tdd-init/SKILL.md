@@ -44,10 +44,7 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 
 ### Step 4: やりたいことを質問
 
-```
-どんな機能を実装しますか？
-例: ユーザーがログインできるようにしたい
-```
+「どんな機能を実装しますか？」と質問。例: ログイン機能、CSV出力など。
 
 ### Step 4.5: リスクスコア判定
 
@@ -57,10 +54,23 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 |--------|------|----------|
 | 0-29 | PASS | 確認表示のみで自動進行 |
 | 30-59 | WARN | スコープ確認（Step 5） |
-| 60-100 | BLOCK | 詳細質問（[reference.md](reference.md)参照） |
+| 60-100 | BLOCK | リスクタイプ別質問（Step 4.6） |
 
 キーワード別スコアは[reference.md](reference.md)参照。
 Cycle docに `Risk: [スコア] ([判定])` を記録。
+
+### Step 4.6: リスクタイプ別質問（BLOCK時のみ）
+
+検出キーワードに応じてAskUserQuestionで詳細確認（複数該当時は全て実行）:
+
+| リスクタイプ | 質問内容 |
+|-------------|----------|
+| セキュリティ | 認証方式、対象ユーザー、2FA |
+| 外部連携 | API認証、エラー処理、レート制限 |
+| データ変更 | 既存データ影響、ロールバック |
+
+質問テンプレート詳細: [reference.md](reference.md)
+回答はCycle docの `Risk Interview` セクションに記録。
 
 ### Step 5: スコープ（Layer）確認
 
@@ -74,20 +84,12 @@ AskUserQuestion でスコープを確認:
 
 詳細: [reference.md](reference.md)
 
-### Step 6: 機能名生成
+### Step 6: 機能名生成→Cycle doc作成
 
-ユーザーの回答から機能名を生成（10-20文字）。確認後、Cycle docを作成。
-
-### Step 7: Cycle doc作成
-
-```bash
-date +"%Y%m%d_%H%M"
-mkdir -p docs/cycles
-```
-
+機能名を生成（10-20文字）し、テンプレートからCycle docを作成。
 テンプレート: [templates/cycle.md](templates/cycle.md)
 
-### Step 8: 完了→PLAN誘導
+### Step 7: 完了→PLAN誘導
 
 `INIT完了` を表示し、PLANフェーズへ誘導。
 
