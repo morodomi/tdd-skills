@@ -2,7 +2,7 @@
 
 Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
-> **v3.0.0**: Question-Driven TDD - リスクベースの質問フローで高品質な設計を実現
+> **v3.1.0**: Brainstorm Enhancement - 高リスク時の問題深掘りとタスク粒度の明確化
 
 ## Why?
 
@@ -74,6 +74,12 @@ claude
 
 ## Migration
 
+### v3.0.0 → v3.1.0
+
+**新機能**: Brainstorm Enhancement
+- BLOCK時のBrainstorm質問追加（自動有効化）
+- PLANフェーズで2-5分タスク粒度を推奨
+
 ### v2.x → v3.0.0
 
 **新機能**: Question-Driven TDD（リスクベース質問フロー）
@@ -129,6 +135,31 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | Security | 認証, ログイン, 権限 | 認証方式, 2FA, 対象ユーザー |
 | External API | API, webhook, 決済 | API認証, エラー処理, レート制限 |
 | Data Changes | DB, マイグレーション | 既存データ影響, ロールバック |
+
+## Brainstorm Enhancement (v3.1.0)
+
+高リスク時（BLOCK）に問題の本質を深掘り:
+
+### Brainstorm Questions
+
+BLOCK時、リスクタイプ別質問の**前に**問題を明確化:
+
+| Question | Purpose |
+|----------|---------|
+| 本当に解決したい問題は何？ | 過剰設計の防止 |
+| 代替アプローチは検討した？ | 最適解の選択 |
+
+### Task Granularity (PLAN Phase)
+
+各タスクは「2-5分で完了する1アクション」に分割:
+
+| 粒度 | 判断 | 対応 |
+|------|------|------|
+| 2-5分 | 適切 | そのまま |
+| 5分超 | 大きすぎ | 分割する |
+| 2分未満 | 小さすぎ | 統合を検討 |
+
+Reference: [superpowers](https://github.com/obra/superpowers)
 
 ## Plugins
 

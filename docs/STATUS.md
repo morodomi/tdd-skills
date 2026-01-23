@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| バージョン | 3.0.0 |
+| バージョン | 3.1.0 |
 | 最終更新 | 2026-01-23 |
 
 ## Tech Stack
@@ -35,16 +35,16 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-23 | brainstorm-enhancement | DONE |
+| 2026-01-23 | task-granularity | DONE |
 | 2026-01-23 | tdd-init-docs-english | DONE |
-| 2026-01-23 | question-driven-init | DONE |
-| 2026-01-23 | phase4-adjustments | DONE |
 
 ## Quality Metrics
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 39 | - |
-| Open Issues | 10 | 0 |
+| Cycle docs | 41 | - |
+| Open Issues | 8 | 0 |
 | Plugin数 | 10 | - |
 
 ---
