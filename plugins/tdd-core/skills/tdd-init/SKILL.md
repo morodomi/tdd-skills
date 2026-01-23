@@ -9,18 +9,8 @@ description: 新しいTDDサイクルを開始し、Cycle docを作成する。�
 
 ## Progress Checklist
 
-コピーして進捗を追跡:
-
 ```
-INIT Progress:
-- [ ] プロジェクト状況確認（docs/STATUS.md）
-- [ ] 環境情報収集
-- [ ] 既存サイクル確認
-- [ ] ユーザーに「やりたいこと」を質問
-- [ ] スコープ（Layer）確認
-- [ ] 機能名を生成して確認
-- [ ] Cycle doc作成（環境・スコープ含む）
-- [ ] PLANフェーズへ誘導
+INIT: STATUS確認 → 環境収集 → 既存確認 → 質問 → リスク判定 → スコープ → 機能名 → Cycle doc → PLAN誘導
 ```
 
 ## 禁止事項
@@ -41,21 +31,8 @@ cat docs/STATUS.md 2>/dev/null
 
 ### Step 2: 環境情報収集
 
-実行環境のバージョンを収集（AIの知識が古い問題を防止）:
-
-```bash
-# 言語バージョン（すべて実行）
-python --version 2>/dev/null
-php -v 2>/dev/null | head -1
-node -v 2>/dev/null
-
-# 主要パッケージ（すべて実行）
-echo "=== Python ===" && pip list 2>/dev/null | head -10
-echo "=== PHP ===" && composer show 2>/dev/null | head -10
-echo "=== Node ===" && npm list --depth=0 2>/dev/null | head -10
-```
-
-収集した情報はCycle docのEnvironmentセクションに記録。
+言語バージョン・主要パッケージを収集し、Cycle docのEnvironmentに記録。
+詳細コマンド: [reference.md](reference.md)
 
 ### Step 3: 既存サイクル確認
 
@@ -71,6 +48,23 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 どんな機能を実装しますか？
 例: ユーザーがログインできるようにしたい
 ```
+
+### Step 4.5: リスク判定
+
+ユーザー入力からリスクレベルを判定:
+
+| リスク | キーワード例 |
+|--------|-------------|
+| 高リスク | 認証/API/DB変更/決済/マイグレーション |
+| 低リスク | テスト追加/ドキュメント/UI修正/色/文言 |
+| 中リスク | 上記以外（デフォルト） |
+
+**分岐処理**:
+- 低リスク → 確認表示のみで自動進行
+- 中リスク → スコープ確認（Step 5）
+- 高リスク → 詳細質問（[reference.md](reference.md)参照）
+
+Cycle docに `Risk: High/Medium/Low` を記録。
 
 ### Step 5: スコープ（Layer）確認
 
@@ -99,14 +93,7 @@ mkdir -p docs/cycles
 
 ### Step 8: 完了→PLAN誘導
 
-```
-================================================================================
-INIT完了
-================================================================================
-ファイル: docs/cycles/YYYYMMDD_HHMM_<機能名>.md
-次: PLANフェーズ（設計・計画）
-================================================================================
-```
+`INIT完了` を表示し、PLANフェーズへ誘導。
 
 ## Reference
 

@@ -2,6 +2,71 @@
 
 SKILL.mdの詳細情報。必要時のみ参照。
 
+## リスク判定の詳細
+
+### キーワードテーブル
+
+| カテゴリ | キーワード | リスク |
+|----------|-----------|--------|
+| セキュリティ | ログイン, 認証, 認可, パスワード, セッション, 権限, トークン | 高リスク |
+| 外部依存 | API, 外部連携, 決済, webhook, サードパーティ | 高リスク |
+| データ影響 | DB変更, マイグレーション, スキーマ, テーブル追加 | 高リスク |
+| 影響範囲 | リファクタリング, 大規模, 全体, アーキテクチャ | 高リスク |
+| 限定的 | テスト追加, ドキュメント, コメント, README | 低リスク |
+| 見た目のみ | UI修正, 色, 文言, typo, CSS, スタイル | 低リスク |
+
+### 判定ロジック
+
+```
+1. ユーザー入力をキーワードで部分一致検索
+2. 複数該当時は最高リスクを採用
+3. 該当なしは中リスク（デフォルト）
+```
+
+### 高リスク時の詳細質問
+
+AskUserQuestion で以下を確認:
+
+```yaml
+questions:
+  - question: "影響範囲はどの程度ですか？"
+    header: "Scope"
+    options:
+      - label: "1-2ファイル"
+        description: "小規模な変更"
+      - label: "3-5ファイル"
+        description: "中規模な変更"
+      - label: "6ファイル以上"
+        description: "大規模な変更"
+    multiSelect: false
+  - question: "外部依存はありますか？"
+    header: "Dependencies"
+    options:
+      - label: "なし"
+        description: "内部コードのみ"
+      - label: "DB変更あり"
+        description: "マイグレーション必要"
+      - label: "外部API連携"
+        description: "サードパーティAPI使用"
+    multiSelect: true
+```
+
+### Cycle docへの記録形式
+
+```markdown
+## Environment
+
+### Scope
+- Layer: Backend
+- Plugin: tdd-php
+- Risk: High  # ← 追加
+
+### Risk Details（高リスク時のみ）
+- 検出キーワード: 認証, API
+- 影響範囲: 3-5ファイル
+- 外部依存: DB変更あり
+```
+
 ## 詳細ワークフロー
 
 ### 既存サイクル確認の詳細

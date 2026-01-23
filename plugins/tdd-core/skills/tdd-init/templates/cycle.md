@@ -32,6 +32,7 @@ updated: YYYY-MM-DD HH:MM
 ### Scope
 - Layer: [Backend / Frontend / Both]
 - Plugin: [tdd-php / tdd-flask / tdd-python / tdd-js / tdd-ts]
+- Risk: [High / Medium / Low]
 
 ### Runtime
 - Language: [Python 3.12.0 / PHP 8.3.0 / Node 20.0.0]
