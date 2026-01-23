@@ -1,14 +1,14 @@
 #!/bin/bash
-# Test: tdd-init Risk Assessment Feature
-# TC-01 ~ TC-06: リスク判定ロジックの検証
-
-# set -e  # Disabled to see all test results
+# Test: tdd-init Risk Assessment Feature (Score Format)
+# TC-01 ~ TC-07: リスクスコア判定ロジックの検証
 
 SKILL_FILE="plugins/tdd-core/skills/tdd-init/SKILL.md"
 REF_FILE="plugins/tdd-core/skills/tdd-init/reference.md"
+TPL_FILE="plugins/tdd-core/skills/tdd-init/templates/cycle.md"
 
 echo "================================"
 echo "Risk Assessment Test Suite"
+echo "(Score Format)"
 echo "================================"
 
 PASSED=0
@@ -30,46 +30,33 @@ assert_contains() {
     fi
 }
 
-assert_not_contains() {
-    local file="$1"
-    local pattern="$2"
-    local test_name="$3"
+echo ""
+echo "--- Score Threshold Check ---"
 
-    if ! grep -qi "$pattern" "$file" 2>/dev/null; then
-        echo "[PASS] $test_name"
-        ((PASSED++))
-    else
-        echo "[FAIL] $test_name"
-        echo "       Pattern '$pattern' should NOT exist in $file"
-        ((FAILED++))
-    fi
-}
+# TC-01: スコア閾値の定義
+assert_contains "$SKILL_FILE" "0-29\|PASS" "TC-01: PASS threshold (0-29) defined"
+assert_contains "$SKILL_FILE" "30-59\|WARN" "TC-02: WARN threshold (30-59) defined"
+assert_contains "$SKILL_FILE" "60-100\|BLOCK" "TC-03: BLOCK threshold (60-100) defined"
 
 echo ""
-echo "--- TC-01~06: Risk Keywords Check ---"
+echo "--- Keyword Score Check ---"
 
-# TC-01, TC-02: 低リスクキーワード
-assert_contains "$SKILL_FILE" "低リスク\|Low" "TC-01/02: Low risk category exists"
-assert_contains "$REF_FILE" "テスト\|ドキュメント\|UI\|色\|文言" "TC-01/02: Low risk keywords defined"
-
-# TC-03: 中リスク（デフォルト）
-assert_contains "$SKILL_FILE" "中リスク\|Medium\|デフォルト" "TC-03: Medium risk (default) exists"
-
-# TC-04, TC-05, TC-06: 高リスクキーワード
-assert_contains "$SKILL_FILE" "高リスク\|High" "TC-04~06: High risk category exists"
-assert_contains "$REF_FILE" "ログイン\|認証\|API\|DB\|マイグレーション" "TC-04~06: High risk keywords defined"
+# TC-04: キーワード別スコア
+assert_contains "$REF_FILE" "+60\|セキュリティ\|認証" "TC-04: High score keywords (+60) defined"
+assert_contains "$REF_FILE" "+10\|限定的\|見た目" "TC-05: Low score keywords (+10) defined"
+assert_contains "$REF_FILE" "+30\|デフォルト" "TC-06: Default score (+30) defined"
 
 echo ""
-echo "--- Step 4.5: Risk Assessment Step Check ---"
+echo "--- Step 4.5 Check ---"
 
-# Step 4.5 が存在するか
-assert_contains "$SKILL_FILE" "Step 4.5\|リスク判定" "Step 4.5: Risk assessment step exists"
+# TC-07: Step 4.5 スコア判定
+assert_contains "$SKILL_FILE" "Step 4.5\|リスクスコア" "TC-07: Risk score step exists"
 
 echo ""
-echo "--- Risk Level Output Check ---"
+echo "--- Cycle doc Template Check ---"
 
-# リスクレベルの出力形式
-assert_contains "$SKILL_FILE" "Risk:\|リスク:" "Risk level output format exists"
+# TC-08: テンプレートのスコア形式
+assert_contains "$TPL_FILE" "0-100\|PASS.*WARN.*BLOCK" "TC-08: Template uses score format"
 
 echo ""
 echo "================================"
