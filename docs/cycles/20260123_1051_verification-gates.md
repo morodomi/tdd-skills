@@ -1,7 +1,7 @@
 ---
 feature: tdd-core
 cycle: 20260123_1051
-phase: REVIEW
+phase: DONE
 created: 2026-01-23 10:51
 updated: 2026-01-23 10:51
 ---
@@ -144,6 +144,10 @@ REVIEWフェーズでquality-gateを自動実行し、結果を表示。COMMIT�
   - security: 25（optional 3件）
   - guidelines: 25（optional 3件）
 
+### 2026-01-23 11:25 - COMMIT
+- コミット: 482509a
+- Issue #31 クローズ
+
 ---
 
 ## 次のステップ
@@ -153,8 +157,8 @@ REVIEWフェーズでquality-gateを自動実行し、結果を表示。COMMIT�
 3. [完了] RED
 4. [完了] GREEN
 5. [完了] REFACTOR
-6. [完了] REVIEW ← 現在
-7. [次] COMMIT
+6. [完了] REVIEW
+7. [完了] COMMIT
 4. [ ] GREEN
 5. [ ] REFACTOR
 6. [ ] REVIEW

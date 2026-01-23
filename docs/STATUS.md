@@ -30,15 +30,14 @@ bash scripts/test-skills-structure.sh
 | # | Title | Labels |
 |---|-------|--------|
 | 29 | 全体調整・フィードバック反映（Phase 4） | enhancement |
-| 31 | Verification Gates（Phase 3） | enhancement |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-23 | verification-gates | DONE |
 | 2026-01-23 | tdd-plan-risk-integration | DONE |
 | 2026-01-23 | tdd-init-risk-assessment | DONE |
-| 2026-01-22 | v2-release-prep | DONE |
 
 ## Quality Metrics
 
