@@ -38,9 +38,9 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
-| 2026-01-23 | tdd-init-risk-assessment | INIT |
-| 2026-01-22 | v2-release-prep | COMMIT |
-| 2026-01-22 | migration-guide | COMMIT |
+| 2026-01-23 | tdd-init-risk-assessment | DONE |
+| 2026-01-22 | v2-release-prep | DONE |
+| 2026-01-22 | migration-guide | DONE |
 
 ## Quality Metrics
 
