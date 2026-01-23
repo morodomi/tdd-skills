@@ -2,6 +2,8 @@
 
 Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
+> **v3.0.0**: Question-Driven TDD - リスクベースの質問フローで高品質な設計を実現
+
 ## Why?
 
 AIにコードを任せると、こんな問題が起きがち：
@@ -72,8 +74,14 @@ claude
 
 ## Migration
 
-v1.x から v2.0 へアップグレードする場合は [Migration Guide](docs/MIGRATION.md) を参照してください。
+### v2.x → v3.0.0
 
+**新機能**: Question-Driven TDD（リスクベース質問フロー）
+- 追加設定不要、自動的に有効化
+
+### v1.x → v2.0
+
+[Migration Guide](docs/MIGRATION.md) を参照。
 **主な変更**: `agent_docs/` → `.claude/rules/`, `.claude/hooks/` 構造に変更
 
 ## Update
@@ -97,6 +105,30 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | REFACTOR | tdd-refactor | コード改善 |
 | REVIEW | tdd-review | 品質チェック |
 | COMMIT | tdd-commit | Git commit |
+
+## Question-Driven TDD (v3.0.0)
+
+リスクスコアに基づいて、適切な質問を自動生成:
+
+```
+ユーザー入力 → リスク判定 → 質問フロー → 設計精度向上
+```
+
+### Risk Score
+
+| Score | Result | Action |
+|-------|--------|--------|
+| 0-29 | PASS | 自動進行 |
+| 30-59 | WARN | スコープ確認 |
+| 60-100 | BLOCK | リスクタイプ別質問 |
+
+### Risk Types (BLOCK時の質問)
+
+| Type | Keywords | Questions |
+|------|----------|-----------|
+| Security | 認証, ログイン, 権限 | 認証方式, 2FA, 対象ユーザー |
+| External API | API, webhook, 決済 | API認証, エラー処理, レート制限 |
+| Data Changes | DB, マイグレーション | 既存データ影響, ロールバック |
 
 ## Plugins
 
