@@ -1,7 +1,7 @@
 ---
 feature: tdd-core
 cycle: 20260123_1309
-phase: REVIEW
+phase: DONE
 created: 2026-01-23 13:09
 updated: 2026-01-23 13:09
 ---
@@ -122,6 +122,10 @@ Phase 1-3のquality-gateで以下の指摘があった:
   - scope: 15
   - risk: 35
 
+### 2026-01-23 13:30 - COMMIT
+- コミット: 1795dcb
+- Issue #29 クローズ
+
 ---
 
 ## 次のステップ
@@ -131,5 +135,5 @@ Phase 1-3のquality-gateで以下の指摘があった:
 3. [完了] RED
 4. [完了] GREEN
 5. [完了] REFACTOR
-6. [完了] REVIEW ← 現在
-7. [次] COMMIT
+6. [完了] REVIEW
+7. [完了] COMMIT

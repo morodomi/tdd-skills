@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| バージョン | 2.0.0 |
+| バージョン | 3.0.0 |
 | 最終更新 | 2026-01-23 |
 
 ## Tech Stack
@@ -29,15 +29,15 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Labels |
 |---|-------|--------|
-| 29 | 全体調整・フィードバック反映（Phase 4） | enhancement |
+| - | (none) | - |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-23 | phase4-adjustments | DONE |
 | 2026-01-23 | verification-gates | DONE |
 | 2026-01-23 | tdd-plan-risk-integration | DONE |
-| 2026-01-23 | tdd-init-risk-assessment | DONE |
 
 ## Quality Metrics
 
