@@ -90,4 +90,3 @@ RED完了
 
 - 詳細: [reference.md](reference.md)
 - red-worker: [../../agents/red-worker.md](../../agents/red-worker.md)
-- テストガイド: `.claude/rules/testing-guide.md`
