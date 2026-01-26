@@ -170,12 +170,8 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 ### Rules
 
-- tdd-workflow.md - TDDサイクル必須
-- quality.md - 品質基準
-- security.md - セキュリティチェック
-- testing-guide.md - テストガイド
-- commands.md - クイックコマンド
 - git-safety.md - Git安全規則
+- security.md - セキュリティチェック
 - git-conventions.md - Git規約
 
 ### Hooks
