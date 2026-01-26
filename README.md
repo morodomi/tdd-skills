@@ -1,62 +1,64 @@
 # TDD Skills
 
-Claude Code で厳格な TDD ワークフローを実現するプラグイン
+Claude Code plugin for enforcing strict TDD workflows
 
-> **v3.3.0**: GREEN Parallelization - 並列エージェントによる実装フェーズの高速化
+> **v4.0.0**: RED & GREEN Parallelization - Parallel agents for both test creation and implementation phases
+
+[Japanese](README.ja.md)
 
 ## Why?
 
-AIにコードを任せると、こんな問題が起きがち：
+When letting AI write code, these problems often occur:
 
-- テストは「書いて」と言わないと書かない
-- 品質チェックは人間が手動で実行
-- セッションが切れると何をやっていたか忘れる
+- Tests aren't written unless explicitly requested
+- Quality checks require manual execution
+- Context is lost when sessions end
 
-**tdd-skills** は、Claude Code に TDD を「強制」することでこれらを解決します。
+**tdd-skills** solves these by "enforcing" TDD on Claude Code.
 
 ## Getting Started
 
-### 1. プラグインインストール
+### 1. Install Plugin
 
 ```bash
 claude
 
 > /plugin marketplace add morodomi/tdd-skills
 > /plugin install tdd-core@tdd-skills
-> /plugin install tdd-php@tdd-skills  # 言語に合わせて選択
+> /plugin install tdd-php@tdd-skills  # Choose based on language
 ```
 
-### 2. プロジェクトセットアップ
+### 2. Project Setup
 
 ```bash
-> TDDセットアップ
-# または「onboard」
+> TDD setup
+# or "onboard"
 
-# 自動で以下を実行:
-# - フレームワーク検出
-# - CLAUDE.md 生成
-# - docs/ 構造作成
+# Automatically executes:
+# - Framework detection
+# - CLAUDE.md generation
+# - docs/ structure creation
 ```
 
-### 3. 開発開始
+### 3. Start Development
 
 ```bash
-> ログイン機能を追加したい
+> I want to add a login feature
 
-# 自動的にTDDサイクルが始まる:
-# INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
+# TDD cycle starts automatically:
+# INIT -> PLAN -> RED -> GREEN -> REFACTOR -> REVIEW -> COMMIT
 ```
 
 ## Installation
 
 ```bash
-# マーケットプレイスを登録
+# Register marketplace
 /plugin marketplace add morodomi/tdd-skills
 
-# TDDワークフローをインストール
+# Install TDD workflow
 /plugin install tdd-core@tdd-skills
 
-# 言語別品質ツール（プロジェクトに合わせて選択）
+# Language-specific quality tools (choose based on project)
 /plugin install tdd-php@tdd-skills       # PHP
 /plugin install tdd-laravel@tdd-skills   # Laravel
 /plugin install tdd-wordpress@tdd-skills # WordPress / Bedrock
@@ -67,158 +69,95 @@ claude
 /plugin install tdd-hugo@tdd-skills      # Hugo SSG
 /plugin install tdd-flutter@tdd-skills   # Flutter / Dart
 
-# 複数言語プロジェクト（例: Laravel + Alpine.js）
+# Multi-language projects (e.g., Laravel + Alpine.js)
 /plugin install tdd-php@tdd-skills
 /plugin install tdd-js@tdd-skills
-```
-
-## Migration
-
-### v3.0.0 → v3.1.0
-
-**新機能**: Brainstorm Enhancement
-- BLOCK時のBrainstorm質問追加（自動有効化）
-- PLANフェーズで2-5分タスク粒度を推奨
-
-### v2.x → v3.0.0
-
-**新機能**: Question-Driven TDD（リスクベース質問フロー）
-- 追加設定不要、自動的に有効化
-
-### v1.x → v2.0
-
-[Migration Guide](docs/MIGRATION.md) を参照。
-**主な変更**: `agent_docs/` → `.claude/rules/`, `.claude/hooks/` 構造に変更
-
-## Update
-
-```bash
-/plugin marketplace update tdd-skills
 ```
 
 ## TDD Workflow
 
 ```
-INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
+INIT -> PLAN -> RED -> GREEN -> REFACTOR -> REVIEW -> COMMIT
 ```
 
 | Phase | Skill | Description |
 |-------|-------|-------------|
-| INIT | tdd-init | サイクルドキュメント作成、スコープ確認 |
-| PLAN | tdd-plan | 設計・計画 |
-| RED | tdd-red | 失敗するテスト作成 |
-| GREEN | tdd-green | 最小限の実装 |
-| REFACTOR | tdd-refactor | コード改善 |
-| REVIEW | tdd-review | 品質チェック |
+| INIT | tdd-init | Create cycle document, scope confirmation |
+| PLAN | tdd-plan | Design & planning |
+| RED | tdd-red | Create failing tests (parallel) |
+| GREEN | tdd-green | Minimal implementation (parallel) |
+| REFACTOR | tdd-refactor | Code improvement |
+| REVIEW | tdd-review | Quality check |
 | COMMIT | tdd-commit | Git commit |
 
-## TDD Philosophy (v3.3.0)
+## TDD Philosophy (v4.0.0)
 
 ### Ticket-Based RED-GREEN-REFACTOR
 
-従来のTDD（Kent Beck）は「1テストずつRED→GREEN→REFACTOR」を推奨。
-tdd-skillsは**チケット（Cycle）単位**でRED→GREEN→REFACTORを回す。
+Traditional TDD (Kent Beck) recommends "RED->GREEN->REFACTOR per test".
+tdd-skills cycles RED->GREEN->REFACTOR per **ticket (Cycle)**.
 
 ```
-従来TDD:    test1 → impl1 → refactor → test2 → impl2 → refactor
-tdd-skills: [test1, test2, test3] → [impl1, impl2, impl3] → refactor
+Traditional: test1 -> impl1 -> refactor -> test2 -> impl2 -> refactor
+tdd-skills:  [test1, test2, test3] -> [impl1, impl2, impl3] -> refactor
 ```
 
 ### Why Batch Approach?
 
-| 観点 | 人間 | AIエージェント |
-|------|------|---------------|
-| モチベーション | 早くグリーンを見たい | 関係なし |
-| デバッグ | 変更が多いと難しい | ログで追跡可能 |
-| 並列化 | 不可能 | 複数エージェント並列実行 |
-| コンテキスト | 忘れる | Cycle docで維持 |
+| Aspect | Human | AI Agent |
+|--------|-------|----------|
+| Motivation | Want to see green quickly | Irrelevant |
+| Debugging | Hard with many changes | Trackable via logs |
+| Parallelization | Impossible | Multiple agents in parallel |
+| Context | Forgotten | Maintained in Cycle doc |
+
+### Parallel Execution (v3.3 & v4.0)
+
+```
+Test List: TC-01, TC-02, TC-03, TC-04
+  |
+  v
+RED Phase (v4.0):
+  Worker 1: TC-01, TC-02 -> tests/AuthTest.php
+  Worker 2: TC-03, TC-04 -> tests/UserTest.php
+  |
+  v
+GREEN Phase (v3.3):
+  Worker 1: TC-01, TC-02 -> src/Auth.php
+  Worker 2: TC-03, TC-04 -> src/User.php
+```
 
 Reference: [Canon TDD - Kent Beck](https://tidyfirst.substack.com/p/canon-tdd)
 
 ## Question-Driven TDD (v3.0.0)
 
-リスクスコアに基づいて、適切な質問を自動生成:
+Automatically generates appropriate questions based on risk score:
 
 ```
-ユーザー入力 → リスク判定 → 質問フロー → 設計精度向上
+User input -> Risk assessment -> Question flow -> Improved design accuracy
 ```
 
 ### Risk Score
 
 | Score | Result | Action |
 |-------|--------|--------|
-| 0-29 | PASS | 自動進行 |
-| 30-59 | WARN | スコープ確認 |
-| 60-100 | BLOCK | リスクタイプ別質問 |
+| 0-29 | PASS | Auto-proceed |
+| 30-59 | WARN | Scope confirmation + Quick questions |
+| 60-100 | BLOCK | Risk-type specific questions |
 
-### Risk Types (BLOCK時の質問)
+### Risk Types (BLOCK questions)
 
 | Type | Keywords | Questions |
 |------|----------|-----------|
-| Security | 認証, ログイン, 権限 | 認証方式, 2FA, 対象ユーザー |
-| External API | API, webhook, 決済 | API認証, エラー処理, レート制限 |
-| Data Changes | DB, マイグレーション | 既存データ影響, ロールバック |
-
-## Brainstorm Enhancement (v3.1.0)
-
-高リスク時（BLOCK）に問題の本質を深掘り:
-
-### Brainstorm Questions
-
-BLOCK時、リスクタイプ別質問の**前に**問題を明確化:
-
-| Question | Purpose |
-|----------|---------|
-| 本当に解決したい問題は何？ | 過剰設計の防止 |
-| 代替アプローチは検討した？ | 最適解の選択 |
-
-### Task Granularity (PLAN Phase)
-
-各タスクは「2-5分で完了する1アクション」に分割:
-
-| 粒度 | 判断 | 対応 |
-|------|------|------|
-| 2-5分 | 適切 | そのまま |
-| 5分超 | 大きすぎ | 分割する |
-| 2分未満 | 小さすぎ | 統合を検討 |
-
-Reference: [superpowers](https://github.com/obra/superpowers)
-
-## Roadmap
-
-| Version | Feature | Priority | Status |
-|---------|---------|----------|--------|
-| **v3.2** | 質問駆動強化 | High | Done |
-| **v3.3** | GREEN並列化 | High | Done |
-| **v4.0** | RED並列化 + 統合最適化 | Medium | Planned |
-
-### v3.2: 質問駆動強化
-
-WARN時（30-59）にも簡易質問を追加し、手戻りを削減:
-
-- INIT: 「本当に解決したい問題は何か」「代替案は検討したか」
-- PLAN: 「この設計で想定外のケースは何か」
-
-### v3.3: GREEN並列化
-
-Test Listの各テストを並列エージェントで実装:
-
-- コンテキスト共有（既存コード、設計方針）
-- 競合解決（同一ファイル編集時のマージ）
-- 期待効果: 実装フェーズの大幅な高速化
-
-### v4.0: RED並列化 + 統合最適化
-
-テスト作成の並列化とエージェント間フィードバック:
-
-- Test Listの各テストケースを並列作成
-- quality-gateの指摘を次回GREENにフィードバック
+| Security | auth, login, permission | Auth method, 2FA, target users |
+| External API | API, webhook, payment | API auth, error handling, rate limiting |
+| Data Changes | DB, migration | Existing data impact, rollback |
 
 ## Plugins
 
 | Plugin | Target | Tools |
 |--------|--------|-------|
-| **tdd-core** | 全言語共通 | TDD 7フェーズワークフロー |
+| **tdd-core** | All languages | TDD 7-phase workflow |
 | **tdd-php** | PHP | PHPStan, Pint, PHPUnit/Pest |
 | **tdd-laravel** | Laravel | Larastan, Pint, Pest |
 | **tdd-wordpress** | WordPress / Bedrock | phpstan-wordpress, WPCS, PHPUnit |
@@ -229,61 +168,47 @@ Test Listの各テストを並列エージェントで実装:
 | **tdd-hugo** | Hugo SSG | hugo build, htmltest |
 | **tdd-flutter** | Flutter / Dart | dart analyze, flutter test |
 
-## Usage
-
-```bash
-claude
-
-> ログイン機能を追加したい
-
-# Claudeが自動的にTDDサイクルを案内
-# 1. docs/cycles/ にサイクルドキュメント作成
-# 2. テスト作成 → 実装 → リファクタ → コミット
-```
-
 ## Quality Standards
 
-| 項目 | 目標 |
-|------|------|
-| カバレッジ | 90%以上 |
-| 静的解析 | エラー0件 |
+| Item | Target |
+|------|--------|
+| Coverage | 90%+ |
+| Static analysis | 0 errors |
+
+## Migration
+
+### v3.x -> v4.0.0
+
+**New feature**: RED Parallelization
+- Parallel test creation with red-worker agents
+- No additional configuration required, automatically enabled
+
+### v2.x -> v3.0.0
+
+**New feature**: Question-Driven TDD (risk-based question flow)
+- No additional configuration required, automatically enabled
+
+### v1.x -> v2.0
+
+See [Migration Guide](docs/MIGRATION.md).
+**Main change**: `agent_docs/` -> `.claude/rules/`, `.claude/hooks/` structure
+
+## Update
+
+```bash
+/plugin marketplace update tdd-skills
+```
 
 ## Cross-Platform Compatibility
 
-これらのスキルは Claude Code 以外の AI コーディングツールでも利用可能です。
+These skills can be used with AI coding tools other than Claude Code.
 
 | CLI Tool | Compatibility | Notes |
 |----------|---------------|-------|
 | **Claude Code** | Native | `.claude/skills/` |
-| **GitHub Copilot CLI** | Auto-detect | `.claude/skills/` を自動認識 |
-| **OpenAI Codex CLI** | Compatible | 同じ SKILL.md 形式 |
-| **Gemini CLI** | Via Extensions | 変換ツールで対応可能 |
-
-### GitHub Copilot CLI
-
-```bash
-# .claude/skills/ を自動で認識
-# 追加設定不要
-```
-
-### OpenAI Codex CLI
-
-```bash
-codex --enable skills
-# ~/.codex/skills/ にスキルを配置
-```
-
-### Gemini CLI
-
-```bash
-# GEMINI.md または Extensions として利用
-# Claude Skills → Gemini Extensions 変換ツールあり
-```
-
-**参考:**
-- [GitHub Copilot Agent Skills](https://github.blog/changelog/2025-12-18-github-copilot-now-supports-agent-skills/)
-- [OpenAI Codex Skills](https://developers.openai.com/codex/skills/)
-- [Gemini CLI Extensions](https://blog.google/technology/developers/gemini-cli-extensions/)
+| **GitHub Copilot CLI** | Auto-detect | Auto-recognizes `.claude/skills/` |
+| **OpenAI Codex CLI** | Compatible | Same SKILL.md format |
+| **Gemini CLI** | Via Extensions | Convertible with tools |
 
 ## License
 
@@ -291,6 +216,5 @@ codex --enable skills
 
 ## Links
 
-- [紹介記事（note.com）](https://note.com/morodomi/n/n5b089a48fe7b)
 - [Claude Code Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
 - [anthropics/skills](https://github.com/anthropics/skills)

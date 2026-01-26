@@ -5,29 +5,29 @@ Claude Codeを使った開発における厳格なTDDワークフローを実現
 ## Tech Stack
 
 - **配布形式**: Claude Code Plugins, Bash scripts
-- **対象言語**: PHP, Python
-- **品質ツール**: PHPStan, PHPUnit/Pest, pytest, mypy, Black
+- **対象言語**: PHP, Python, TypeScript, JavaScript, Flutter, Hugo
+- **品質ツール**: PHPStan, PHPUnit/Pest, pytest, mypy, Black, ESLint, Jest
 
 ## Project Structure
 
 ```
-ClaudeSkills/
-├── plugins/                  # Claude Code Plugins（推奨）
-│   ├── tdd-core/             # TDD 7フェーズワークフロー
-│   ├── tdd-php/              # PHP品質ツール
-│   └── tdd-python/           # Python品質ツール
-├── templates/                # Legacy templates
-│   ├── generic/
-│   ├── laravel/
-│   ├── flask/
-│   ├── hugo/
-│   └── bedrock/
+tdd-skills/
+├── plugins/                  # Claude Code Plugins
+│   ├── tdd-core/             # TDD 7フェーズワークフロー + エージェント
+│   │   ├── agents/           # green-worker, red-worker, reviewers
+│   │   └── skills/           # tdd-init, tdd-plan, tdd-red, etc.
+│   ├── tdd-php/              # PHP (PHPStan, Pint, PHPUnit)
+│   ├── tdd-laravel/          # Laravel (Larastan, Pest)
+│   ├── tdd-wordpress/        # WordPress (phpstan-wordpress, WPCS)
+│   ├── tdd-python/           # Python (pytest, mypy, Black)
+│   ├── tdd-flask/            # Flask (pytest-flask)
+│   ├── tdd-ts/               # TypeScript (tsc, ESLint, Jest)
+│   ├── tdd-js/               # JavaScript (ESLint, Prettier, Jest)
+│   ├── tdd-hugo/             # Hugo SSG (hugo build, htmltest)
+│   └── tdd-flutter/          # Flutter (dart analyze, flutter test)
 ├── .claude/
-│   ├── rules/                # 常時適用ルール
-│   ├── hooks/                # 推奨Hooks設定
-│   ├── commands/             # Slash Commands
-│   └── skills/               # Project Skills
-├── scripts/                  # Test scripts
+│   └── rules/                # 常時適用ルール (security, git-safety)
+├── scripts/                  # テストスクリプト
 └── docs/                     # Documentation
     └── cycles/               # TDDサイクルドキュメント
 ```

@@ -5,6 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2026-01-26
+
+### Added
+
+- **RED Parallelization**: red-worker エージェントによる並列テスト作成
+  - tdd-red/SKILL.md: 並列ワークフロー (Steps 2-4)
+  - plugins/tdd-core/agents/red-worker.md: ワーカーエージェント定義
+  - tdd-red/reference.md: Shared fixtures handling ドキュメント
+- リトライ上限 (最大2回) を tdd-red に追加
+- Cycle doc 検証エラー処理を red-worker に追加
+- scripts/test-red-parallelization.sh: RED並列化テストスクリプト
+
+### Changed
+
+- README.md を英語版に変更、README.ja.md を日本語版として追加
+- TDD Philosophy セクションを並列実行 (v3.3 & v4.0) で更新
+
+## [3.3.0] - 2026-01-26
+
+### Added
+
+- **GREEN Parallelization**: green-worker エージェントによる並列実装
+  - tdd-green/SKILL.md: 並列ワークフロー
+  - plugins/tdd-core/agents/green-worker.md: ワーカーエージェント定義
+- ファイル依存関係分析による競合回避戦略
+
+## [3.2.0] - 2026-01-26
+
+### Added
+
+- **WARN-level Quick Questions**: WARN時 (30-59) にも簡易質問を追加
+  - INIT: 「本当に解決したい問題は何か」「代替案は検討したか」
+  - PLAN: 「この設計で想定外のケースは何か」
+- 手戻り削減のためのスコープ確認強化
+
+## [3.1.0] - 2026-01-23
+
+### Added
+
+- **Brainstorm Enhancement**: BLOCK時に問題の本質を深掘り
+  - 「本当に解決したい問題は何？」
+  - 「代替アプローチは検討した？」
+- **Task Granularity**: PLANフェーズで2-5分タスク粒度を推奨
+
+### Changed
+
+- tdd-plan: タスク粒度ガイドを reference.md に追加
+
+## [3.0.0] - 2026-01-23
+
+### Added
+
+- **Question-Driven TDD**: リスクスコアに基づく質問フロー
+  - Risk Score: 0-29 (PASS), 30-59 (WARN), 60-100 (BLOCK)
+  - Risk Types: Security, External API, Data Changes
+- tdd-init: リスクスコア計算 (Step 4.5)
+- tdd-init: Brainstorm & Risk Questions (Step 4.6)
+- plan-review スキル: 3エージェント並行レビュー (scope, architecture, risk)
+
+### Changed
+
+- tdd-init: ステップ構成を Question-Driven 対応に変更
+
 ## [2.0.0] - 2026-01-22
 
 ### BREAKING CHANGES
