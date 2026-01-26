@@ -301,6 +301,10 @@ codex --enable skills
 
 [MIT](LICENSE)
 
+## Related Projects
+
+- [redteam-skills](https://github.com/morodomi/redteam-skills) - セキュリティ監査自動化プラグイン（Red Team）
+
 ## Links
 
 - [紹介記事（note.com）](https://note.com/morodomi/n/n5b089a48fe7b)

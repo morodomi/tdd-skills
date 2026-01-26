@@ -214,6 +214,10 @@ These skills can be used with AI coding tools other than Claude Code.
 
 [MIT](LICENSE)
 
+## Related Projects
+
+- [redteam-skills](https://github.com/morodomi/redteam-skills) - Security audit automation plugins (Red Team)
+
 ## Links
 
 - [Claude Code Skills](https://docs.anthropic.com/en/docs/claude-code/skills)
