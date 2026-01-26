@@ -2,7 +2,7 @@
 
 Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
-> **v3.1.0**: Brainstorm Enhancement - 高リスク時の問題深掘りとタスク粒度の明確化
+> **v3.3.0**: GREEN Parallelization - 並列エージェントによる実装フェーズの高速化
 
 ## Why?
 
@@ -188,8 +188,8 @@ Reference: [superpowers](https://github.com/obra/superpowers)
 
 | Version | Feature | Priority | Status |
 |---------|---------|----------|--------|
-| **v3.2** | 質問駆動強化 | High | Planned |
-| **v3.3** | GREEN並列化 | High | Planned |
+| **v3.2** | 質問駆動強化 | High | Done |
+| **v3.3** | GREEN並列化 | High | Done |
 | **v4.0** | RED並列化 + 統合最適化 | Medium | Planned |
 
 ### v3.2: 質問駆動強化

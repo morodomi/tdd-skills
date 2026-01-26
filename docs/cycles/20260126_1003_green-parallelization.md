@@ -1,7 +1,7 @@
 ---
 feature: tdd-core
 cycle: 20260126_1003
-phase: REVIEW
+phase: DONE
 created: 2026-01-26 10:03
 updated: 2026-01-26 10:03
 ---
@@ -160,5 +160,5 @@ tdd-green（並列実行がデフォルト）
 3. [Done] RED
 4. [Done] GREEN
 5. [Done] REFACTOR
-6. [Done] REVIEW <- Current
-7. [ ] COMMIT
+6. [Done] REVIEW
+7. [Done] COMMIT
