@@ -9,8 +9,8 @@ SKILL.mdの詳細情報。必要時のみ参照。
 | スコア | 判定 | アクション |
 |--------|------|-----------|
 | 0-29 | PASS | 確認表示のみで自動進行 |
-| 30-59 | WARN | スコープ確認（Step 5） |
-| 60-100 | BLOCK | 詳細質問で深掘り |
+| 30-59 | WARN | 簡易質問（Step 4.6）→ スコープ確認（Step 5） |
+| 60-100 | BLOCK | Brainstorm & リスク質問（Step 4.7） |
 
 ### キーワード別スコア
 
@@ -53,6 +53,36 @@ SKILL.mdの詳細情報。必要時のみ参照。
 ```
 
 Cycle docには全ての回答を記録する。
+
+### WARN質問（30-59）
+
+スコープ確認前に2つの軽量な質問を行う。結果はCycle docに記録しない。
+
+```yaml
+questions:
+  - question: "代替アプローチは検討しましたか？"
+    header: "Alternatives"
+    options:
+      - label: "はい、これが最善"
+        description: "代替案を評価した上でこれを選択"
+      - label: "いいえ、でもスコープは小さい"
+        description: "低リスクなのでこのまま進める"
+      - label: "選択肢を議論したい"
+        description: "もう少し検討が必要"
+    multiSelect: false
+  - question: "影響範囲を把握していますか？"
+    header: "Impact"
+    options:
+      - label: "はい、特定ファイルに限定"
+        description: "境界が明確で低リスク"
+      - label: "はい、複数箇所に影響"
+        description: "広めだが管理可能"
+      - label: "不明、調査が必要"
+        description: "追加分析が必要かも"
+    multiSelect: false
+```
+
+**目的**: 中リスク変更に対する簡易確認。BLOCK時の完全なインタビューは不要。
 
 ### Brainstorm（深掘り）質問（BLOCK: 60以上）
 

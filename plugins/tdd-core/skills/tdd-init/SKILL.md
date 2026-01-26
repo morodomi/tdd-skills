@@ -53,27 +53,19 @@ Calculate risk score (0-100) from user input:
 | Score | Result | Action |
 |-------|--------|--------|
 | 0-29 | PASS | Show confirmation, auto-proceed |
-| 30-59 | WARN | Scope confirmation (Step 5) |
-| 60-100 | BLOCK | Risk-type questions (Step 4.6) |
+| 30-59 | WARN | Quick questions (Step 4.6), then Step 5 |
+| 60-100 | BLOCK | Brainstorm & risk questions (Step 4.7) |
 
 Keyword scores: [reference.md](reference.md)
 Record `Risk: [score] ([result])` in Cycle doc.
 
-### Step 4.6: Brainstorm & Risk Questions (BLOCK only)
+### Step 4.6: Quick Questions (WARN only)
 
-**First, clarify the problem** (Brainstorm):
-- What problem are you really trying to solve?
-- Have you considered alternative approaches?
+Ask 2 lightweight questions. Templates: [reference.md](reference.md#warn-questions-30-59)
 
-**Then, risk-type questions** based on detected keywords:
+### Step 4.7: Brainstorm & Risk Questions (BLOCK only)
 
-| Risk Type | Questions |
-|-----------|-----------|
-| Security | Auth method, target users, 2FA |
-| External API | API auth, error handling, rate limiting |
-| Data Changes | Existing data impact, rollback |
-
-Templates: [reference.md](reference.md). Record in `Risk Interview` section.
+Brainstorm first, then risk-type questions. Templates: [reference.md](reference.md#brainstorm-questions-block-60-1)
 
 ### Step 5: Scope (Layer) Confirmation
 

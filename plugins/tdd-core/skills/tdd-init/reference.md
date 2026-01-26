@@ -9,8 +9,8 @@ Detailed information for SKILL.md. Refer only when needed.
 | Score | Result | Action |
 |-------|--------|--------|
 | 0-29 | PASS | Show confirmation, auto-proceed |
-| 30-59 | WARN | Scope confirmation (Step 5) |
-| 60-100 | BLOCK | Deep-dive with questions |
+| 30-59 | WARN | Quick questions (Step 4.6), then Scope confirmation (Step 5) |
+| 60-100 | BLOCK | Brainstorm & risk questions (Step 4.7) |
 
 ### Keyword Scores
 
@@ -53,6 +53,36 @@ Example: "Login feature with API integration and DB changes"
 ```
 
 Record all answers in the Cycle doc.
+
+### WARN Questions (30-59)
+
+Ask 2 lightweight questions to confirm scope before proceeding. Results are NOT recorded in Cycle doc.
+
+```yaml
+questions:
+  - question: "Have you considered alternative approaches?"
+    header: "Alternatives"
+    options:
+      - label: "Yes, this is the best option"
+        description: "Evaluated alternatives and chose this"
+      - label: "No, but scope is small enough"
+        description: "Low risk, proceed anyway"
+      - label: "Want to discuss options"
+        description: "Need more exploration"
+    multiSelect: false
+  - question: "Do you understand the impact scope?"
+    header: "Impact"
+    options:
+      - label: "Yes, limited to specific files"
+        description: "Clear boundaries, low risk"
+      - label: "Yes, but touches multiple areas"
+        description: "Broader scope, manageable"
+      - label: "Not sure, need to investigate"
+        description: "May need more analysis"
+    multiSelect: false
+```
+
+**Purpose**: Quick sanity check for medium-risk changes without the full BLOCK interview.
 
 ### Brainstorm Questions (BLOCK: 60+)
 
