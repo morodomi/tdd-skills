@@ -161,6 +161,36 @@ BLOCK時、リスクタイプ別質問の**前に**問題を明確化:
 
 Reference: [superpowers](https://github.com/obra/superpowers)
 
+## Roadmap
+
+| Version | Feature | Priority | Status |
+|---------|---------|----------|--------|
+| **v3.2** | 質問駆動強化 | High | Planned |
+| **v3.3** | GREEN並列化 | High | Planned |
+| **v4.0** | RED並列化 + 統合最適化 | Medium | Planned |
+
+### v3.2: 質問駆動強化
+
+WARN時（30-59）にも簡易質問を追加し、手戻りを削減:
+
+- INIT: 「本当に解決したい問題は何か」「代替案は検討したか」
+- PLAN: 「この設計で想定外のケースは何か」
+
+### v3.3: GREEN並列化
+
+Test Listの各テストを並列エージェントで実装:
+
+- コンテキスト共有（既存コード、設計方針）
+- 競合解決（同一ファイル編集時のマージ）
+- 期待効果: 実装フェーズの大幅な高速化
+
+### v4.0: RED並列化 + 統合最適化
+
+テスト作成の並列化とエージェント間フィードバック:
+
+- Test Listの各テストケースを並列作成
+- quality-gateの指摘を次回GREENにフィードバック
+
 ## Plugins
 
 | Plugin | Target | Tools |
