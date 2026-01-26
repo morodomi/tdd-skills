@@ -112,6 +112,29 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | REVIEW | tdd-review | 品質チェック |
 | COMMIT | tdd-commit | Git commit |
 
+## TDD Philosophy (v3.3.0)
+
+### Ticket-Based RED-GREEN-REFACTOR
+
+従来のTDD（Kent Beck）は「1テストずつRED→GREEN→REFACTOR」を推奨。
+tdd-skillsは**チケット（Cycle）単位**でRED→GREEN→REFACTORを回す。
+
+```
+従来TDD:    test1 → impl1 → refactor → test2 → impl2 → refactor
+tdd-skills: [test1, test2, test3] → [impl1, impl2, impl3] → refactor
+```
+
+### Why Batch Approach?
+
+| 観点 | 人間 | AIエージェント |
+|------|------|---------------|
+| モチベーション | 早くグリーンを見たい | 関係なし |
+| デバッグ | 変更が多いと難しい | ログで追跡可能 |
+| 並列化 | 不可能 | 複数エージェント並列実行 |
+| コンテキスト | 忘れる | Cycle docで維持 |
+
+Reference: [Canon TDD - Kent Beck](https://tidyfirst.substack.com/p/canon-tdd)
+
 ## Question-Driven TDD (v3.0.0)
 
 リスクスコアに基づいて、適切な質問を自動生成:

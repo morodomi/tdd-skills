@@ -24,7 +24,6 @@ RED Progress:
 
 - 実装コード作成（GREENで行う）
 - テストを通すための実装
-- 複数テストの同時作成（1つずつ）
 
 ## Workflow
 
@@ -34,7 +33,7 @@ RED Progress:
 ls -t docs/cycles/*.md 2>/dev/null | head -1
 ```
 
-Test ListのTODOから1つ選択してWIPに移動。
+Test ListのTODOからテストケースを選択してWIPに移動。
 
 ### Step 2: カテゴリ別チェック
 

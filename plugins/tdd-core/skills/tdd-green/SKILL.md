@@ -5,18 +5,17 @@ description: テストを通すための最小限の実装を行う。REDの次�
 
 # TDD GREEN Phase
 
-テストを通すための最小限の実装を行う。
+テストを通すための最小限の実装を行う（並列実行がデフォルト）。
 
 ## Progress Checklist
 
-コピーして進捗を追跡:
-
 ```
 GREEN Progress:
-- [ ] 最新Cycle doc確認
-- [ ] WIPのテストを確認
-- [ ] 最小限の実装を作成
-- [ ] テスト実行→成功確認
+- [ ] Cycle doc確認、WIPテスト抽出
+- [ ] ファイル依存関係分析
+- [ ] green-worker並列起動
+- [ ] 結果収集・マージ
+- [ ] 全テスト実行→成功確認
 - [ ] Cycle doc更新（WIP→DONE）
 - [ ] REFACTORフェーズへ誘導
 ```
@@ -35,42 +34,56 @@ GREEN Progress:
 ls -t docs/cycles/*.md 2>/dev/null | head -1
 ```
 
-WIPのテストケースを確認。
+WIPのテストケースを抽出。
 
-### Step 2: 最小実装
+### Step 2: ファイル依存関係分析
 
-**原則**: テストを通すために必要な最小限のコードのみ
+テストケースを対象ファイル別にグルーピング:
 
-### Step 3: テスト実行→成功確認
+| ファイル | テストケース |
+|----------|-------------|
+| src/Auth.php | TC-01, TC-02 |
+| src/User.php | TC-03 |
 
-```bash
-php artisan test --filter=TestName  # PHP
-pytest tests/test_xxx.py -v          # Python
+**原則**: 同一ファイル→同一workerに割り当て（競合回避）
+
+### Step 3: green-worker並列起動
+
+Taskツールで `tdd-core:green-worker` を並列起動:
+
+```
+Task 1: TC-01, TC-02 → src/Auth.php
+Task 2: TC-03 → src/User.php
 ```
 
-**期待**: テストが**成功**すること（GREEN状態）
+### Step 4: 結果収集・マージ
+
+全workerの完了を待ち、結果を統合。失敗時は該当workerのみ再試行。
+
+### Step 5: 全テスト実行→成功確認
+
+```bash
+php artisan test  # PHP
+pytest            # Python
+```
+
+**期待**: 全テストが**成功**すること（GREEN状態）
 
 ### Verification Gate
 
 | 結果 | 判定 | アクション |
 |------|------|-----------|
-| テスト成功 | PASS | REFACTORへ自動進行 |
-| テスト失敗 | BLOCK | 実装修正して再試行 |
+| 全テスト成功 | PASS | REFACTORへ自動進行 |
+| テスト失敗 | BLOCK | 該当worker再試行 |
 
-### Step 4: 次のテストまたはREFACTOR
-
-- Test Listに残りあり → REDフェーズに戻る
-- 全テスト完了 → REFACTORフェーズへ
+### Step 6: 完了→REFACTOR誘導
 
 ```
-================================================================================
-GREEN完了
-================================================================================
-テスト成功を確認しました。
+GREEN完了。全テスト成功を確認しました。
 次: REFACTORフェーズ（コード改善）
-================================================================================
 ```
 
 ## Reference
 
 - 詳細: [reference.md](reference.md)
+- green-worker: [../../agents/green-worker.md](../../agents/green-worker.md)

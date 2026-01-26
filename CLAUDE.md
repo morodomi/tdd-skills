@@ -40,6 +40,32 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 
 **絶対ルール**: エラーを見つけたら、まずテストを書く
 
+## TDD Philosophy (AI-Optimized)
+
+### Ticket-Based RED-GREEN-REFACTOR
+
+従来のTDD（Kent Beck）は「1テストずつRED→GREEN→REFACTOR」を推奨するが、
+tdd-skillsは**チケット（Cycle）単位**でRED→GREEN→REFACTORを回す。
+
+```
+従来TDD:  test1→impl1→refactor → test2→impl2→refactor → ...
+tdd-skills: [test1,test2,test3] → [impl1,impl2,impl3] → refactor
+```
+
+### Why Batch Approach for AI?
+
+| 観点 | 人間 | AIエージェント |
+|------|------|---------------|
+| モチベーション | 早くグリーンを見たい | 関係なし |
+| デバッグ | 変更が多いと難しい | ログで追跡可能 |
+| 並列化 | 1人では不可能 | 複数エージェント並列実行可能 |
+| コンテキスト | 忘れる | Cycle docで維持 |
+
+### References
+
+- [Canon TDD - Kent Beck](https://tidyfirst.substack.com/p/canon-tdd)
+- [Programmer Test Principles - Kent Beck](https://medium.com/@kentbeck_7670/programmer-test-principles-d01c064d7934)
+
 ## Quality Standards
 
 | 指標 | 目標 |
