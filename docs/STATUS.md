@@ -36,17 +36,17 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-26 | stale-references-cleanup | DONE |
 | 2026-01-26 | migration-guide-update | DONE |
 | 2026-01-26 | tdd-onboard-cleanup | DONE |
 | 2026-01-26 | claudemd-template-update | DONE |
-| 2026-01-26 | red-parallelization | DONE |
 
 ## Quality Metrics
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 47 | - |
-| Open Issues | 2 | 0 |
+| Cycle docs | 48 | - |
+| Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
 ---
