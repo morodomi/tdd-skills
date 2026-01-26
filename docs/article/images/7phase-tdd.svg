@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grayGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6b7280;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4b5563;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="200" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#f1f5f9" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">7-Phase TDD Workflow</text>
+
+  <!-- Phase boxes -->
+  <!-- INIT -->
+  <rect x="20" y="70" width="85" height="50" rx="8" fill="url(#grayGrad)"/>
+  <text x="62.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">INIT</text>
+
+  <!-- Arrow -->
+  <path d="M110 95 L125 95" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- PLAN -->
+  <rect x="130" y="70" width="85" height="50" rx="8" fill="url(#blueGrad)"/>
+  <text x="172.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">PLAN</text>
+
+  <!-- Arrow -->
+  <path d="M220 95 L235 95" stroke="#64748b" stroke-width="2" fill="none"/>
+
+  <!-- RED -->
+  <rect x="240" y="70" width="85" height="50" rx="8" fill="url(#redGrad)"/>
+  <text x="282.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">RED</text>
+
+  <!-- Arrow -->
+  <path d="M330 95 L345 95" stroke="#64748b" stroke-width="2" fill="none"/>
+
+  <!-- GREEN -->
+  <rect x="350" y="70" width="85" height="50" rx="8" fill="url(#greenGrad)"/>
+  <text x="392.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">GREEN</text>
+
+  <!-- Arrow -->
+  <path d="M440 95 L455 95" stroke="#64748b" stroke-width="2" fill="none"/>
+
+  <!-- REFACTOR -->
+  <rect x="460" y="70" width="85" height="50" rx="8" fill="url(#orangeGrad)"/>
+  <text x="502.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">REFACTOR</text>
+
+  <!-- Arrow -->
+  <path d="M550 95 L565 95" stroke="#64748b" stroke-width="2" fill="none"/>
+
+  <!-- REVIEW -->
+  <rect x="570" y="70" width="85" height="50" rx="8" fill="url(#purpleGrad)"/>
+  <text x="612.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">REVIEW</text>
+
+  <!-- Arrow -->
+  <path d="M660 95 L675 95" stroke="#64748b" stroke-width="2" fill="none"/>
+
+  <!-- COMMIT -->
+  <rect x="680" y="70" width="85" height="50" rx="8" fill="url(#grayGrad)"/>
+  <text x="722.5" y="100" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">COMMIT</text>
+
+  <!-- Descriptions -->
+  <text x="62.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Cycle doc</text>
+  <text x="172.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Test List</text>
+  <text x="282.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Failing test</text>
+  <text x="392.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Make it pass</text>
+  <text x="502.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Clean up</text>
+  <text x="612.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Quality gate</text>
+  <text x="722.5" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="10">Git commit</text>
+
+  <!-- Review markers -->
+  <text x="172.5" y="170" text-anchor="middle" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="9">plan-review</text>
+  <text x="612.5" y="170" text-anchor="middle" fill="#fbbf24" font-family="system-ui, sans-serif" font-size="9">quality-gate</text>
+</svg>

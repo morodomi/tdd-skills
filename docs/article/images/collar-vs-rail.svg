@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 280">
+  <defs>
+    <linearGradient id="failGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="successGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16a34a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="280" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" fill="#f1f5f9" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Collar vs Rail</text>
+
+  <!-- Left: Collar (fails) -->
+  <rect x="30" y="50" width="300" height="200" rx="12" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+  <text x="180" y="80" text-anchor="middle" fill="#f87171" font-family="system-ui, sans-serif" font-size="16" font-weight="bold">Collar (CLAUDE.md)</text>
+
+  <!-- Collar illustration -->
+  <circle cx="180" cy="130" r="35" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="8,4"/>
+  <text x="180" y="135" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Claude</text>
+
+  <!-- Escape arrow -->
+  <path d="M215 130 C 250 130, 260 100, 280 100" stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#arrowRed)"/>
+  <text x="270" y="90" fill="#f87171" font-family="system-ui, sans-serif" font-size="10">escapes</text>
+
+  <text x="180" y="190" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">"Don't do X"</text>
+  <text x="180" y="210" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">"Follow this rule"</text>
+  <text x="180" y="235" text-anchor="middle" fill="#ef4444" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">Can be ignored</text>
+
+  <!-- Right: Rail (works) -->
+  <rect x="370" y="50" width="300" height="200" rx="12" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="520" y="80" text-anchor="middle" fill="#4ade80" font-family="system-ui, sans-serif" font-size="16" font-weight="bold">Rail (Skills)</text>
+
+  <!-- Rail illustration -->
+  <rect x="420" y="115" width="200" height="30" rx="4" fill="none" stroke="#22c55e" stroke-width="3"/>
+  <circle cx="470" cy="130" r="12" fill="#22c55e"/>
+  <text x="470" y="134" text-anchor="middle" fill="#0f172a" font-family="system-ui, sans-serif" font-size="8" font-weight="bold">C</text>
+
+  <!-- Movement arrow on rail -->
+  <path d="M490 130 L560 130" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+
+  <text x="520" y="175" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">allowed-tools: [Read, Write]</text>
+  <text x="520" y="195" text-anchor="middle" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Structural constraint</text>
+  <text x="520" y="235" text-anchor="middle" fill="#22c55e" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">Cannot escape</text>
+
+  <!-- VS divider -->
+  <line x1="350" y1="70" x2="350" y2="230" stroke="#64748b" stroke-width="1" stroke-dasharray="4,4"/>
+</svg>
