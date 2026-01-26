@@ -114,28 +114,7 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | REVIEW | tdd-review | 品質チェック |
 | COMMIT | tdd-commit | Git commit |
 
-## TDD Philosophy (v4.0.0)
-
-### Ticket-Based RED-GREEN-REFACTOR
-
-従来のTDD（Kent Beck）は「1テストずつRED→GREEN→REFACTOR」を推奨。
-tdd-skillsは**チケット（Cycle）単位**でRED→GREEN→REFACTORを回す。
-
-```
-従来TDD:    test1 → impl1 → refactor → test2 → impl2 → refactor
-tdd-skills: [test1, test2, test3] → [impl1, impl2, impl3] → refactor
-```
-
-### Why Batch Approach?
-
-| 観点 | 人間 | AIエージェント |
-|------|------|---------------|
-| モチベーション | 早くグリーンを見たい | 関係なし |
-| デバッグ | 変更が多いと難しい | ログで追跡可能 |
-| 並列化 | 不可能 | 複数エージェント並列実行 |
-| コンテキスト | 忘れる | Cycle docで維持 |
-
-### Parallel Execution (v3.3 & v4.0)
+## Parallel Execution (v3.3 & v4.0)
 
 ```
 Test List: TC-01, TC-02, TC-03, TC-04
@@ -150,8 +129,6 @@ GREENフェーズ (v3.3):
   Worker 1: TC-01, TC-02 → src/Auth.php
   Worker 2: TC-03, TC-04 → src/User.php
 ```
-
-Reference: [Canon TDD - Kent Beck](https://tidyfirst.substack.com/p/canon-tdd)
 
 ## Question-Driven TDD (v3.0.0)
 
@@ -204,27 +181,7 @@ Reference: [superpowers](https://github.com/obra/superpowers)
 
 ## Roadmap
 
-| Version | Feature | Priority | Status |
-|---------|---------|----------|--------|
-| **v3.2** | 質問駆動強化 | High | Done |
-| **v3.3** | GREEN並列化 | High | Done |
-| **v4.0** | RED並列化 | High | Done |
-| **v4.1** | フィードバックループ | Medium | Planned |
-
-### v4.0: RED並列化 (Current)
-
-Test Listの各テストを並列エージェントで作成:
-
-- red-workerエージェントによる並列テスト作成
-- テストファイル別のworker割り当て（競合回避）
-- Shared fixtures handling（conftest.py等）
-
-### v4.1: フィードバックループ (Planned)
-
-quality-gateの指摘を次回サイクルにフィードバック:
-
-- Cycle doc間でパターンを学習
-- 次回のPLAN/GREENで活用
+次のバージョンは検討中です。フィードバックや要望は [GitHub Issues](https://github.com/morodomi/tdd-skills/issues) へ。
 
 ## Plugins
 

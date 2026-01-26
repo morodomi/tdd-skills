@@ -90,28 +90,7 @@ INIT -> PLAN -> RED -> GREEN -> REFACTOR -> REVIEW -> COMMIT
 | REVIEW | tdd-review | Quality check |
 | COMMIT | tdd-commit | Git commit |
 
-## TDD Philosophy (v4.0.0)
-
-### Ticket-Based RED-GREEN-REFACTOR
-
-Traditional TDD (Kent Beck) recommends "RED->GREEN->REFACTOR per test".
-tdd-skills cycles RED->GREEN->REFACTOR per **ticket (Cycle)**.
-
-```
-Traditional: test1 -> impl1 -> refactor -> test2 -> impl2 -> refactor
-tdd-skills:  [test1, test2, test3] -> [impl1, impl2, impl3] -> refactor
-```
-
-### Why Batch Approach?
-
-| Aspect | Human | AI Agent |
-|--------|-------|----------|
-| Motivation | Want to see green quickly | Irrelevant |
-| Debugging | Hard with many changes | Trackable via logs |
-| Parallelization | Impossible | Multiple agents in parallel |
-| Context | Forgotten | Maintained in Cycle doc |
-
-### Parallel Execution (v3.3 & v4.0)
+## Parallel Execution (v3.3 & v4.0)
 
 ```
 Test List: TC-01, TC-02, TC-03, TC-04
@@ -126,8 +105,6 @@ GREEN Phase (v3.3):
   Worker 1: TC-01, TC-02 -> src/Auth.php
   Worker 2: TC-03, TC-04 -> src/User.php
 ```
-
-Reference: [Canon TDD - Kent Beck](https://tidyfirst.substack.com/p/canon-tdd)
 
 ## Question-Driven TDD (v3.0.0)
 
