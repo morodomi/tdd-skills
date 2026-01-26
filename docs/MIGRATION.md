@@ -14,9 +14,43 @@ v2.0 では `agent_docs/` ディレクトリが `.claude/` 構造に変更され
 - Rules と Hooks の明確な分離
 - Claude Code 公式推奨構造への準拠
 
+### v2.0 ファイル構造
+
+```
+.claude/
+├── rules/
+│   ├── git-safety.md      # Git安全規則
+│   ├── security.md        # セキュリティチェックリスト
+│   └── git-conventions.md # Git規約
+└── hooks/
+    └── recommended.md     # 推奨Hooks設定
+```
+
+---
+
+## Recommended: tdd-onboard 実行
+
+最も簡単なマイグレーション方法は `tdd-onboard` を実行することです。
+
+```bash
+claude
+
+> TDDセットアップ
+# または「onboard」
+```
+
+`tdd-onboard` は以下を自動実行します:
+1. `.claude/rules/` と `.claude/hooks/` を作成
+2. 必要なルールファイルを生成
+3. CLAUDE.md を更新（既存があればマージ確認）
+
+**注意**: 既存の CLAUDE.md がある場合、マージ方法を確認されます。
+
 ---
 
 ## Manual Migration
+
+手動でマイグレーションする場合:
 
 ### Step 1: 新ディレクトリ作成
 
@@ -24,35 +58,21 @@ v2.0 では `agent_docs/` ディレクトリが `.claude/` 構造に変更され
 mkdir -p .claude/{rules,hooks}
 ```
 
-### Step 2: ファイル移動/リネーム
+### Step 2: ルールファイル作成
 
-| v1.x (Before) | v2.0 (After) |
-|---------------|--------------|
-| `agent_docs/tdd_workflow.md` | `.claude/rules/tdd-workflow.md` |
-| `agent_docs/testing_guide.md` | `.claude/rules/testing-guide.md` |
-| `agent_docs/quality_standards.md` | `.claude/rules/quality.md` |
-| `agent_docs/commands.md` | `.claude/rules/commands.md` |
-
-```bash
-# 例: ファイル移動
-mv agent_docs/tdd_workflow.md .claude/rules/tdd-workflow.md
-mv agent_docs/testing_guide.md .claude/rules/testing-guide.md
-mv agent_docs/quality_standards.md .claude/rules/quality.md
-mv agent_docs/commands.md .claude/rules/commands.md
-```
-
-### Step 3: 新規ファイル追加
-
-v2.0 で追加された新しいテンプレートをコピー:
+以下の3ファイルを `.claude/rules/` に作成:
 
 | ファイル | 説明 |
 |---------|------|
-| `.claude/rules/security.md` | セキュリティチェックリスト |
-| `.claude/rules/git-safety.md` | Git安全規則 |
-| `.claude/rules/git-conventions.md` | Git規約 |
-| `.claude/hooks/recommended.md` | 推奨Hooks設定 |
+| `git-safety.md` | Git安全規則（--no-verify禁止等） |
+| `security.md` | セキュリティチェックリスト |
+| `git-conventions.md` | コミットメッセージ規約 |
 
-テンプレートは `tdd-onboard` の reference.md から取得できます。
+テンプレートは `tdd-onboard` の [reference.md](https://github.com/morodomi/tdd-skills/blob/main/plugins/tdd-core/skills/tdd-onboard/reference.md) を参照。
+
+### Step 3: Hooks設定
+
+`.claude/hooks/recommended.md` を作成（任意）。
 
 ### Step 4: CLAUDE.md 更新
 
@@ -65,6 +85,12 @@ CLAUDE.md に Configuration セクションを追加:
 |-------------|------|
 | .claude/rules/ | 常時適用ルール |
 | .claude/hooks/ | 推奨Hooks設定 |
+
+### Rules
+
+- git-safety.md - Git安全規則
+- security.md - セキュリティチェック
+- git-conventions.md - Git規約
 ```
 
 ### Step 5: 旧ディレクトリ削除
@@ -72,21 +98,6 @@ CLAUDE.md に Configuration セクションを追加:
 ```bash
 rm -rf agent_docs/
 ```
-
----
-
-## Alternative: tdd-onboard 再実行
-
-手動マイグレーションの代わりに、`tdd-onboard` を再実行することで自動的に新構造を生成できます。
-
-```bash
-claude
-
-> TDDセットアップ
-# または「onboard」
-```
-
-**注意**: 既存の CLAUDE.md がある場合、マージ方法を確認されます。
 
 ---
 
