@@ -30,8 +30,7 @@ bash scripts/test-skills-structure.sh
 | # | Title | Status |
 |---|-------|--------|
 | 26 | マイグレーションガイド作成 | Open |
-| 25 | tdd-onboard SKILL.md / reference.md 更新 | Open |
-| 19 | tdd-onboard v2.0 | Open (parent) |
+| 19 | tdd-onboard v2.0 | Open (parent, #26残り) |
 | 15 | tdd-fastapi プラグイン | Open (deferred) |
 | 6 | フレームワーク固有quality Skill | Open |
 
@@ -39,17 +38,17 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-26 | tdd-onboard-cleanup | DONE |
 | 2026-01-26 | claudemd-template-update | DONE |
 | 2026-01-26 | red-parallelization | DONE |
 | 2026-01-26 | green-parallelization | DONE |
-| 2026-01-26 | question-driven-warn | DONE |
 
 ## Quality Metrics
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 45 | - |
-| Open Issues | 5 | 0 |
+| Cycle docs | 46 | - |
+| Open Issues | 4 | 0 |
 | Plugin数 | 10 | - |
 
 ---
