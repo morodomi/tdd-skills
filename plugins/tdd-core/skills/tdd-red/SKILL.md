@@ -1,22 +1,22 @@
 ---
 name: tdd-red
-description: テストコードを作成し、失敗することを確認する。PLANの次フェーズ。「テスト書いて」「red」で起動。
+description: テストコードを作成し、失敗することを確認する（並列実行対応）。PLANの次フェーズ。「テスト書いて」「red」で起動。
 ---
 
 # TDD RED Phase
 
-テストコードを作成し、失敗することを確認する。
+テストコードを作成し、失敗することを確認する（並列実行がデフォルト）。
 
 ## Progress Checklist
-
-コピーして進捗を追跡:
 
 ```
 RED Progress:
 - [ ] Cycle doc確認、TODO→WIPに移動
-- [ ] カテゴリ別チェック
-- [ ] テストコード作成
-- [ ] テスト実行→失敗確認
+- [ ] テストファイル依存関係分析
+- [ ] red-worker並列起動
+- [ ] 結果収集・マージ
+- [ ] 全テスト実行→失敗確認
+- [ ] Cycle doc更新（WIP→DONE相当）
 - [ ] GREENフェーズへ誘導
 ```
 
@@ -35,36 +35,31 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 
 Test ListのTODOからテストケースを選択してWIPに移動。
 
-### Step 2: カテゴリ別チェック
+### Step 2: テストファイル依存関係分析
 
-該当カテゴリに応じて具体的な観点を確認:
+テストケースを対象テストファイル別にグルーピング:
 
-| カテゴリ | チェック項目 |
-|----------|------------|
-| **境界値** | 0、-1、MAX_INT、最小/最大長 |
-| **エッジケース** | null、undefined、空文字、空配列 |
-| **異常系** | 型違い、フォーマット違反、存在しないID |
-| **権限** | 未認証、権限不足、他ユーザーのデータ |
-| **外部依存** | API失敗、DB失敗、タイムアウト |
-| **セキュリティ** | SQLi、XSS、パストラバーサル |
+| テストファイル | テストケース |
+|---------------|-------------|
+| tests/AuthTest.php | TC-01, TC-02 |
+| tests/UserTest.php | TC-03 |
 
-追加すべきケースがあればTest ListのTODOに追加。
+**原則**: 同一テストファイル→同一workerに割り当て（競合回避）
 
-### Step 3: テスト作成
+### Step 3: red-worker並列起動
 
-Given/When/Then形式でテストを作成:
+Taskツールで `tdd-core:red-worker` を並列起動:
 
-```php
-#[Test]
-public function user_can_login(): void
-{
-    // Given: 有効なユーザーが存在
-    // When: 正しい認証情報でログイン
-    // Then: ダッシュボードにリダイレクト
-}
+```
+Task 1: TC-01, TC-02 → tests/AuthTest.php
+Task 2: TC-03 → tests/UserTest.php
 ```
 
-### Step 4: テスト実行→失敗確認
+### Step 4: 結果収集・マージ
+
+全workerの完了を待ち、結果を統合。失敗時は該当workerのみ再試行（最大2回）。
+
+### Step 5: テスト実行→失敗確認
 
 ```bash
 php artisan test --filter=TestName  # PHP
@@ -80,7 +75,7 @@ pytest tests/test_xxx.py -v          # Python
 | テスト失敗 | PASS | GREENへ自動進行 |
 | テスト成功 | BLOCK | テスト条件を見直して再試行 |
 
-### Step 5: 完了→GREEN誘導
+### Step 6: 完了→GREEN誘導
 
 ```
 ================================================================================
@@ -94,4 +89,5 @@ RED完了
 ## Reference
 
 - 詳細: [reference.md](reference.md)
+- red-worker: [../../agents/red-worker.md](../../agents/red-worker.md)
 - テストガイド: `.claude/rules/testing-guide.md`
