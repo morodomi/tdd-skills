@@ -64,17 +64,47 @@ else
     test_fail "agents directory not found"
 fi
 
-AGENT_FILES="correctness-reviewer performance-reviewer security-reviewer guidelines-reviewer scope-reviewer architecture-reviewer risk-reviewer"
+AGENT_FILES="correctness-reviewer performance-reviewer security-reviewer guidelines-reviewer scope-reviewer architecture-reviewer risk-reviewer product-reviewer"
 AGENT_COUNT=0
 for agent in $AGENT_FILES; do
     if [ -f "$AGENTS_DIR/$agent.md" ]; then
         ((AGENT_COUNT++))
     fi
 done
-if [ "$AGENT_COUNT" -eq 7 ]; then
-    test_pass "tdd-core has 7 reviewer agents"
+if [ "$AGENT_COUNT" -eq 8 ]; then
+    test_pass "tdd-core has 8 reviewer agents"
 else
-    test_fail "tdd-core has $AGENT_COUNT/7 reviewer agents"
+    test_fail "tdd-core has $AGENT_COUNT/8 reviewer agents"
+fi
+
+# TC-02b2: product-reviewer agent exists
+if [ -f "$AGENTS_DIR/product-reviewer.md" ]; then
+    test_pass "product-reviewer agent exists"
+else
+    test_fail "product-reviewer agent not found"
+fi
+
+# TC-02b3: plan-review includes product-reviewer
+PLAN_REVIEW_SKILL="$PLUGINS_DIR/tdd-core/skills/plan-review/SKILL.md"
+if grep -q "product-reviewer" "$PLAN_REVIEW_SKILL" 2>/dev/null; then
+    test_pass "plan-review includes product-reviewer"
+else
+    test_fail "plan-review missing product-reviewer"
+fi
+
+# TC-02b4: quality-gate includes product-reviewer
+QG_SKILL="$PLUGINS_DIR/tdd-core/skills/quality-gate/SKILL.md"
+if grep -q "product-reviewer" "$QG_SKILL" 2>/dev/null; then
+    test_pass "quality-gate includes product-reviewer"
+else
+    test_fail "quality-gate missing product-reviewer"
+fi
+
+# TC-02b5: risk-reviewer does not contain business impact wording
+if ! grep -qi "ビジネス\|business" "$AGENTS_DIR/risk-reviewer.md" 2>/dev/null; then
+    test_pass "risk-reviewer focused on technical risk (no business wording)"
+else
+    test_fail "risk-reviewer still contains business impact wording"
 fi
 
 # TC-02c: quality-gate skill exists (replaces code-review)
