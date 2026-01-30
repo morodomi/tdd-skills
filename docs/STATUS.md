@@ -28,9 +28,6 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
-| 39 | tdd-commitでドキュメント更新をコミット前に移動 | Open |
-| 38 | tdd-reviewでquality-gateを必須実行にする | Open |
-| 37 | plugin.jsonからversionフィールドを削除 | Open |
 | 15 | tdd-fastapi プラグイン | Open (deferred) |
 | 6 | フレームワーク固有quality Skill | Open |
 
@@ -51,7 +48,7 @@ bash scripts/test-skills-structure.sh
 | 指標 | 現状 | 目標 |
 |------|------|------|
 | Cycle docs | 51 | - |
-| Open Issues | 2 | 0 |
+| Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
 ---
