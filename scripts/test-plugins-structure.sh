@@ -84,6 +84,21 @@ else
     test_fail "quality-gate skill not found"
 fi
 
+# TC-02c2: tdd-review SKILL.md marks quality-gate as mandatory
+REVIEW_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-review/SKILL.md"
+if grep -q "必須" "$REVIEW_SKILL" 2>/dev/null; then
+    test_pass "tdd-review marks quality-gate as mandatory (必須)"
+else
+    test_fail "tdd-review missing mandatory (必須) for quality-gate"
+fi
+
+# TC-02c3: tdd-review SKILL.md marks quality-gate as skip not allowed
+if grep -q "スキップ不可" "$REVIEW_SKILL" 2>/dev/null; then
+    test_pass "tdd-review marks quality-gate as skip not allowed"
+else
+    test_fail "tdd-review missing skip not allowed (スキップ不可) for quality-gate"
+fi
+
 # TC-02d: code-review skill should NOT exist (replaced by quality-gate)
 if [ ! -d "$PLUGINS_DIR/tdd-core/skills/code-review" ]; then
     test_pass "code-review skill removed (replaced by quality-gate)"

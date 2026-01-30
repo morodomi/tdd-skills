@@ -16,7 +16,7 @@ REVIEW Progress:
 - [ ] テスト実行（全PASS）
 - [ ] カバレッジチェック（目標達成）
 - [ ] 静的解析実行（エラー0件）
-- [ ] quality-gate 実行
+- [ ] quality-gate 実行（必須・スキップ不可）
 - [ ] コードフォーマッタ実行
 - [ ] Cycle doc更新
 - [ ] COMMITフェーズへ誘導
@@ -53,9 +53,9 @@ pytest --cov=src --cov-fail-under=80  # Python
 mypy --strict src/                       # Python
 ```
 
-### Step 4: quality-gate（自動実行）
+### Step 4: quality-gate（必須・スキップ不可）
 
-quality-gateスキルを自動実行。4エージェントで並行レビュー。
+quality-gateスキルを必ず実行する。スキップ不可。4エージェントで並行レビュー。
 
 - PASS（スコア49以下） → Step 5へ
 - WARN（スコア50-79） → 警告確認後、Step 5へ
