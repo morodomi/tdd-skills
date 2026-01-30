@@ -38,6 +38,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-30 | commit-docs-before-git | DONE |
 | 2026-01-30 | enforce-quality-gate | DONE |
 | 2026-01-30 | remove-version-field | DONE |
 | 2026-01-26 | stale-references-cleanup | DONE |
@@ -49,8 +50,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 50 | - |
-| Open Issues | 3 | 0 |
+| Cycle docs | 51 | - |
+| Open Issues | 2 | 0 |
 | Plugin数 | 10 | - |
 
 ---

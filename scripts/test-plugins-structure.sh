@@ -151,6 +151,30 @@ else
     test_fail "tdd-commit Checklist missing hook item"
 fi
 
+# TC-02k2: tdd-commit Cycle doc update step comes before git commit step
+CYCLE_STEP=$(grep -n "^### Step.*Cycle doc" "$COMMIT_SKILL" 2>/dev/null | head -1 | cut -d: -f1)
+COMMIT_STEP=$(grep -n "^### Step.*コミット実行\|^### Step.*git add" "$COMMIT_SKILL" 2>/dev/null | head -1 | cut -d: -f1)
+if [ -n "$CYCLE_STEP" ] && [ -n "$COMMIT_STEP" ] && [ "$CYCLE_STEP" -lt "$COMMIT_STEP" ]; then
+    test_pass "tdd-commit: Cycle doc update before git commit"
+else
+    test_fail "tdd-commit: Cycle doc update must come before git commit"
+fi
+
+# TC-02k3: tdd-commit STATUS.md update step comes before git commit step
+STATUS_STEP=$(grep -n "^### Step.*STATUS.md" "$COMMIT_SKILL" 2>/dev/null | head -1 | cut -d: -f1)
+if [ -n "$STATUS_STEP" ] && [ -n "$COMMIT_STEP" ] && [ "$STATUS_STEP" -lt "$COMMIT_STEP" ]; then
+    test_pass "tdd-commit: STATUS.md update before git commit"
+else
+    test_fail "tdd-commit: STATUS.md update must come before git commit"
+fi
+
+# TC-02k4: tdd-commit Progress Checklist has doc updates before git add
+if grep -A20 "Progress Checklist" "$COMMIT_SKILL" 2>/dev/null | grep -B5 "git add" | grep -q "Cycle doc\|STATUS.md"; then
+    test_pass "tdd-commit Checklist: doc updates before git add"
+else
+    test_fail "tdd-commit Checklist: doc updates must come before git add"
+fi
+
 # TC-02k: tdd-onboard has hierarchical CLAUDE.md step (Step 5)
 if grep -q "Step 5.*階層CLAUDE.md\|Step 5.*CLAUDE.md推奨" "$ONBOARD_SKILL" 2>/dev/null; then
     test_pass "tdd-onboard has Step 5 (階層CLAUDE.md)"
