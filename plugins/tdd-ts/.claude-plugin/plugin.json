@@ -1,5 +1,4 @@
 {
   "name": "tdd-ts",
-  "version": "2.0.0",
   "description": "TypeScript quality tools: tsc, ESLint, Prettier, Jest/Vitest"
 }

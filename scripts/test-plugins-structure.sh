@@ -386,6 +386,33 @@ else
 fi
 echo ""
 
+# TC-11: No plugin.json should contain a "version" field
+echo "--- version field check ---"
+ALL_PLUGIN_JSONS=$(find "$PLUGINS_DIR" -path "*/.claude-plugin/plugin.json" 2>/dev/null)
+VERSION_FOUND=0
+for pj in $ALL_PLUGIN_JSONS; do
+    if python3 -c "import json,sys; d=json.load(open('$pj')); sys.exit(0 if 'version' in d else 1)" 2>/dev/null; then
+        test_fail "$(basename $(dirname $(dirname $pj)))/plugin.json contains version field"
+        ((VERSION_FOUND++))
+    fi
+done
+if [ "$VERSION_FOUND" -eq 0 ]; then
+    test_pass "No plugin.json contains version field"
+fi
+
+# TC-11b: All plugin.json files are valid JSON (comprehensive check)
+INVALID_JSON=0
+for pj in $ALL_PLUGIN_JSONS; do
+    if ! python3 -c "import json; json.load(open('$pj'))" 2>/dev/null; then
+        test_fail "$(basename $(dirname $(dirname $pj)))/plugin.json is invalid JSON"
+        ((INVALID_JSON++))
+    fi
+done
+if [ "$INVALID_JSON" -eq 0 ]; then
+    test_pass "All plugin.json files are valid JSON"
+fi
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

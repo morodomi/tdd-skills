@@ -1,7 +1,6 @@
 {
   "name": "tdd-core",
   "description": "TDD 7-phase workflow skills. Language-agnostic test-driven development: INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT",
-  "version": "4.0.0",
   "author": {
     "name": "morodomi"
   },

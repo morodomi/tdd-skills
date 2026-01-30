@@ -1,7 +1,6 @@
 {
   "name": "tdd-laravel",
   "description": "Laravel-specific quality tools for TDD workflow. Pest Laravel Plugin, HTTP tests, Eloquent patterns.",
-  "version": "2.0.0",
   "author": {
     "name": "morodomi"
   },

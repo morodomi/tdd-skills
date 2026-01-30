@@ -1,7 +1,6 @@
 {
   "name": "tdd-js",
   "description": "JavaScript quality tools for TDD workflow. ESLint, Prettier, Jest/Vitest integration.",
-  "version": "2.0.0",
   "author": {
     "name": "morodomi"
   },

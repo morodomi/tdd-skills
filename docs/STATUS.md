@@ -6,8 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| バージョン | 4.0.0 |
-| 最終更新 | 2026-01-26 |
+| 最終更新 | 2026-01-30 |
 
 ## Tech Stack
 
@@ -29,6 +28,9 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
+| 39 | tdd-commitでドキュメント更新をコミット前に移動 | Open |
+| 38 | tdd-reviewでquality-gateを必須実行にする | Open |
+| 37 | plugin.jsonからversionフィールドを削除 | Open |
 | 15 | tdd-fastapi プラグイン | Open (deferred) |
 | 6 | フレームワーク固有quality Skill | Open |
 
@@ -36,6 +38,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-01-30 | remove-version-field | DONE |
 | 2026-01-26 | stale-references-cleanup | DONE |
 | 2026-01-26 | migration-guide-update | DONE |
 | 2026-01-26 | tdd-onboard-cleanup | DONE |
@@ -45,8 +48,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 48 | - |
-| Open Issues | 0 | 0 |
+| Cycle docs | 49 | - |
+| Open Issues | 3 | 0 |
 | Plugin数 | 10 | - |
 
 ---
