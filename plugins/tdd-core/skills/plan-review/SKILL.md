@@ -1,18 +1,18 @@
 ---
 name: plan-review
-description: PLANフェーズの設計を4観点で並行レビュー。信頼スコア80以上でBLOCK。
+description: PLANフェーズの設計を5観点で並行レビュー。信頼スコア80以上でBLOCK。
 ---
 
 # Plan Review
 
-PLANフェーズの設計を4つの専門エージェントで並行レビューする。
+PLANフェーズの設計を5つの専門エージェントで並行レビューする。
 
 ## Progress Checklist
 
 ```
 plan-review Progress:
 - [ ] Cycle doc確認
-- [ ] 4エージェント並行起動
+- [ ] 5エージェント並行起動
 - [ ] 結果統合・スコア判定
 - [ ] 分岐判定（PASS/WARN/BLOCK）
 ```
@@ -27,15 +27,16 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 
 PLANセクション（設計方針、Test List、変更予定ファイル）を読み込む。
 
-### Step 2: 4エージェント並行起動
+### Step 2: 5エージェント並行起動
 
-Taskツールで4つのエージェントを**並行**起動:
+Taskツールで5つのエージェントを**並行**起動:
 
 ```
 tdd-core:scope-reviewer        # スコープ妥当性
 tdd-core:architecture-reviewer # 設計整合性
 tdd-core:risk-reviewer         # 技術リスク評価
 tdd-core:product-reviewer      # プロダクト観点（価値・コスト・優先度）
+tdd-core:usability-reviewer    # ユーザビリティ（UX・アクセシビリティ）
 ```
 
 ### Step 3: 結果統合

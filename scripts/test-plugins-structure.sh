@@ -64,17 +64,17 @@ else
     test_fail "agents directory not found"
 fi
 
-AGENT_FILES="correctness-reviewer performance-reviewer security-reviewer guidelines-reviewer scope-reviewer architecture-reviewer risk-reviewer product-reviewer"
+AGENT_FILES="correctness-reviewer performance-reviewer security-reviewer guidelines-reviewer scope-reviewer architecture-reviewer risk-reviewer product-reviewer usability-reviewer"
 AGENT_COUNT=0
 for agent in $AGENT_FILES; do
     if [ -f "$AGENTS_DIR/$agent.md" ]; then
         ((AGENT_COUNT++))
     fi
 done
-if [ "$AGENT_COUNT" -eq 8 ]; then
-    test_pass "tdd-core has 8 reviewer agents"
+if [ "$AGENT_COUNT" -eq 9 ]; then
+    test_pass "tdd-core has 9 reviewer agents"
 else
-    test_fail "tdd-core has $AGENT_COUNT/8 reviewer agents"
+    test_fail "tdd-core has $AGENT_COUNT/9 reviewer agents"
 fi
 
 # TC-02b2: product-reviewer agent exists
@@ -98,6 +98,27 @@ if grep -q "product-reviewer" "$QG_SKILL" 2>/dev/null; then
     test_pass "quality-gate includes product-reviewer"
 else
     test_fail "quality-gate missing product-reviewer"
+fi
+
+# TC-02b6: usability-reviewer agent exists
+if [ -f "$AGENTS_DIR/usability-reviewer.md" ]; then
+    test_pass "usability-reviewer agent exists"
+else
+    test_fail "usability-reviewer agent not found"
+fi
+
+# TC-02b7: plan-review includes usability-reviewer
+if grep -q "usability-reviewer" "$PLAN_REVIEW_SKILL" 2>/dev/null; then
+    test_pass "plan-review includes usability-reviewer"
+else
+    test_fail "plan-review missing usability-reviewer"
+fi
+
+# TC-02b8: quality-gate includes usability-reviewer
+if grep -q "usability-reviewer" "$QG_SKILL" 2>/dev/null; then
+    test_pass "quality-gate includes usability-reviewer"
+else
+    test_fail "quality-gate missing usability-reviewer"
 fi
 
 # TC-02b5: risk-reviewer does not contain business impact wording
