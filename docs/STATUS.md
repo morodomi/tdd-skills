@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-01-30 |
+| 最終更新 | 2026-02-03 |
 
 ## Tech Stack
 
@@ -28,8 +28,7 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
-| 15 | tdd-fastapi プラグイン | Open (deferred) |
-| 6 | フレームワーク固有quality Skill | Open |
+| - | なし | - |
 
 ## Recent Cycles
 

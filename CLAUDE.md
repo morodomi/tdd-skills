@@ -101,7 +101,8 @@ chore: その他
 |-------|---------|-------------|
 | tdd-onboard | 「TDDセットアップ」「onboard」 | 初期セットアップ |
 | tdd-init | 「機能追加」「TDDを始めたい」 | サイクル開始 |
-| quality-gate | 「quality-gate」 | 4エージェント並行レビュー |
+| plan-review | 「plan-review」 | 5エージェント並行レビュー |
+| quality-gate | 「quality-gate」 | 6エージェント並行レビュー |
 
 ## Test Scripts
 

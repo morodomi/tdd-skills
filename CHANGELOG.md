@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2026-02-03
+
+### Added
+
+- **product-reviewer**: PdM目線のレビューエージェント（価値・コスト・優先度）
+- **usability-reviewer**: デザイナー目線のレビューエージェント（UX・アクセシビリティ）
+
+### Changed
+
+- quality-gate: 4エージェント → 6エージェント体制（product-reviewer, usability-reviewer追加）
+- plan-review: 3エージェント → 5エージェント体制（product-reviewer, usability-reviewer追加）
+- tdd-review: quality-gateを必須・スキップ不可に変更
+- tdd-commit: ワークフロー順序修正（docs更新をgit commit前に移動）
+
+### Removed
+
+- 全plugin.jsonからversionフィールド削除
+- 未使用スクリプト削除
+
 ## [4.0.0] - 2026-01-26
 
 ### Added

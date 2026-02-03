@@ -2,7 +2,7 @@
 
 Claude Code plugin for enforcing strict TDD workflows
 
-> **v4.0.0**: RED & GREEN Parallelization - Parallel agents for both test creation and implementation phases
+> **v4.1.0**: Multi-Perspective Review - Product and usability reviewers added to plan-review (5 agents) and quality-gate (6 agents)
 
 [Japanese](README.ja.md)
 
@@ -153,6 +153,13 @@ User input -> Risk assessment -> Question flow -> Improved design accuracy
 | Static analysis | 0 errors |
 
 ## Migration
+
+### v4.0 -> v4.1.0
+
+**New feature**: Multi-Perspective Review
+- plan-review: 5-agent parallel review (scope, architecture, risk, product, usability)
+- quality-gate: 6-agent parallel review (correctness, performance, security, guidelines, product, usability)
+- quality-gate is now mandatory in tdd-review (cannot be skipped)
 
 ### v3.x -> v4.0.0
 
