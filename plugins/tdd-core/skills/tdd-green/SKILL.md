@@ -17,7 +17,7 @@ GREEN Progress:
 - [ ] 結果収集・マージ
 - [ ] 全テスト実行→成功確認
 - [ ] Cycle doc更新（WIP→DONE）
-- [ ] REFACTORフェーズへ誘導
+- [ ] REFACTOR自動実行
 ```
 
 ## 禁止事項
@@ -76,12 +76,14 @@ pytest            # Python
 | 全テスト成功 | PASS | REFACTORへ自動進行 |
 | テスト失敗 | BLOCK | 該当worker再試行 |
 
-### Step 6: 完了→REFACTOR誘導
+### Step 6: 完了→REFACTOR自動実行
 
 ```
 GREEN完了。全テスト成功を確認しました。
-次: REFACTORフェーズ（コード改善）
+REFACTORフェーズを開始します。
 ```
+
+`Skill(tdd-core:tdd-refactor)` を実行してREFACTORフェーズへ進む。
 
 ## Reference
 

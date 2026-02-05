@@ -45,12 +45,12 @@ else
     ERRORS=$((ERRORS + 1))
 fi
 
-# TC-04: plan-review Step 4 PASS に tdd-red 自動実行の記述があること
-echo -n "TC-04: plan-review Step 4 PASS has tdd-red auto-execution... "
-if grep -q "Skill.*tdd-core:tdd-red\|tdd-red.*自動実行\|tdd-red.*auto" "$PLUGIN_DIR/plan-review/SKILL.md" 2>/dev/null; then
+# TC-04: plan-review Step 4 PASS が手動判断になっていること（Part 2で修正）
+echo -n "TC-04: plan-review Step 4 PASS maintains manual judgment... "
+if ! grep -q "Skill.*tdd-core:tdd-red\|tdd-red.*自動実行" "$PLUGIN_DIR/plan-review/SKILL.md" 2>/dev/null; then
     echo "PASS"
 else
-    echo "FAIL"
+    echo "FAIL (found tdd-red auto-execution)"
     ERRORS=$((ERRORS + 1))
 fi
 

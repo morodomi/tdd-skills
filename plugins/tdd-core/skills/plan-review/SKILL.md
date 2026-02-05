@@ -52,7 +52,10 @@ tdd-core:usability-reviewer    # ユーザビリティ（UX・アクセシビリ
 ### Step 4: 分岐判定
 
 #### PASS（スコア49以下）
-→ `Skill(tdd-core:tdd-red)` でREDフェーズへ自動実行
+```
+設計レビュー完了。問題ありません。
+→ REDフェーズへ進んでください
+```
 
 #### WARN（スコア50-79）
 ```
