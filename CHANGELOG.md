@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0] - 2026-02-05
+
+### Added
+
+- **Auto Phase Transition**: TDDフェーズ間のスキル自動実行
+  - 各フェーズ完了時に次フェーズへの遷移を自動化
+  - ユーザー確認後にスキルを自動呼び出し
+
+### Changed
+
+- Progress Checklistのフォーマットをチェックボックス形式に統一
+
+### Removed
+
+- docs/article/ ディレクトリ削除（外部リポジトリに移行）
+
 ## [4.1.0] - 2026-02-03
 
 ### Added
