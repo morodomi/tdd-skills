@@ -10,7 +10,7 @@ Start a new TDD cycle and create a Cycle doc.
 ## Progress Checklist
 
 ```
-INIT: STATUS check → Environment → Existing cycle → Questions → Risk assessment → Scope → Feature name → Cycle doc → Guide to PLAN
+INIT: STATUS check → Environment → Existing cycle → Questions → Risk assessment → Scope → Feature name → Cycle doc → Auto-execute tdd-plan
 ```
 
 ## Restrictions
@@ -83,9 +83,13 @@ Details: [reference.md](reference.md)
 
 Generate feature name (3-5 words) and create Cycle doc from [templates/cycle.md](templates/cycle.md).
 
-### Step 7: Complete & Guide to PLAN
+### Step 7: Complete & Auto-Execute tdd-plan
 
-Display `INIT Complete` and guide to PLAN phase.
+Display `INIT Complete` and automatically execute tdd-plan:
+
+```
+Skill(tdd-core:tdd-plan)
+```
 
 ## Reference
 

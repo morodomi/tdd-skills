@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-02-03 |
+| 最終更新 | 2026-02-05 |
 
 ## Tech Stack
 
@@ -34,6 +34,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-05 | auto-phase-transition-part1 | DONE |
 | 2026-01-30 | add-usability-reviewer | DONE |
 | 2026-01-30 | add-product-reviewer | DONE |
 | 2026-01-30 | commit-docs-before-git | DONE |
@@ -42,13 +43,12 @@ bash scripts/test-skills-structure.sh
 | 2026-01-26 | stale-references-cleanup | DONE |
 | 2026-01-26 | migration-guide-update | DONE |
 | 2026-01-26 | tdd-onboard-cleanup | DONE |
-| 2026-01-26 | claudemd-template-update | DONE |
 
 ## Quality Metrics
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 53 | - |
+| Cycle docs | 54 | - |
 | Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
