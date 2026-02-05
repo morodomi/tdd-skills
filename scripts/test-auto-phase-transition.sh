@@ -19,29 +19,22 @@ else
     ERRORS=$((ERRORS + 1))
 fi
 
-# TC-02: tdd-plan Step 6 が plan-review「必須」になっていること
-echo -n "TC-02: tdd-plan Step 6 has plan-review as required... "
-if grep -q "plan-review.*必須\|plan-review.*required\|必ず.*plan-review" "$PLUGIN_DIR/tdd-plan/SKILL.md" 2>/dev/null; then
+# TC-02: tdd-plan に plan-review 自動実行の記述があること
+echo -n "TC-02: tdd-plan has plan-review auto-execution... "
+if grep -q "plan-review.*自動実行\|Skill.*plan-review" "$PLUGIN_DIR/tdd-plan/SKILL.md" 2>/dev/null; then
     echo "PASS"
 else
     echo "FAIL"
     ERRORS=$((ERRORS + 1))
 fi
 
-# TC-03: tdd-plan Step 7 が plan-review 委譲に変更されていること
-echo -n "TC-03: tdd-plan Step 7 delegates to plan-review... "
-# Step 7が「plan-review実行」または「plan-review自動実行」の記述を含むこと
-# かつ、「ユーザーが続行を確認したら」という手動確認の記述がないこと
-if grep -A5 "Step 7" "$PLUGIN_DIR/tdd-plan/SKILL.md" 2>/dev/null | grep -q "plan-review"; then
-    # 手動確認の記述がないことを確認
-    if ! grep -A5 "Step 7" "$PLUGIN_DIR/tdd-plan/SKILL.md" 2>/dev/null | grep -q "ユーザーが続行を確認"; then
-        echo "PASS"
-    else
-        echo "FAIL (still has manual confirmation)"
-        ERRORS=$((ERRORS + 1))
-    fi
+# TC-03: tdd-plan が plan-review に制御を委譲していること
+echo -n "TC-03: tdd-plan delegates control to plan-review... "
+# plan-reviewがRED以降を制御する記述があること
+if grep -q "plan-review.*制御\|plan-review.*RED" "$PLUGIN_DIR/tdd-plan/SKILL.md" 2>/dev/null; then
+    echo "PASS"
 else
-    echo "FAIL (no plan-review reference in Step 7)"
+    echo "FAIL"
     ERRORS=$((ERRORS + 1))
 fi
 

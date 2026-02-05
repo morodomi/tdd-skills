@@ -10,7 +10,10 @@ description: 実装計画を作成し、Test Listを定義する。INITの次フ
 ## Progress Checklist
 
 ```
-PLAN: Cycle doc確認 → リスク確認 → ドキュメント確認 → 対話 → PLAN更新 → Test List → Auto-execute plan-review
+PLAN Progress:
+- [ ] Cycle doc確認 → リスク確認 → ドキュメント確認
+- [ ] 対話 → PLAN更新 → Test List作成
+- [ ] plan-review自動実行
 ```
 
 ## 禁止事項
@@ -82,17 +85,9 @@ Riskフィールドなし → WARN（標準設計）として扱う。
 - [ ] TC-04: [異常系]
 ```
 
-### Step 6: plan-review（必須）
+### Step 6: plan-review自動実行
 
-Test List作成後、必ずplan-reviewを自動実行する。
-
-```
-Skill(tdd-core:plan-review)
-```
-
-### Step 7: plan-reviewへ委譲
-
-plan-reviewがRED以降の進行を制御する。本フェーズはここで終了。
+Test List作成後、`Skill(tdd-core:plan-review)` を実行。plan-reviewがRED以降を制御。
 
 ## Reference
 

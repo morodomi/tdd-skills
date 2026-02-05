@@ -28,12 +28,13 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
-| #43 | refactor: SKILL.md言語・形式の統一 | Open |
+| - | なし | - |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-05 | skill-md-unification | DONE |
 | 2026-02-05 | auto-phase-transition-part2 | DONE |
 | 2026-02-05 | auto-phase-transition-part1 | DONE |
 | 2026-01-30 | add-usability-reviewer | DONE |
@@ -49,8 +50,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 55 | - |
-| Open Issues | 1 | 0 |
+| Cycle docs | 56 | - |
+| Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
 ---

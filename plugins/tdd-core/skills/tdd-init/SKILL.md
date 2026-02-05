@@ -10,7 +10,10 @@ Start a new TDD cycle and create a Cycle doc.
 ## Progress Checklist
 
 ```
-INIT: STATUS check → Environment → Existing cycle → Questions → Risk assessment → Scope → Feature name → Cycle doc → Auto-execute tdd-plan
+INIT Progress:
+- [ ] STATUS確認 → 環境収集 → 既存cycle確認
+- [ ] 実装内容確認 → リスク評価 → スコープ確認
+- [ ] Cycle doc作成 → tdd-plan自動実行
 ```
 
 ## Restrictions
