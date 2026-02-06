@@ -68,7 +68,7 @@ Ask 2 lightweight questions. Templates: [reference.md](reference.md#warn-questio
 
 ### Step 4.7: Brainstorm & Risk Questions (BLOCK only)
 
-Brainstorm first, then risk-type questions. Templates: [reference.md](reference.md#brainstorm-questions-block-60-1)
+Templates: [reference.md](reference.md#brainstorm-questions-block-60-1). Bug keywords detected → `Skill(tdd-core:tdd-diagnose)`.
 
 ### Step 5: Scope (Layer) Confirmation
 

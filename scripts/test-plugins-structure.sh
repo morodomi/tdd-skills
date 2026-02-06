@@ -543,6 +543,106 @@ if [ "$INVALID_JSON" -eq 0 ]; then
 fi
 echo ""
 
+# --- tdd-diagnose ---
+echo "--- tdd-diagnose ---"
+DIAG_DIR="$PLUGINS_DIR/tdd-core/skills/tdd-diagnose"
+DIAG_SKILL="$DIAG_DIR/SKILL.md"
+
+# TC-DG-01: tdd-diagnose SKILL.md exists and is 100 lines or less
+if [ -f "$DIAG_SKILL" ]; then
+    DIAG_LINES=$(wc -l < "$DIAG_SKILL" | tr -d ' ')
+    if [ "$DIAG_LINES" -le 100 ]; then
+        test_pass "tdd-diagnose SKILL.md exists and is ${DIAG_LINES} lines (<= 100)"
+    else
+        test_fail "tdd-diagnose SKILL.md is ${DIAG_LINES} lines (> 100)"
+    fi
+else
+    test_fail "tdd-diagnose SKILL.md not found"
+fi
+
+# TC-DG-02: tdd-diagnose SKILL.md has Agent Teams env var branching
+if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$DIAG_SKILL" 2>/dev/null; then
+    test_pass "tdd-diagnose has Agent Teams env var branching"
+else
+    test_fail "tdd-diagnose missing Agent Teams env var branching"
+fi
+
+# TC-DG-03: tdd-diagnose SKILL.md has Progress Checklist
+if grep -q "Progress Checklist" "$DIAG_SKILL" 2>/dev/null; then
+    test_pass "tdd-diagnose has Progress Checklist"
+else
+    test_fail "tdd-diagnose missing Progress Checklist"
+fi
+
+# TC-DG-04: steps-subagent.md exists with Explore agent procedure
+DIAG_SUBAGENT="$DIAG_DIR/steps-subagent.md"
+if [ -f "$DIAG_SUBAGENT" ] && grep -qi "Explore" "$DIAG_SUBAGENT"; then
+    test_pass "tdd-diagnose steps-subagent.md exists with Explore agent"
+else
+    test_fail "tdd-diagnose steps-subagent.md missing or no Explore agent"
+fi
+
+# TC-DG-05: steps-teams.md exists with Team debate procedure
+DIAG_TEAMS="$DIAG_DIR/steps-teams.md"
+if [ -f "$DIAG_TEAMS" ] && grep -q "Teammate\|Team" "$DIAG_TEAMS" && grep -qi "Debate\|debate\|討論" "$DIAG_TEAMS"; then
+    test_pass "tdd-diagnose steps-teams.md exists with Team debate"
+else
+    test_fail "tdd-diagnose steps-teams.md missing or incomplete"
+fi
+
+# TC-DG-06: steps-teams.md has Fallback section
+if grep -qi "Fallback\|fallback\|フォールバック" "$DIAG_TEAMS" 2>/dev/null; then
+    test_pass "tdd-diagnose steps-teams.md has Fallback"
+else
+    test_fail "tdd-diagnose steps-teams.md missing Fallback"
+fi
+
+# TC-DG-07: reference.md exists with hypothesis template
+DIAG_REF="$DIAG_DIR/reference.md"
+if [ -f "$DIAG_REF" ] && grep -qi "hypothesis\|仮説" "$DIAG_REF"; then
+    test_pass "tdd-diagnose reference.md exists with hypothesis info"
+else
+    test_fail "tdd-diagnose reference.md missing or no hypothesis info"
+fi
+
+# TC-DG-08: tdd-init SKILL.md has tdd-diagnose auto-transition
+INIT_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-init/SKILL.md"
+if grep -q "tdd-diagnose" "$INIT_SKILL" 2>/dev/null; then
+    test_pass "tdd-init has tdd-diagnose auto-transition"
+else
+    test_fail "tdd-init missing tdd-diagnose auto-transition"
+fi
+
+# TC-DG-09: tdd-init SKILL.md is 100 lines or less
+INIT_LINES=$(wc -l < "$INIT_SKILL" 2>/dev/null | tr -d ' ')
+if [ -n "$INIT_LINES" ] && [ "$INIT_LINES" -le 100 ]; then
+    test_pass "tdd-init SKILL.md is ${INIT_LINES} lines (<= 100)"
+else
+    test_fail "tdd-init SKILL.md is ${INIT_LINES} lines (> 100)"
+fi
+
+# TC-DG-11: reference.md has hypothesis template fields
+if grep -q "hypothesis" "$DIAG_REF" 2>/dev/null && grep -q "evidence_for" "$DIAG_REF" 2>/dev/null && grep -q "evidence_against" "$DIAG_REF" 2>/dev/null && grep -q "verdict" "$DIAG_REF" 2>/dev/null; then
+    test_pass "tdd-diagnose reference.md has hypothesis template fields"
+else
+    test_fail "tdd-diagnose reference.md missing hypothesis template fields"
+fi
+
+# TC-DG-12: SKILL.md Step 4 has investigation result branching
+if grep -qi "特定\|identified\|confirmed" "$DIAG_SKILL" 2>/dev/null && grep -qi "絞込\|narrowed\|候補" "$DIAG_SKILL" 2>/dev/null && grep -qi "不明\|inconclusive\|エスカレート" "$DIAG_SKILL" 2>/dev/null; then
+    test_pass "tdd-diagnose SKILL.md has result branching"
+else
+    test_fail "tdd-diagnose SKILL.md missing result branching"
+fi
+
+# TC-DG-13: CLAUDE.md Skills table has tdd-diagnose
+if grep -q "tdd-diagnose" "CLAUDE.md" 2>/dev/null; then
+    test_pass "CLAUDE.md Skills table has tdd-diagnose"
+else
+    test_fail "CLAUDE.md Skills table missing tdd-diagnose"
+fi
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

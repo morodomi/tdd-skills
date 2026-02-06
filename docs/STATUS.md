@@ -28,7 +28,6 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
-| #44 | feat: team-review - Agent Teams based adversarial review | open |
 | #45 | feat: tdd-diagnose - parallel bug investigation phase | open |
 | #46 | feat: tdd-parallel - cross-layer parallel development orchestrator | open |
 
@@ -36,6 +35,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-06 | tdd-diagnose-skill | DONE |
 | 2026-02-06 | quality-gate-agent-teams | DONE |
 | 2026-02-05 | skill-md-unification | DONE |
 | 2026-02-05 | auto-phase-transition-part2 | DONE |
@@ -53,8 +53,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 57 | - |
-| Open Issues | 3 | 0 |
+| Cycle docs | 58 | - |
+| Open Issues | 2 | 0 |
 | Plugin数 | 10 | - |
 
 ---

@@ -103,6 +103,7 @@ chore: その他
 | tdd-init | 「機能追加」「TDDを始めたい」 | サイクル開始 |
 | plan-review | 「plan-review」 | 5エージェント並行レビュー |
 | quality-gate | 「quality-gate」 | 6エージェント並行レビュー |
+| tdd-diagnose | 「原因調査」「investigate」「diagnose」 | 並列バグ仮説調査 |
 
 ## Test Scripts
 
