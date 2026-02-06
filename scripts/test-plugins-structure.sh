@@ -852,6 +852,55 @@ fi
 
 echo ""
 
+# ==========================================
+# onboard AI Behavior Principles Tests
+# ==========================================
+echo "--- onboard AI Behavior Principles ---"
+
+ONBOARD_REF="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/reference.md"
+
+# TC-OB-01: reference.md CLAUDE.md template has AI Behavior Principles header
+if grep -q "## AI Behavior Principles" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "onboard template has AI Behavior Principles header"
+else
+    test_fail "onboard template missing AI Behavior Principles header"
+fi
+
+# TC-OB-02: template has Role: PdM section
+if grep -q "### Role: PdM" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "onboard template has Role: PdM section"
+else
+    test_fail "onboard template missing Role: PdM section"
+fi
+
+# TC-OB-03: template has Mandatory: AskUserQuestion section
+if grep -q "### Mandatory: AskUserQuestion" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "onboard template has Mandatory: AskUserQuestion section"
+else
+    test_fail "onboard template missing Mandatory: AskUserQuestion section"
+fi
+
+# TC-OB-04: template has Delegation Strategy with Agent Teams env var
+if grep -q "### Delegation Strategy" "$ONBOARD_REF" 2>/dev/null && grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "onboard template has Delegation Strategy with env var"
+else
+    test_fail "onboard template missing Delegation Strategy or env var"
+fi
+
+# TC-OB-05: template has Delegation Rules with 5 items
+if grep -q "### Delegation Rules" "$ONBOARD_REF" 2>/dev/null; then
+    OB_RULES_COUNT=$(grep -c "green-worker\|red-worker\|architect\|reviewer.*委譲\|AskUserQuestion.*確認" "$ONBOARD_REF" 2>/dev/null)
+    if [ "$OB_RULES_COUNT" -ge 5 ]; then
+        test_pass "onboard template has Delegation Rules with ${OB_RULES_COUNT} items"
+    else
+        test_fail "onboard template has Delegation Rules but only ${OB_RULES_COUNT}/5 items"
+    fi
+else
+    test_fail "onboard template missing Delegation Rules section"
+fi
+
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

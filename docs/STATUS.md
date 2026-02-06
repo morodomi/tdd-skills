@@ -37,6 +37,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-07 | onboard-ai-behavior-principles | DONE |
 | 2026-02-07 | plan-review-agent-teams | DONE |
 | 2026-02-06 | tdd-parallel-skill | DONE |
 | 2026-02-06 | tdd-diagnose-skill | DONE |
@@ -57,7 +58,7 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 61 | - |
+| Cycle docs | 62 | - |
 | Open Issues | 4 | 0 |
 | Plugin数 | 10 | - |
 
