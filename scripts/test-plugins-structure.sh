@@ -1023,6 +1023,121 @@ fi
 
 echo ""
 
+# ==========================================
+# Architect / Refactorer Agent + tdd-init Integration Tests
+# ==========================================
+
+echo "--- Architect/Refactorer Agent + tdd-init Integration ---"
+
+ARCH_AGENT="$AGENTS_DIR/architect.md"
+REFAC_AGENT="$AGENTS_DIR/refactorer.md"
+INIT_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-init/SKILL.md"
+CLAUDE_MD="CLAUDE.md"
+
+# TC-AG-01: architect.md exists with YAML frontmatter name: architect
+if [ -f "$ARCH_AGENT" ] && grep -q "name: architect" "$ARCH_AGENT" 2>/dev/null; then
+    test_pass "architect.md exists with name: architect in frontmatter"
+else
+    test_fail "architect.md missing or missing name: architect in frontmatter"
+fi
+
+# TC-AG-02: architect.md references Skill(tdd-plan) or tdd-core:tdd-plan
+if grep -q "tdd-plan" "$ARCH_AGENT" 2>/dev/null; then
+    test_pass "architect.md references tdd-plan"
+else
+    test_fail "architect.md missing tdd-plan reference"
+fi
+
+# TC-AG-03: architect.md has Input/Output/Workflow/Principles sections
+if [ -f "$ARCH_AGENT" ]; then
+    ARCH_SECTIONS=0
+    for section in Input Output Workflow Principles; do
+        if grep -q "## $section" "$ARCH_AGENT" 2>/dev/null; then
+            ARCH_SECTIONS=$((ARCH_SECTIONS + 1))
+        fi
+    done
+    if [ "$ARCH_SECTIONS" -eq 4 ]; then
+        test_pass "architect.md has all 4 sections (Input/Output/Workflow/Principles)"
+    else
+        test_fail "architect.md has ${ARCH_SECTIONS}/4 sections"
+    fi
+else
+    test_fail "architect.md not found"
+fi
+
+# TC-AG-04: refactorer.md exists with YAML frontmatter name: refactorer
+if [ -f "$REFAC_AGENT" ] && grep -q "name: refactorer" "$REFAC_AGENT" 2>/dev/null; then
+    test_pass "refactorer.md exists with name: refactorer in frontmatter"
+else
+    test_fail "refactorer.md missing or missing name: refactorer in frontmatter"
+fi
+
+# TC-AG-05: refactorer.md references Skill(tdd-refactor) or tdd-core:tdd-refactor
+if grep -q "tdd-refactor" "$REFAC_AGENT" 2>/dev/null; then
+    test_pass "refactorer.md references tdd-refactor"
+else
+    test_fail "refactorer.md missing tdd-refactor reference"
+fi
+
+# TC-AG-06: refactorer.md has Input/Output/Workflow/Principles sections
+if [ -f "$REFAC_AGENT" ]; then
+    REFAC_SECTIONS=0
+    for section in Input Output Workflow Principles; do
+        if grep -q "## $section" "$REFAC_AGENT" 2>/dev/null; then
+            REFAC_SECTIONS=$((REFAC_SECTIONS + 1))
+        fi
+    done
+    if [ "$REFAC_SECTIONS" -eq 4 ]; then
+        test_pass "refactorer.md has all 4 sections (Input/Output/Workflow/Principles)"
+    else
+        test_fail "refactorer.md has ${REFAC_SECTIONS}/4 sections"
+    fi
+else
+    test_fail "refactorer.md not found"
+fi
+
+# TC-AG-07: tdd-init SKILL.md has CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS env var branch
+if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$INIT_SKILL" 2>/dev/null; then
+    test_pass "tdd-init SKILL.md has CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS branch"
+else
+    test_fail "tdd-init SKILL.md missing CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS branch"
+fi
+
+# TC-AG-08: tdd-init SKILL.md references tdd-orchestrate
+if grep -q "tdd-orchestrate" "$INIT_SKILL" 2>/dev/null; then
+    test_pass "tdd-init SKILL.md references tdd-orchestrate"
+else
+    test_fail "tdd-init SKILL.md missing tdd-orchestrate reference"
+fi
+
+# TC-AG-09: tdd-init SKILL.md references tdd-plan (backward compat)
+if grep -q "tdd-plan" "$INIT_SKILL" 2>/dev/null; then
+    test_pass "tdd-init SKILL.md references tdd-plan (backward compat)"
+else
+    test_fail "tdd-init SKILL.md missing tdd-plan reference (backward compat broken)"
+fi
+
+# TC-AG-10: tdd-init SKILL.md is 100 lines or less
+if [ -f "$INIT_SKILL" ]; then
+    INIT_LINES=$(wc -l < "$INIT_SKILL" | tr -d ' ')
+    if [ "$INIT_LINES" -le 100 ]; then
+        test_pass "tdd-init SKILL.md is ${INIT_LINES} lines (<= 100)"
+    else
+        test_fail "tdd-init SKILL.md is ${INIT_LINES} lines (> 100)"
+    fi
+else
+    test_fail "tdd-init SKILL.md not found"
+fi
+
+# TC-AG-11: CLAUDE.md Skills table includes tdd-orchestrate
+if grep -q "tdd-orchestrate" "$CLAUDE_MD" 2>/dev/null; then
+    test_pass "CLAUDE.md Skills table includes tdd-orchestrate"
+else
+    test_fail "CLAUDE.md Skills table missing tdd-orchestrate"
+fi
+
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

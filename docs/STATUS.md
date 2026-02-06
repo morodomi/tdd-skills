@@ -28,13 +28,13 @@ bash scripts/test-skills-structure.sh
 
 | # | タイトル |
 |---|---------|
-| #50 | feat: architect/refactorer agent定義 + tdd-init統合 |
 | #51 | docs: v5.0 PdM Delegation Model リリース |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-07 | architect-refactorer-init | DONE |
 | 2026-02-07 | tdd-orchestrate-skill | DONE |
 | 2026-02-07 | onboard-ai-behavior-principles | DONE |
 | 2026-02-07 | plan-review-agent-teams | DONE |
@@ -57,8 +57,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 63 | - |
-| Open Issues | 2 | 0 |
+| Cycle docs | 64 | - |
+| Open Issues | 1 | 0 |
 | Plugin数 | 10 | - |
 
 ---

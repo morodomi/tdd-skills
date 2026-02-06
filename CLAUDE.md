@@ -105,6 +105,7 @@ chore: その他
 | quality-gate | 「quality-gate」 | 6エージェント並行レビュー |
 | tdd-diagnose | 「原因調査」「investigate」「diagnose」 | 並列バグ仮説調査 |
 | tdd-parallel | 「parallel」「並列開発」 | クロスレイヤー並列開発オーケストレータ |
+| tdd-orchestrate | (内部: tdd-initから自動呼び出し) | PdMオーケストレータ（Agent Teams有効時） |
 
 ## Test Scripts
 
