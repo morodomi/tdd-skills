@@ -12,7 +12,7 @@ PLANフェーズの設計を5つの専門エージェントで並行レビュー
 ```
 plan-review Progress:
 - [ ] Cycle doc確認
-- [ ] 5エージェント並行起動
+- [ ] レビュー実行（モード自動選択）
 - [ ] 結果統合・スコア判定
 - [ ] 分岐判定（PASS/WARN/BLOCK）
 ```
@@ -27,17 +27,14 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1
 
 PLANセクション（設計方針、Test List、変更予定ファイル）を読み込む。
 
-### Step 2: 5エージェント並行起動
+### Step 2: レビュー実行
 
-Taskツールで5つのエージェントを**並行**起動:
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` 環境変数でモードを選択:
 
-```
-tdd-core:scope-reviewer        # スコープ妥当性
-tdd-core:architecture-reviewer # 設計整合性
-tdd-core:risk-reviewer         # 技術リスク評価
-tdd-core:product-reviewer      # プロダクト観点（価値・コスト・優先度）
-tdd-core:usability-reviewer    # ユーザビリティ（UX・アクセシビリティ）
-```
+| 環境変数 | モード | 手順 |
+|----------|--------|------|
+| 有効 (`1`) | 討論型 (Agent Teams) | [steps-teams.md](steps-teams.md) |
+| 無効 / 未設定 | 並行型 (Subagent) | [steps-subagent.md](steps-subagent.md) |
 
 ### Step 3: 結果統合
 

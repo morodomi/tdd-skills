@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-02-06 |
+| 最終更新 | 2026-02-07 |
 
 ## Tech Stack
 
@@ -26,12 +26,18 @@ bash scripts/test-skills-structure.sh
 
 ## Open Issues
 
-None
+| # | タイトル |
+|---|---------|
+| #48 | feat: onboard CLAUDE.mdテンプレートにAI Behavior Principles追加 |
+| #49 | feat: tdd-orchestrate PdMオーケストレータスキル |
+| #50 | feat: architect/refactorer agent定義 + tdd-init統合 |
+| #51 | docs: v5.0 PdM Delegation Model リリース |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-07 | plan-review-agent-teams | DONE |
 | 2026-02-06 | tdd-parallel-skill | DONE |
 | 2026-02-06 | tdd-diagnose-skill | DONE |
 | 2026-02-06 | quality-gate-agent-teams | DONE |
@@ -51,8 +57,8 @@ None
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 60 | - |
-| Open Issues | 0 | 0 |
+| Cycle docs | 61 | - |
+| Open Issues | 4 | 0 |
 | Plugin数 | 10 | - |
 
 ---

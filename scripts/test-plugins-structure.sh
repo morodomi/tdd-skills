@@ -86,7 +86,8 @@ fi
 
 # TC-02b3: plan-review includes product-reviewer
 PLAN_REVIEW_SKILL="$PLUGINS_DIR/tdd-core/skills/plan-review/SKILL.md"
-if grep -q "product-reviewer" "$PLAN_REVIEW_SKILL" 2>/dev/null; then
+PLAN_REVIEW_DIR="$PLUGINS_DIR/tdd-core/skills/plan-review"
+if grep -rq "product-reviewer" "$PLAN_REVIEW_DIR" 2>/dev/null; then
     test_pass "plan-review includes product-reviewer"
 else
     test_fail "plan-review missing product-reviewer"
@@ -109,7 +110,7 @@ else
 fi
 
 # TC-02b7: plan-review includes usability-reviewer
-if grep -q "usability-reviewer" "$PLAN_REVIEW_SKILL" 2>/dev/null; then
+if grep -rq "usability-reviewer" "$PLAN_REVIEW_DIR" 2>/dev/null; then
     test_pass "plan-review includes usability-reviewer"
 else
     test_fail "plan-review missing usability-reviewer"
@@ -740,6 +741,115 @@ if grep -q "tdd-parallel" "CLAUDE.md" 2>/dev/null; then
 else
     test_fail "CLAUDE.md Skills table missing tdd-parallel"
 fi
+echo ""
+
+# ==========================================
+# plan-review Agent Teams Tests
+# ==========================================
+echo "--- plan-review Agent Teams ---"
+
+PR_DIR="$PLUGINS_DIR/tdd-core/skills/plan-review"
+PR_SKILL="$PR_DIR/SKILL.md"
+
+# TC-PR-01: plan-review SKILL.md has Agent Teams env var branching
+if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review has Agent Teams env var branching"
+else
+    test_fail "plan-review missing Agent Teams env var branching"
+fi
+
+# TC-PR-02: plan-review SKILL.md references steps-teams.md (enabled) and steps-subagent.md (disabled)
+if grep -q "steps-teams.md" "$PR_SKILL" 2>/dev/null && grep -q "steps-subagent.md" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review references both steps-teams.md and steps-subagent.md"
+else
+    test_fail "plan-review missing steps-teams.md or steps-subagent.md reference"
+fi
+
+# TC-PR-03: plan-review SKILL.md is 100 lines or less
+PR_LINES=$(wc -l < "$PR_SKILL" 2>/dev/null | tr -d ' ')
+if [ -n "$PR_LINES" ] && [ "$PR_LINES" -le 100 ]; then
+    test_pass "plan-review SKILL.md is ${PR_LINES} lines (<= 100)"
+else
+    test_fail "plan-review SKILL.md is ${PR_LINES:-0} lines (> 100)"
+fi
+
+# TC-PR-04: plan-review SKILL.md has Progress Checklist
+if grep -q "Progress Checklist" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review SKILL.md has Progress Checklist"
+else
+    test_fail "plan-review SKILL.md missing Progress Checklist"
+fi
+
+# TC-PR-05: steps-teams.md exists with Team creation, Teammate spawn, Debate, Lead Synthesis, Cleanup
+PR_TEAMS="$PR_DIR/steps-teams.md"
+if [ -f "$PR_TEAMS" ] && grep -q "Teammate\|spawnTeam" "$PR_TEAMS" && grep -qi "Debate\|debate\|討論" "$PR_TEAMS" && grep -qi "Synthesis\|合議\|判定" "$PR_TEAMS" && grep -qi "Cleanup\|cleanup\|シャットダウン" "$PR_TEAMS"; then
+    test_pass "plan-review steps-teams.md has Team/Debate/Synthesis/Cleanup"
+else
+    test_fail "plan-review steps-teams.md missing or incomplete"
+fi
+
+# TC-PR-06: steps-teams.md has Fallback with subagent switch and specific message
+if grep -qi "Fallback\|fallback\|フォールバック" "$PR_TEAMS" 2>/dev/null && grep -qi "steps-subagent\|並行型\|subagent" "$PR_TEAMS" 2>/dev/null; then
+    test_pass "plan-review steps-teams.md has Fallback with subagent switch"
+else
+    test_fail "plan-review steps-teams.md missing Fallback or subagent switch"
+fi
+
+# TC-PR-07: steps-teams.md has 5 reviewers (scope/architecture/risk/product/usability)
+PR_TEAMS_REVIEWERS=0
+for reviewer in scope-reviewer architecture-reviewer risk-reviewer product-reviewer usability-reviewer; do
+    if grep -q "$reviewer" "$PR_TEAMS" 2>/dev/null; then
+        ((PR_TEAMS_REVIEWERS++))
+    fi
+done
+if [ "$PR_TEAMS_REVIEWERS" -eq 5 ]; then
+    test_pass "plan-review steps-teams.md has 5 reviewers"
+else
+    test_fail "plan-review steps-teams.md has ${PR_TEAMS_REVIEWERS}/5 reviewers"
+fi
+
+# TC-PR-08: steps-teams.md has debate convergence condition (no new issues or round limit)
+if grep -qi "収束\|converge\|ラウンド\|round.*上限\|新規.*指摘.*なし\|no.*new" "$PR_TEAMS" 2>/dev/null; then
+    test_pass "plan-review steps-teams.md has debate convergence condition"
+else
+    test_fail "plan-review steps-teams.md missing debate convergence condition"
+fi
+
+# TC-PR-09: steps-subagent.md exists with 5-agent parallel procedure
+PR_SUBAGENT="$PR_DIR/steps-subagent.md"
+if [ -f "$PR_SUBAGENT" ] && grep -q "scope-reviewer" "$PR_SUBAGENT" && grep -q "architecture-reviewer" "$PR_SUBAGENT" && grep -qi "並行\|parallel" "$PR_SUBAGENT"; then
+    test_pass "plan-review steps-subagent.md has 5-agent parallel procedure"
+else
+    test_fail "plan-review steps-subagent.md missing or incomplete"
+fi
+
+# TC-PR-10: steps-subagent.md has 5 reviewers (scope/architecture/risk/product/usability)
+PR_SUB_REVIEWERS=0
+for reviewer in scope-reviewer architecture-reviewer risk-reviewer product-reviewer usability-reviewer; do
+    if grep -q "$reviewer" "$PR_SUBAGENT" 2>/dev/null; then
+        ((PR_SUB_REVIEWERS++))
+    fi
+done
+if [ "$PR_SUB_REVIEWERS" -eq 5 ]; then
+    test_pass "plan-review steps-subagent.md has 5 reviewers"
+else
+    test_fail "plan-review steps-subagent.md has ${PR_SUB_REVIEWERS}/5 reviewers"
+fi
+
+# TC-PR-11: steps-subagent.md has JSON output format
+if grep -q "JSON\|json" "$PR_SUBAGENT" 2>/dev/null && grep -q "confidence" "$PR_SUBAGENT" 2>/dev/null; then
+    test_pass "plan-review steps-subagent.md has JSON output format"
+else
+    test_fail "plan-review steps-subagent.md missing JSON output format"
+fi
+
+# TC-PR-12: plan-review SKILL.md Progress Checklist uses mode-agnostic expression
+if grep -qi "モード自動選択\|モード.*自動\|auto.*mode\|レビュー実行（モード" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review Progress Checklist uses mode-agnostic expression"
+else
+    test_fail "plan-review Progress Checklist missing mode-agnostic expression"
+fi
+
 echo ""
 
 echo "=========================================="
