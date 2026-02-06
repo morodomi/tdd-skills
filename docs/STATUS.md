@@ -26,9 +26,7 @@ bash scripts/test-skills-structure.sh
 
 ## Open Issues
 
-| # | Title | Status |
-|---|-------|--------|
-| #46 | feat: tdd-parallel - cross-layer parallel development orchestrator | open |
+None
 
 ## Recent Cycles
 
@@ -53,8 +51,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 59 | - |
-| Open Issues | 1 | 0 |
+| Cycle docs | 60 | - |
+| Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
 ---

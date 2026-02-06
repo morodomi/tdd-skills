@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0] - 2026-02-06
+
+### Added
+
+- **quality-gate Agent Teams mode**: 環境変数 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` による討論型レビュー
+  - 有効時: 6レビュアーがチーム討論で反証・補強し合う debate mode
+  - 無効時: 従来の並行実行 (subagent mode)
+  - steps-teams.md / steps-subagent.md にモード別手順を分離
+- **tdd-diagnose**: 複雑なバグの並列仮説調査スキル
+  - 複数の原因仮説を並行調査し互いに反証
+  - Agent Teams 有効時は討論型調査、無効時は Explore エージェント並行調査
+  - tdd-init の高リスク時に auto-transition で自動起動
+- **tdd-parallel**: クロスレイヤー並列開発オーケストレータ
+  - Frontend/Backend/DB 等のレイヤー別に Teammate が並列で RED→GREEN→REFACTOR を実行
+  - API 契約変更時のチーム間即時共有、統合テスト実行
+  - tdd-plan でレイヤー検出時に自動提案
+
 ## [4.2.0] - 2026-02-05
 
 ### Added

@@ -2,7 +2,7 @@
 
 Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
-> **v4.0.0**: RED & GREEN Parallelization - テスト作成と実装の両フェーズで並列エージェント実行
+> **v4.3.0**: Agent Teams Integration - 討論型 quality-gate、並列バグ調査 (tdd-diagnose)、クロスレイヤー並列開発 (tdd-parallel)
 
 [English](README.md)
 
@@ -76,6 +76,21 @@ claude
 
 ## Migration
 
+### v4.2 → v4.3.0
+
+**新機能**: Agent Teams Integration
+- quality-gate: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` による討論型レビュー
+- tdd-diagnose: 並列バグ仮説調査（tdd-init 高リスク時に自動起動）
+- tdd-parallel: クロスレイヤー並列開発オーケストレータ
+- 破壊的変更なし、全機能は追加のみ
+
+### v4.0 → v4.2.0
+
+**新機能**: Auto Phase Transition, Multi-Perspective Review
+- TDDフェーズ間の自動スキル実行
+- plan-review: 5エージェント並行レビュー
+- quality-gate: 6エージェント並行レビュー（必須化）
+
 ### v3.x → v4.0.0
 
 **新機能**: RED Parallelization
@@ -113,6 +128,40 @@ INIT → PLAN → RED → GREEN → REFACTOR → REVIEW → COMMIT
 | REFACTOR | tdd-refactor | コード改善 |
 | REVIEW | tdd-review | 品質チェック |
 | COMMIT | tdd-commit | Git commit |
+
+## Agent Teams Integration (v4.3.0)
+
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` 有効時:
+
+| 機能 | Agent Teams 無効時 | Agent Teams 有効時 |
+|------|-------------------|-------------------|
+| **quality-gate** | 6エージェント並行 (subagent) | 討論モード (反証・補強) |
+| **tdd-diagnose** | Explore エージェント並行調査 | チーム討論型調査 |
+| **tdd-parallel** | 利用不可 (逐次実行にフォールバック) | クロスレイヤー並列開発 |
+
+### tdd-diagnose (バグ調査)
+
+```
+バグ報告 → 仮説生成 → 並列調査 → 根本原因特定
+                         |
+          調査員 1: 「認証の競合状態」
+          調査員 2: 「キャッシュ無効化の問題」
+          調査員 3: 「DB接続タイムアウト」
+                         |
+                    討論・反証 → 根本原因特定
+```
+
+### tdd-parallel (クロスレイヤー開発)
+
+```
+INIT → PLAN → [tdd-parallel] → REVIEW → COMMIT
+                    |
+         Teammate A: Backend  (RED→GREEN→REFACTOR)
+         Teammate B: Frontend (RED→GREEN→REFACTOR)
+         Teammate C: Database (RED→GREEN→REFACTOR)
+                    |
+             統合テスト → 全て GREEN
+```
 
 ## Parallel Execution (v3.3 & v4.0)
 

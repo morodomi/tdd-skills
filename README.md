@@ -2,7 +2,7 @@
 
 Claude Code plugin for enforcing strict TDD workflows
 
-> **v4.1.0**: Multi-Perspective Review - Product and usability reviewers added to plan-review (5 agents) and quality-gate (6 agents)
+> **v4.3.0**: Agent Teams Integration - Debate-mode quality-gate, parallel bug investigation (tdd-diagnose), cross-layer parallel development (tdd-parallel)
 
 [Japanese](README.ja.md)
 
@@ -90,6 +90,40 @@ INIT -> PLAN -> RED -> GREEN -> REFACTOR -> REVIEW -> COMMIT
 | REVIEW | tdd-review | Quality check |
 | COMMIT | tdd-commit | Git commit |
 
+## Agent Teams Integration (v4.3.0)
+
+When `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` is enabled:
+
+| Feature | Without Agent Teams | With Agent Teams |
+|---------|-------------------|------------------|
+| **quality-gate** | 6-agent parallel (subagent) | Debate mode (discuss & refute) |
+| **tdd-diagnose** | Explore agent parallel investigation | Team debate investigation |
+| **tdd-parallel** | Not available (sequential fallback) | Cross-layer parallel development |
+
+### tdd-diagnose (Bug Investigation)
+
+```
+Bug report -> Hypothesis generation -> Parallel investigation -> Root cause
+                                         |
+                        Investigator 1: "Race condition in auth"
+                        Investigator 2: "Cache invalidation issue"
+                        Investigator 3: "DB connection timeout"
+                                         |
+                                    Debate & refute -> Root cause identified
+```
+
+### tdd-parallel (Cross-Layer Development)
+
+```
+INIT -> PLAN -> [tdd-parallel] -> REVIEW -> COMMIT
+                     |
+          Teammate A: Backend  (RED->GREEN->REFACTOR)
+          Teammate B: Frontend (RED->GREEN->REFACTOR)
+          Teammate C: Database (RED->GREEN->REFACTOR)
+                     |
+              Integration test -> All green
+```
+
 ## Parallel Execution (v3.3 & v4.0)
 
 ```
@@ -154,12 +188,20 @@ User input -> Risk assessment -> Question flow -> Improved design accuracy
 
 ## Migration
 
-### v4.0 -> v4.1.0
+### v4.2 -> v4.3.0
 
-**New feature**: Multi-Perspective Review
-- plan-review: 5-agent parallel review (scope, architecture, risk, product, usability)
-- quality-gate: 6-agent parallel review (correctness, performance, security, guidelines, product, usability)
-- quality-gate is now mandatory in tdd-review (cannot be skipped)
+**New features**: Agent Teams Integration
+- quality-gate: debate mode with `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`
+- tdd-diagnose: parallel bug investigation (auto-triggered from tdd-init on high-risk)
+- tdd-parallel: cross-layer parallel development orchestrator
+- No breaking changes, all features are additive
+
+### v4.0 -> v4.2.0
+
+**New features**: Auto Phase Transition, Multi-Perspective Review
+- Automatic skill execution between TDD phases
+- plan-review: 5-agent parallel review
+- quality-gate: 6-agent parallel review (mandatory)
 
 ### v3.x -> v4.0.0
 
