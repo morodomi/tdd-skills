@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-02-05 |
+| 最終更新 | 2026-02-06 |
 
 ## Tech Stack
 
@@ -28,12 +28,15 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
-| - | なし | - |
+| #44 | feat: team-review - Agent Teams based adversarial review | open |
+| #45 | feat: tdd-diagnose - parallel bug investigation phase | open |
+| #46 | feat: tdd-parallel - cross-layer parallel development orchestrator | open |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-06 | quality-gate-agent-teams | DONE |
 | 2026-02-05 | skill-md-unification | DONE |
 | 2026-02-05 | auto-phase-transition-part2 | DONE |
 | 2026-02-05 | auto-phase-transition-part1 | DONE |
@@ -50,8 +53,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 56 | - |
-| Open Issues | 0 | 0 |
+| Cycle docs | 57 | - |
+| Open Issues | 3 | 0 |
 | Plugin数 | 10 | - |
 
 ---

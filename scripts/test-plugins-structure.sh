@@ -94,7 +94,8 @@ fi
 
 # TC-02b4: quality-gate includes product-reviewer
 QG_SKILL="$PLUGINS_DIR/tdd-core/skills/quality-gate/SKILL.md"
-if grep -q "product-reviewer" "$QG_SKILL" 2>/dev/null; then
+QG_DIR="$PLUGINS_DIR/tdd-core/skills/quality-gate"
+if grep -rq "product-reviewer" "$QG_DIR" 2>/dev/null; then
     test_pass "quality-gate includes product-reviewer"
 else
     test_fail "quality-gate missing product-reviewer"
@@ -115,7 +116,7 @@ else
 fi
 
 # TC-02b8: quality-gate includes usability-reviewer
-if grep -q "usability-reviewer" "$QG_SKILL" 2>/dev/null; then
+if grep -rq "usability-reviewer" "$QG_DIR" 2>/dev/null; then
     test_pass "quality-gate includes usability-reviewer"
 else
     test_fail "quality-gate missing usability-reviewer"
@@ -133,6 +134,45 @@ if [ -f "$PLUGINS_DIR/tdd-core/skills/quality-gate/SKILL.md" ]; then
     test_pass "quality-gate skill exists"
 else
     test_fail "quality-gate skill not found"
+fi
+
+# TC-AT-01: quality-gate SKILL.md has Agent Teams env var branching
+if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$QG_SKILL" 2>/dev/null; then
+    test_pass "quality-gate has Agent Teams env var branching"
+else
+    test_fail "quality-gate missing Agent Teams env var branching"
+fi
+
+# TC-AT-02: quality-gate SKILL.md is 100 lines or less
+QG_LINES=$(wc -l < "$QG_SKILL" 2>/dev/null | tr -d ' ')
+if [ -n "$QG_LINES" ] && [ "$QG_LINES" -le 100 ]; then
+    test_pass "quality-gate SKILL.md is ${QG_LINES} lines (<= 100)"
+else
+    test_fail "quality-gate SKILL.md is ${QG_LINES} lines (> 100)"
+fi
+
+# TC-AT-03: steps-subagent.md exists and has 6-agent parallel procedure
+QG_SUBAGENT="$PLUGINS_DIR/tdd-core/skills/quality-gate/steps-subagent.md"
+if [ -f "$QG_SUBAGENT" ] && grep -q "correctness-reviewer" "$QG_SUBAGENT" && grep -q "security-reviewer" "$QG_SUBAGENT"; then
+    test_pass "steps-subagent.md exists with 6-agent procedure"
+else
+    test_fail "steps-subagent.md missing or incomplete"
+fi
+
+# TC-AT-04: steps-teams.md exists and has Team debate procedure
+QG_TEAMS="$PLUGINS_DIR/tdd-core/skills/quality-gate/steps-teams.md"
+if [ -f "$QG_TEAMS" ] && grep -q "Teammate" "$QG_TEAMS" && grep -q "Debate\|debate\|討論" "$QG_TEAMS"; then
+    test_pass "steps-teams.md exists with Team debate procedure"
+else
+    test_fail "steps-teams.md missing or incomplete"
+fi
+
+# TC-AT-05: reference.md has shared info (scope, scoring, output format)
+QG_REF="$PLUGINS_DIR/tdd-core/skills/quality-gate/reference.md"
+if grep -q "対象範囲" "$QG_REF" 2>/dev/null && grep -q "信頼スコア" "$QG_REF" 2>/dev/null && grep -q "出力形式" "$QG_REF" 2>/dev/null; then
+    test_pass "reference.md has shared info (scope, scoring, output)"
+else
+    test_fail "reference.md missing shared info"
 fi
 
 # TC-02c2: tdd-review SKILL.md marks quality-gate as mandatory
