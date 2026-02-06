@@ -643,6 +643,105 @@ else
 fi
 echo ""
 
+# --- tdd-parallel ---
+echo "--- tdd-parallel ---"
+PAR_DIR="$PLUGINS_DIR/tdd-core/skills/tdd-parallel"
+PAR_SKILL="$PAR_DIR/SKILL.md"
+
+# TC-PL-01: tdd-parallel SKILL.md exists and is 100 lines or less
+if [ -f "$PAR_SKILL" ]; then
+    PAR_LINES=$(wc -l < "$PAR_SKILL" | tr -d ' ')
+    if [ "$PAR_LINES" -le 100 ]; then
+        test_pass "tdd-parallel SKILL.md exists and is ${PAR_LINES} lines (<= 100)"
+    else
+        test_fail "tdd-parallel SKILL.md is ${PAR_LINES} lines (> 100)"
+    fi
+else
+    test_fail "tdd-parallel SKILL.md not found"
+fi
+
+# TC-PL-02: SKILL.md has Agent Teams env var check + fallback for disabled
+if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$PAR_SKILL" 2>/dev/null && grep -qi "tdd-red\|通常.*TDD\|sequential\|逐次" "$PAR_SKILL" 2>/dev/null; then
+    test_pass "tdd-parallel has env var check + fallback"
+else
+    test_fail "tdd-parallel missing env var check or fallback"
+fi
+
+# TC-PL-03: SKILL.md has Progress Checklist
+if grep -q "Progress Checklist" "$PAR_SKILL" 2>/dev/null; then
+    test_pass "tdd-parallel has Progress Checklist"
+else
+    test_fail "tdd-parallel missing Progress Checklist"
+fi
+
+# TC-PL-04: SKILL.md has Architecture Note (composite pattern)
+if grep -qi "Architecture Note\|合成パターン\|composite\|複数フェーズ" "$PAR_SKILL" 2>/dev/null; then
+    test_pass "tdd-parallel has Architecture Note"
+else
+    test_fail "tdd-parallel missing Architecture Note"
+fi
+
+# TC-PL-05: SKILL.md has When to Use section
+if grep -qi "When to Use\|使用推奨\|使用非推奨" "$PAR_SKILL" 2>/dev/null; then
+    test_pass "tdd-parallel has When to Use section"
+else
+    test_fail "tdd-parallel missing When to Use section"
+fi
+
+# TC-PL-06: SKILL.md has integration test step
+if grep -qi "統合テスト\|Integration Test\|全テスト.*一括" "$PAR_SKILL" 2>/dev/null; then
+    test_pass "tdd-parallel has integration test step"
+else
+    test_fail "tdd-parallel missing integration test step"
+fi
+
+# TC-PL-07: steps-teams.md exists with Team creation, Teammate, file conflict check, integration test
+PAR_TEAMS="$PAR_DIR/steps-teams.md"
+if [ -f "$PAR_TEAMS" ] && grep -q "Teammate" "$PAR_TEAMS" && grep -qi "競合\|conflict" "$PAR_TEAMS" && grep -qi "統合\|Integration" "$PAR_TEAMS"; then
+    test_pass "tdd-parallel steps-teams.md exists with required sections"
+else
+    test_fail "tdd-parallel steps-teams.md missing or incomplete"
+fi
+
+# TC-PL-08: steps-teams.md has Fallback with specific error message + next action
+if grep -qi "Fallback\|fallback\|フォールバック" "$PAR_TEAMS" 2>/dev/null && grep -qi "Skill(tdd-core:tdd-red)\|tdd-red.*個別\|next action\|次のアクション" "$PAR_TEAMS" 2>/dev/null; then
+    test_pass "tdd-parallel steps-teams.md has Fallback with next action"
+else
+    test_fail "tdd-parallel steps-teams.md missing Fallback or next action"
+fi
+
+# TC-PL-09: reference.md exists with layer guide, Why Agent Teams Only, recommended layer count (2-4)
+PAR_REF="$PAR_DIR/reference.md"
+if [ -f "$PAR_REF" ] && grep -qi "レイヤー\|layer" "$PAR_REF" && grep -qi "Why Agent Teams Only\|Agent Teams.*必須\|なぜ.*Agent Teams" "$PAR_REF" && grep -q "2-4\|2〜4" "$PAR_REF"; then
+    test_pass "tdd-parallel reference.md has layer guide, Why Agent Teams Only, 2-4 layers"
+else
+    test_fail "tdd-parallel reference.md missing or incomplete"
+fi
+
+# TC-PL-10: tdd-plan/SKILL.md has tdd-parallel auto-proposal with env var check
+PLAN_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-plan/SKILL.md"
+if grep -q "tdd-parallel" "$PLAN_SKILL" 2>/dev/null && grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$PLAN_SKILL" 2>/dev/null; then
+    test_pass "tdd-plan has tdd-parallel proposal with env var check"
+else
+    test_fail "tdd-plan missing tdd-parallel proposal or env var check"
+fi
+
+# TC-PL-11: tdd-plan/SKILL.md is 100 lines or less
+PLAN_LINES=$(wc -l < "$PLAN_SKILL" 2>/dev/null | tr -d ' ')
+if [ -n "$PLAN_LINES" ] && [ "$PLAN_LINES" -le 100 ]; then
+    test_pass "tdd-plan SKILL.md is ${PLAN_LINES} lines (<= 100)"
+else
+    test_fail "tdd-plan SKILL.md is ${PLAN_LINES} lines (> 100)"
+fi
+
+# TC-PL-12: CLAUDE.md Skills table has tdd-parallel
+if grep -q "tdd-parallel" "CLAUDE.md" 2>/dev/null; then
+    test_pass "CLAUDE.md Skills table has tdd-parallel"
+else
+    test_fail "CLAUDE.md Skills table missing tdd-parallel"
+fi
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

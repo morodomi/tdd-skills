@@ -104,6 +104,7 @@ chore: その他
 | plan-review | 「plan-review」 | 5エージェント並行レビュー |
 | quality-gate | 「quality-gate」 | 6エージェント並行レビュー |
 | tdd-diagnose | 「原因調査」「investigate」「diagnose」 | 並列バグ仮説調査 |
+| tdd-parallel | 「parallel」「並列開発」 | クロスレイヤー並列開発オーケストレータ |
 
 ## Test Scripts
 

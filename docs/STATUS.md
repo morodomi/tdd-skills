@@ -28,13 +28,13 @@ bash scripts/test-skills-structure.sh
 
 | # | Title | Status |
 |---|-------|--------|
-| #45 | feat: tdd-diagnose - parallel bug investigation phase | open |
 | #46 | feat: tdd-parallel - cross-layer parallel development orchestrator | open |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-06 | tdd-parallel-skill | DONE |
 | 2026-02-06 | tdd-diagnose-skill | DONE |
 | 2026-02-06 | quality-gate-agent-teams | DONE |
 | 2026-02-05 | skill-md-unification | DONE |
@@ -53,8 +53,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 58 | - |
-| Open Issues | 2 | 0 |
+| Cycle docs | 59 | - |
+| Open Issues | 1 | 0 |
 | Plugin数 | 10 | - |
 
 ---

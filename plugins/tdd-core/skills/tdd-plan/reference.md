@@ -137,6 +137,23 @@ tdd-init を先に実行してください。
 Scope Definitionを確認してください。
 ```
 
+## クロスレイヤー検出
+
+### Step 5.5: tdd-parallel 提案条件
+
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` が有効な場合のみ実行。
+
+| 検出条件 | 判定 |
+|---------|------|
+| Scope Layer が "Both" | クロスレイヤー |
+| In Scope に Backend + Frontend が含まれる | クロスレイヤー |
+| Files to Change に 3+ ディレクトリ接頭辞 | クロスレイヤー |
+
+検出時: AskUserQuestion で「tdd-parallel（並列開発）を利用しますか？」と提案。
+
+ユーザーが承認 → Cycle doc に記録。plan-review 後、RED の代わりに `Skill(tdd-core:tdd-parallel)` を実行（tdd-parallel 内で RED→GREEN→REFACTOR→REVIEW を実行）。
+ユーザーが拒否 → 通常の tdd-red → tdd-green → tdd-refactor。
+
 ## エラーメッセージ設計
 
 異常系テストケース作成時に参照。ユーザーフレンドリーなエラーメッセージを設計する。

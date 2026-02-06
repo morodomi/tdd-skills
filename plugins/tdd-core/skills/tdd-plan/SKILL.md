@@ -85,6 +85,10 @@ Riskフィールドなし → WARN（標準設計）として扱う。
 - [ ] TC-04: [異常系]
 ```
 
+### Step 5.5: クロスレイヤー検出（tdd-parallel 提案）
+
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` 有効時、複数レイヤー検出で tdd-parallel を提案。詳細: [reference.md](reference.md#クロスレイヤー検出)
+
 ### Step 6: plan-review自動実行
 
 Test List作成後、`Skill(tdd-core:plan-review)` を実行。plan-reviewがRED以降を制御。
