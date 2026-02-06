@@ -2,7 +2,7 @@
 
 Claude Code plugin for enforcing strict TDD workflows
 
-> **v4.3.0**: Agent Teams Integration - Debate-mode quality-gate, parallel bug investigation (tdd-diagnose), cross-layer parallel development (tdd-parallel)
+> **v5.0.0**: PdM Delegation Model - Claude acts as Product Manager, delegating implementation to specialist agents
 
 [Japanese](README.ja.md)
 
@@ -124,6 +124,50 @@ INIT -> PLAN -> [tdd-parallel] -> REVIEW -> COMMIT
               Integration test -> All green
 ```
 
+## PdM Delegation Model (v5.0)
+
+Claude acts as a PdM (Product Manager), focusing on planning and decision-making while delegating implementation, testing, and review to specialist agents. This separates concerns and keeps the main context lightweight.
+
+```
+v4.3: Claude --- Read Skill --- Execute phases --- Some subagent parallelization
+
+v5.0: Claude(PdM) --- Plan & Decide --- Delegate --- Autonomous judgment
+                          |
+                    +-----+-----+
+                  architect  red/green  refactorer
+```
+
+### 3-Block Orchestration
+
+| Block | Phases | Description |
+|-------|--------|-------------|
+| Planning | INIT -> PLAN -> plan-review | PdM plans, architect agent designs |
+| Implementation | RED -> GREEN -> REFACTOR -> quality-gate | Worker agents implement & review |
+| Finalization | COMMIT | PdM commits with full context |
+
+### Specialist Agents
+
+| Agent | Phase | Role |
+|-------|-------|------|
+| architect | PLAN | Design and test list creation via Skill(tdd-plan) |
+| red-worker | RED | Test creation (parallel) |
+| green-worker | GREEN | Minimal implementation (parallel) |
+| refactorer | REFACTOR | Code quality improvement via Skill(tdd-refactor) |
+
+### tdd-orchestrate
+
+`tdd-orchestrate` is an internal skill that runs automatically when Agent Teams is enabled. Users do not invoke it directly; `tdd-init` routes to it. It manages the full TDD cycle as a PdM hub, delegating each phase to the appropriate specialist agent and making autonomous pass/warn/block decisions.
+
+### Activation
+
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+claude
+> I want to add a login feature  # tdd-init automatically uses PdM orchestration
+```
+
+Without this variable, all v4.3 workflows continue unchanged. No migration or configuration changes are needed to stay on v4.3 behavior.
+
 ## Parallel Execution (v3.3 & v4.0)
 
 ```
@@ -187,6 +231,16 @@ User input -> Risk assessment -> Question flow -> Improved design accuracy
 | Static analysis | 0 errors |
 
 ## Migration
+
+### v4.3 -> v5.0.0
+
+**New feature**: PdM Delegation Model
+- Claude acts as Product Manager, delegating to specialist agents (architect, refactorer)
+- `tdd-orchestrate`: Internal orchestration skill for full-cycle autonomous management
+- `tdd-init` automatically routes to PdM mode when Agent Teams is enabled
+- No breaking changes: all features are opt-in via `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
+- Without the env var: existing v4.3 workflows continue unchanged, no action required
+- To revert: unset the variable, no migration needed
 
 ### v4.2 -> v4.3.0
 

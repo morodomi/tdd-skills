@@ -1138,6 +1138,64 @@ fi
 
 echo ""
 
+# ==========================================
+# v5.0 Release Documentation Tests
+# ==========================================
+
+echo "--- v5.0 Release Documentation ---"
+
+README="README.md"
+STATUS_MD="docs/STATUS.md"
+
+# TC-V5-01: README.md has PdM Delegation Model section
+if grep -q "PdM Delegation Model" "$README" 2>/dev/null; then
+    test_pass "README.md has PdM Delegation Model section"
+else
+    test_fail "README.md missing PdM Delegation Model section"
+fi
+
+# TC-V5-02: README.md has tdd-orchestrate description
+if grep -q "tdd-orchestrate" "$README" 2>/dev/null; then
+    test_pass "README.md has tdd-orchestrate description"
+else
+    test_fail "README.md missing tdd-orchestrate description"
+fi
+
+# TC-V5-03: README.md has v5.0 version banner
+if grep -q "v5\.0" "$README" 2>/dev/null; then
+    test_pass "README.md has v5.0 version banner"
+else
+    test_fail "README.md missing v5.0 version banner"
+fi
+
+# TC-V5-04: README.md has v4.3 -> v5.0 Migration section
+if grep -q "v4\.3.*v5\.0\|v5\.0.*Migration\|v4\.3.0.*v5\.0" "$README" 2>/dev/null; then
+    test_pass "README.md has v4.3 -> v5.0 Migration section"
+else
+    test_fail "README.md missing v4.3 -> v5.0 Migration section"
+fi
+
+# TC-V5-05: README.md has architect/refactorer mention
+if grep -q "architect" "$README" 2>/dev/null && grep -q "refactorer" "$README" 2>/dev/null; then
+    test_pass "README.md has architect/refactorer mention"
+else
+    test_fail "README.md missing architect/refactorer mention"
+fi
+
+# TC-V5-06: STATUS.md has 0 Open Issues (no issue rows in Open Issues table)
+if [ -f "$STATUS_MD" ]; then
+    OPEN_ISSUE_COUNT=$(sed -n '/## Open Issues/,/## /p' "$STATUS_MD" 2>/dev/null | grep -c "^| #[0-9]" 2>/dev/null)
+    if [ "$OPEN_ISSUE_COUNT" -eq 0 ]; then
+        test_pass "STATUS.md has 0 Open Issues"
+    else
+        test_fail "STATUS.md has ${OPEN_ISSUE_COUNT} Open Issues (expected 0)"
+    fi
+else
+    test_fail "STATUS.md not found"
+fi
+
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="
