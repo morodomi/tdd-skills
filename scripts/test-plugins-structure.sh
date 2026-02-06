@@ -899,6 +899,128 @@ else
     test_fail "onboard template missing Delegation Rules section"
 fi
 
+# ===========================================
+# tdd-orchestrate skill structure tests
+# ===========================================
+echo "--- tdd-orchestrate ---"
+ORCH_DIR="$PLUGINS_DIR/tdd-core/skills/tdd-orchestrate"
+ORCH_SKILL="$ORCH_DIR/SKILL.md"
+ORCH_REF="$ORCH_DIR/reference.md"
+ORCH_TEAMS="$ORCH_DIR/steps-teams.md"
+ORCH_SUB="$ORCH_DIR/steps-subagent.md"
+
+# TC-OR-01: SKILL.md exists and is <= 100 lines
+if [ -f "$ORCH_SKILL" ]; then
+    ORCH_LINES=$(wc -l < "$ORCH_SKILL" | tr -d ' ')
+    if [ "$ORCH_LINES" -le 100 ]; then
+        test_pass "tdd-orchestrate SKILL.md exists and is ${ORCH_LINES} lines (<= 100)"
+    else
+        test_fail "tdd-orchestrate SKILL.md is ${ORCH_LINES} lines (> 100)"
+    fi
+else
+    test_fail "tdd-orchestrate SKILL.md not found"
+fi
+
+# TC-OR-02: SKILL.md contains Block 1, Block 2, Block 3
+if grep -q "Block 1" "$ORCH_SKILL" 2>/dev/null && grep -q "Block 2" "$ORCH_SKILL" 2>/dev/null && grep -q "Block 3" "$ORCH_SKILL" 2>/dev/null; then
+    test_pass "tdd-orchestrate SKILL.md has Block 1/2/3"
+else
+    test_fail "tdd-orchestrate SKILL.md missing Block 1/2/3"
+fi
+
+# TC-OR-03: SKILL.md contains env var branching
+if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$ORCH_SKILL" 2>/dev/null; then
+    test_pass "tdd-orchestrate SKILL.md has env var branching"
+else
+    test_fail "tdd-orchestrate SKILL.md missing env var branching"
+fi
+
+# TC-OR-04: SKILL.md has Progress Checklist with 7+ phases
+if grep -q "Progress Checklist" "$ORCH_SKILL" 2>/dev/null; then
+    ORCH_PHASES=$(grep -c "INIT\|PLAN\|plan-review\|RED\|GREEN\|REFACTOR\|REVIEW\|COMMIT" "$ORCH_SKILL" 2>/dev/null)
+    if [ "$ORCH_PHASES" -ge 7 ]; then
+        test_pass "tdd-orchestrate SKILL.md has Progress Checklist with ${ORCH_PHASES} phase refs"
+    else
+        test_fail "tdd-orchestrate SKILL.md Progress Checklist has only ${ORCH_PHASES}/7 phase refs"
+    fi
+else
+    test_fail "tdd-orchestrate SKILL.md missing Progress Checklist"
+fi
+
+# TC-OR-05: SKILL.md references steps-teams.md and steps-subagent.md
+if grep -q "steps-teams.md" "$ORCH_SKILL" 2>/dev/null && grep -q "steps-subagent.md" "$ORCH_SKILL" 2>/dev/null; then
+    test_pass "tdd-orchestrate SKILL.md references both steps files"
+else
+    test_fail "tdd-orchestrate SKILL.md missing steps file references"
+fi
+
+# TC-OR-06: reference.md has PdM judgment criteria table (PASS/WARN/BLOCK + auto-proceed)
+if [ -f "$ORCH_REF" ]; then
+    if grep -q "PASS" "$ORCH_REF" 2>/dev/null && grep -q "WARN" "$ORCH_REF" 2>/dev/null && grep -q "BLOCK" "$ORCH_REF" 2>/dev/null && grep -qE "自律判断|自動進行" "$ORCH_REF" 2>/dev/null; then
+        test_pass "tdd-orchestrate reference.md has PdM judgment criteria"
+    else
+        test_fail "tdd-orchestrate reference.md missing PdM judgment criteria"
+    fi
+else
+    test_fail "tdd-orchestrate reference.md not found"
+fi
+
+# TC-OR-07: reference.md has retry logic with max count and escalation
+if grep -qE "再試行|retry" "$ORCH_REF" 2>/dev/null && grep -qE "ユーザーに報告|エスカレーション" "$ORCH_REF" 2>/dev/null && grep -qE "max|上限|[0-9]+回" "$ORCH_REF" 2>/dev/null; then
+    test_pass "tdd-orchestrate reference.md has retry logic with limits"
+else
+    test_fail "tdd-orchestrate reference.md missing retry logic or limits"
+fi
+
+# TC-OR-08: reference.md has Phase Ownership table with all phases
+if grep -q "INIT" "$ORCH_REF" 2>/dev/null && grep -q "PLAN" "$ORCH_REF" 2>/dev/null && grep -q "RED" "$ORCH_REF" 2>/dev/null && grep -q "GREEN" "$ORCH_REF" 2>/dev/null && grep -q "REFACTOR" "$ORCH_REF" 2>/dev/null && grep -q "REVIEW" "$ORCH_REF" 2>/dev/null && grep -q "COMMIT" "$ORCH_REF" 2>/dev/null; then
+    test_pass "tdd-orchestrate reference.md has all 7 phases"
+else
+    test_fail "tdd-orchestrate reference.md missing some phases"
+fi
+
+# TC-OR-09: steps-teams.md has spawnTeam, spawn, shutdown, cleanup
+if [ -f "$ORCH_TEAMS" ]; then
+    if grep -q "spawnTeam" "$ORCH_TEAMS" 2>/dev/null && grep -qE "spawn|起動" "$ORCH_TEAMS" 2>/dev/null && grep -q "shutdown" "$ORCH_TEAMS" 2>/dev/null && grep -q "cleanup" "$ORCH_TEAMS" 2>/dev/null; then
+        test_pass "tdd-orchestrate steps-teams.md has team lifecycle keywords"
+    else
+        test_fail "tdd-orchestrate steps-teams.md missing team lifecycle keywords"
+    fi
+else
+    test_fail "tdd-orchestrate steps-teams.md not found"
+fi
+
+# TC-OR-10: steps-teams.md has fallback to steps-subagent.md
+if grep -q "steps-subagent.md" "$ORCH_TEAMS" 2>/dev/null; then
+    test_pass "tdd-orchestrate steps-teams.md has fallback reference"
+else
+    test_fail "tdd-orchestrate steps-teams.md missing fallback reference"
+fi
+
+# TC-OR-11: steps-subagent.md has Skill calls for 6 skills
+if [ -f "$ORCH_SUB" ]; then
+    ORCH_SKILL_COUNT=0
+    for sk in tdd-plan tdd-red tdd-green tdd-refactor tdd-review tdd-commit; do
+        if grep -q "$sk" "$ORCH_SUB" 2>/dev/null; then
+            ORCH_SKILL_COUNT=$((ORCH_SKILL_COUNT + 1))
+        fi
+    done
+    if [ "$ORCH_SKILL_COUNT" -ge 6 ] && grep -q "Skill" "$ORCH_SUB" 2>/dev/null; then
+        test_pass "tdd-orchestrate steps-subagent.md has Skill calls for ${ORCH_SKILL_COUNT}/6 skills"
+    else
+        test_fail "tdd-orchestrate steps-subagent.md has only ${ORCH_SKILL_COUNT}/6 skill refs"
+    fi
+else
+    test_fail "tdd-orchestrate steps-subagent.md not found"
+fi
+
+# TC-OR-12: SKILL.md links to reference.md
+if grep -q "reference.md" "$ORCH_SKILL" 2>/dev/null; then
+    test_pass "tdd-orchestrate SKILL.md links to reference.md"
+else
+    test_fail "tdd-orchestrate SKILL.md missing reference.md link"
+fi
+
 echo ""
 
 echo "=========================================="
