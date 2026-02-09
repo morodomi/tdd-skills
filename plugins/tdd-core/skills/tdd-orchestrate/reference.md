@@ -136,7 +136,7 @@ DISCOVERED items found:
 1. [項目1の要約]
 2. [項目2の要約]
 
-GitHub issue を作成しますか? (Y/n/skip)
+GitHub issue を作成しますか? (Y/n)
 ```
 
 ### 重複防止
@@ -172,10 +172,9 @@ Socrates は常駐 advisor teammate であり、reviewer とは異なる役割�
 | proceed | 現状のまま次 Phase へ進行 |
 | fix | 指摘事項を修正してから進行 (Phase 再実行) |
 | abort | サイクルを中断 |
-| skip | Socrates の反論を無視して進行 |
 | 1, 2, 3 | 提示された選択肢の番号で選択 |
 
-不明瞭な入力 (曖昧な文言、無関係な内容) を受けた場合は再確認する:
+不明瞭な入力 (曖昧な文言、無関係な内容) を受けた場合は再確認する (max 2回):
 
 ```
 入力を解釈できません。以下から選択してください:
@@ -183,6 +182,14 @@ Socrates は常駐 advisor teammate であり、reviewer とは異なる役割�
 2. fix - 修正して再実行
 3. abort - サイクル中断
 ```
+
+2回再確認しても不明瞭な場合、デフォルト (proceed) で次 Phase へ進行する:
+
+```
+入力が2回不明瞭でした。デフォルト (proceed) で次 Phase へ進行します。
+```
+
+再試行カウンタは Socrates Protocol 発動ごとにリセットする。
 
 ### Progress Log 記録フォーマット
 

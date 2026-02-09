@@ -52,7 +52,7 @@ Skill(tdd-core:plan-review)
 1. PdM → socrates に判断提案を SendMessage（Phase名, スコア, reviewer サマリ, 提案）
 2. socrates → PdM に反論を返答（Objections + Alternative 形式）
 3. PdM → 人間にメリデメを構造化してテキスト出力（自由入力を求める）
-4. 人間 → 自由入力で判断（proceed / fix / abort / skip / 番号選択）
+4. 人間 → 自由入力で判断（proceed / fix / abort / 番号選択）
 
 初回発動時のみユーザー案内を表示（[reference.md](reference.md#初回発動時のユーザー案内) 参照）。
 
@@ -111,7 +111,7 @@ Skill(tdd-core:quality-gate)
 1. PdM → socrates に判断提案を SendMessage（Phase名, スコア, reviewer サマリ, 提案）
 2. socrates → PdM に反論を返答（Objections + Alternative 形式）
 3. PdM → 人間にメリデメを構造化してテキスト出力（自由入力を求める）
-4. 人間 → 自由入力で判断（proceed / fix / abort / skip / 番号選択）
+4. 人間 → 自由入力で判断（proceed / fix / abort / 番号選択）
 
 - proceed → DISCOVERED 判断へ進行
 - fix → green-worker を再起動して修正（max 1回再試行）
@@ -134,7 +134,7 @@ gh auth status 2>/dev/null || echo "gh CLI未認証。issue起票をスキップ
 ```
 DISCOVERED items found:
 1. [項目の要約]
-GitHub issue を作成しますか? (Y/n/skip)
+GitHub issue を作成しますか? (Y/n)
 ```
 
 承認後、各項目に対して:
