@@ -122,11 +122,11 @@ PdM の判断提案に反論し、メリデメを構造化して人間にテキ�
 
 ## DISCOVERED
 
-- free-text 再試行の上限定義 (max 2回 → proceed デフォルト)
-- "skip" と "proceed" の意味的重複の整理
-- Socrates 障害時のフォールバック (タイムアウト → v5.0 ロジック)
-- Progress Log にタイムスタンプ追加
-- Socrates 応答の長さ制約 (各 objection 2-3文以内)
+- free-text 再試行の上限定義 (max 2回 → proceed デフォルト) → #56
+- "skip" と "proceed" の意味的重複の整理 → #57
+- Socrates 障害時のフォールバック (タイムアウト → v5.0 ロジック) → #58
+- Progress Log にタイムスタンプ追加 → #59
+- Socrates 応答の長さ制約 (各 objection 2-3文以内) → #60
 
 ## Progress Log
 
