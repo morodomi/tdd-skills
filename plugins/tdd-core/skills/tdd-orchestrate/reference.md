@@ -196,7 +196,7 @@ Socrates は常駐 advisor teammate であり、reviewer とは異なる役割�
 Socrates Protocol 発動時、Cycle doc の Progress Log に以下を追記:
 
 ```markdown
-#### [Phase名] (Score: [N] [WARN/BLOCK])
+#### [Phase名] (Score: [N] [WARN/BLOCK]) - [HH:MM]
 - PdM Proposal: [提案内容]
 - Socrates Objection: [反論の要約]
 - Human Decision: [人間の判断]

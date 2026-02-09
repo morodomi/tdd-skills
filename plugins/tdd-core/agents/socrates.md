@@ -50,6 +50,12 @@ Alternative:
 - [選択肢3: 代替案のメリット/デメリット]
 ```
 
+### 文量ガイドライン
+
+- 各 Objection は 2-3文以内に簡潔にまとめる
+- Alternative は 3つまでに制限する
+- 根拠は Cycle doc・reviewer 結果から具体的に引用する
+
 ## Context
 
 - Cycle doc のパスは PdM から SendMessage で通知される
