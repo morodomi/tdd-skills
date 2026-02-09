@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-02-07 |
+| 最終更新 | 2026-02-09 |
 
 ## Tech Stack
 
@@ -28,11 +28,14 @@ bash scripts/test-skills-structure.sh
 
 | # | タイトル |
 |---|---------|
+| #53 | feat: persist review feedback in Cycle doc Progress Log on BLOCK |
+| #52 | proposal: PdM Delegation Model の命名見直し検討 |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-09 | reviewer-subagent-sonnet | DONE |
 | 2026-02-07 | discovered-issue-creation | DONE |
 | 2026-02-07 | v5-release-docs | DONE |
 | 2026-02-07 | architect-refactorer-init | DONE |
@@ -58,8 +61,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 66 | - |
-| Open Issues | 0 | 0 |
+| Cycle docs | 67 | - |
+| Open Issues | 2 | 0 |
 | Plugin数 | 10 | - |
 
 ---
