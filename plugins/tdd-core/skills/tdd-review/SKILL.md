@@ -18,6 +18,7 @@ REVIEW Progress:
 - [ ] 静的解析実行（エラー0件）
 - [ ] quality-gate 実行（必須・スキップ不可）
 - [ ] コードフォーマッタ実行
+- [ ] DISCOVERED issue 起票（該当項目がある場合）
 - [ ] Cycle doc更新
 - [ ] COMMITフェーズへ誘導
 ```
@@ -68,7 +69,12 @@ quality-gateスキルを必ず実行する。スキップ不可。4エージェ�
 black . && isort .  # Python
 ```
 
-### Step 6: 品質基準クリア確認
+### Step 6: DISCOVERED issue 起票
+
+Cycle doc の DISCOVERED セクションを確認し、スコープ外の未起票項目を GitHub issue に起票する。
+DISCOVERED が空の場合はスキップ。詳細: [reference.md](reference.md#discovered-issue-起票)
+
+### Step 7: 品質基準クリア確認
 
 結果を表示し、ユーザー承認を求める。COMMIT判断はユーザーが行う。
 

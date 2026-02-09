@@ -85,8 +85,44 @@ guidelines-reviewer, product-reviewer, usability-reviewer
 
 ### 自律判断
 
-- PASS/WARN → Block 3 (Phase 4) へ進行
+- PASS/WARN → DISCOVERED 判断へ進行
 - BLOCK → green-worker を再起動して修正（max 1回再試行）
+
+### DISCOVERED 判断
+
+REVIEW が PASS/WARN の場合、Cycle doc の DISCOVERED セクションを確認:
+
+1. DISCOVERED が空 → スキップして Block 3 へ
+2. 起票済み（`→ #` 付き）の項目 → スキップ
+3. 未起票の項目がある場合:
+
+```bash
+# 事前チェック
+gh auth status 2>/dev/null || echo "gh CLI未認証。issue起票をスキップします。"
+```
+
+ユーザーに確認:
+```
+DISCOVERED items found:
+1. [項目の要約]
+GitHub issue を作成しますか? (Y/n/skip)
+```
+
+承認後、各項目に対して:
+```bash
+gh issue create --title "[DISCOVERED] <要約>" --body "$(cat <<'EOF'
+## 発見元
+- Cycle: docs/cycles/<cycle-doc>.md
+- Phase: REVIEW
+- Reviewer: <reviewer名 or 手動>
+
+## 内容
+<DISCOVERED セクションの記載内容>
+EOF
+)" --label "discovered"
+```
+
+起票後、Cycle doc の DISCOVERED セクションに `→ #<issue番号>` を付記。
 
 ## Phase 4: Block 3 - Finalization
 

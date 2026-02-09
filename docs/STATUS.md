@@ -33,6 +33,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-07 | discovered-issue-creation | DONE |
 | 2026-02-07 | v5-release-docs | DONE |
 | 2026-02-07 | architect-refactorer-init | DONE |
 | 2026-02-07 | tdd-orchestrate-skill | DONE |
@@ -57,7 +58,7 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 65 | - |
+| Cycle docs | 66 | - |
 | Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
