@@ -137,11 +137,11 @@ else
     test_fail "quality-gate skill not found"
 fi
 
-# TC-AT-01: quality-gate SKILL.md has Agent Teams env var branching
-if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$QG_SKILL" 2>/dev/null; then
-    test_pass "quality-gate has Agent Teams env var branching"
+# TC-AT-01: quality-gate SKILL.md uses Subagent mode with Sonnet
+if grep -qi "subagent" "$QG_SKILL" 2>/dev/null && grep -qi "sonnet" "$QG_SKILL" 2>/dev/null; then
+    test_pass "quality-gate uses Subagent mode with Sonnet"
 else
-    test_fail "quality-gate missing Agent Teams env var branching"
+    test_fail "quality-gate missing Subagent/Sonnet configuration"
 fi
 
 # TC-AT-02: quality-gate SKILL.md is 100 lines or less
@@ -160,12 +160,12 @@ else
     test_fail "steps-subagent.md missing or incomplete"
 fi
 
-# TC-AT-04: steps-teams.md exists and has Team debate procedure
+# TC-AT-04: steps-teams.md removed from quality-gate (Subagent only)
 QG_TEAMS="$PLUGINS_DIR/tdd-core/skills/quality-gate/steps-teams.md"
-if [ -f "$QG_TEAMS" ] && grep -q "Teammate" "$QG_TEAMS" && grep -q "Debate\|debate\|討論" "$QG_TEAMS"; then
-    test_pass "steps-teams.md exists with Team debate procedure"
+if [ ! -f "$QG_TEAMS" ]; then
+    test_pass "quality-gate steps-teams.md removed (Subagent only)"
 else
-    test_fail "steps-teams.md missing or incomplete"
+    test_fail "quality-gate steps-teams.md still exists"
 fi
 
 # TC-AT-05: reference.md has shared info (scope, scoring, output format)
@@ -751,18 +751,18 @@ echo "--- plan-review Agent Teams ---"
 PR_DIR="$PLUGINS_DIR/tdd-core/skills/plan-review"
 PR_SKILL="$PR_DIR/SKILL.md"
 
-# TC-PR-01: plan-review SKILL.md has Agent Teams env var branching
-if grep -q "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS" "$PR_SKILL" 2>/dev/null; then
-    test_pass "plan-review has Agent Teams env var branching"
+# TC-PR-01: plan-review SKILL.md uses Subagent mode with Sonnet
+if grep -qi "subagent" "$PR_SKILL" 2>/dev/null && grep -qi "sonnet" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review uses Subagent mode with Sonnet"
 else
-    test_fail "plan-review missing Agent Teams env var branching"
+    test_fail "plan-review missing Subagent/Sonnet configuration"
 fi
 
-# TC-PR-02: plan-review SKILL.md references steps-teams.md (enabled) and steps-subagent.md (disabled)
-if grep -q "steps-teams.md" "$PR_SKILL" 2>/dev/null && grep -q "steps-subagent.md" "$PR_SKILL" 2>/dev/null; then
-    test_pass "plan-review references both steps-teams.md and steps-subagent.md"
+# TC-PR-02: plan-review SKILL.md references steps-subagent.md
+if grep -q "steps-subagent.md" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review references steps-subagent.md"
 else
-    test_fail "plan-review missing steps-teams.md or steps-subagent.md reference"
+    test_fail "plan-review missing steps-subagent.md reference"
 fi
 
 # TC-PR-03: plan-review SKILL.md is 100 lines or less
@@ -780,39 +780,25 @@ else
     test_fail "plan-review SKILL.md missing Progress Checklist"
 fi
 
-# TC-PR-05: steps-teams.md exists with Team creation, Teammate spawn, Debate, Lead Synthesis, Cleanup
+# TC-PR-05: plan-review steps-teams.md removed (Subagent only)
 PR_TEAMS="$PR_DIR/steps-teams.md"
-if [ -f "$PR_TEAMS" ] && grep -q "Teammate\|spawnTeam" "$PR_TEAMS" && grep -qi "Debate\|debate\|討論" "$PR_TEAMS" && grep -qi "Synthesis\|合議\|判定" "$PR_TEAMS" && grep -qi "Cleanup\|cleanup\|シャットダウン" "$PR_TEAMS"; then
-    test_pass "plan-review steps-teams.md has Team/Debate/Synthesis/Cleanup"
+if [ ! -f "$PR_TEAMS" ]; then
+    test_pass "plan-review steps-teams.md removed (Subagent only)"
 else
-    test_fail "plan-review steps-teams.md missing or incomplete"
+    test_fail "plan-review steps-teams.md still exists"
 fi
 
-# TC-PR-06: steps-teams.md has Fallback with subagent switch and specific message
-if grep -qi "Fallback\|fallback\|フォールバック" "$PR_TEAMS" 2>/dev/null && grep -qi "steps-subagent\|並行型\|subagent" "$PR_TEAMS" 2>/dev/null; then
-    test_pass "plan-review steps-teams.md has Fallback with subagent switch"
-else
-    test_fail "plan-review steps-teams.md missing Fallback or subagent switch"
-fi
-
-# TC-PR-07: steps-teams.md has 5 reviewers (scope/architecture/risk/product/usability)
-PR_TEAMS_REVIEWERS=0
+# TC-PR-06: steps-subagent.md has 5 reviewers
+PR_SUB_REVIEWERS=0
 for reviewer in scope-reviewer architecture-reviewer risk-reviewer product-reviewer usability-reviewer; do
-    if grep -q "$reviewer" "$PR_TEAMS" 2>/dev/null; then
-        ((PR_TEAMS_REVIEWERS++))
+    if grep -q "$reviewer" "$PR_DIR/steps-subagent.md" 2>/dev/null; then
+        ((PR_SUB_REVIEWERS++))
     fi
 done
-if [ "$PR_TEAMS_REVIEWERS" -eq 5 ]; then
-    test_pass "plan-review steps-teams.md has 5 reviewers"
+if [ "$PR_SUB_REVIEWERS" -eq 5 ]; then
+    test_pass "plan-review steps-subagent.md has 5 reviewers"
 else
-    test_fail "plan-review steps-teams.md has ${PR_TEAMS_REVIEWERS}/5 reviewers"
-fi
-
-# TC-PR-08: steps-teams.md has debate convergence condition (no new issues or round limit)
-if grep -qi "収束\|converge\|ラウンド\|round.*上限\|新規.*指摘.*なし\|no.*new" "$PR_TEAMS" 2>/dev/null; then
-    test_pass "plan-review steps-teams.md has debate convergence condition"
-else
-    test_fail "plan-review steps-teams.md missing debate convergence condition"
+    test_fail "plan-review steps-subagent.md has ${PR_SUB_REVIEWERS}/5 reviewers"
 fi
 
 # TC-PR-09: steps-subagent.md exists with 5-agent parallel procedure
@@ -843,11 +829,11 @@ else
     test_fail "plan-review steps-subagent.md missing JSON output format"
 fi
 
-# TC-PR-12: plan-review SKILL.md Progress Checklist uses mode-agnostic expression
-if grep -qi "モード自動選択\|モード.*自動\|auto.*mode\|レビュー実行（モード" "$PR_SKILL" 2>/dev/null; then
-    test_pass "plan-review Progress Checklist uses mode-agnostic expression"
+# TC-PR-12: plan-review SKILL.md Progress Checklist has Subagent + Sonnet expression
+if grep -qi "Subagent.*Sonnet\|レビュー実行（Subagent" "$PR_SKILL" 2>/dev/null; then
+    test_pass "plan-review Progress Checklist has Subagent + Sonnet expression"
 else
-    test_fail "plan-review Progress Checklist missing mode-agnostic expression"
+    test_fail "plan-review Progress Checklist missing Subagent + Sonnet expression"
 fi
 
 echo ""

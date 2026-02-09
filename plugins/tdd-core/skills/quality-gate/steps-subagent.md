@@ -1,18 +1,18 @@
 # Quality Gate - Subagent Mode
 
-環境変数 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` が無効時の手順。
+常に Subagent モードで実行する（環境変数に関わらず）。
 
 ## 6エージェント並行起動
 
-Taskツールで6つのエージェントを**並行**起動:
+Taskツールで6つのエージェントを **model: sonnet** で**並行**起動:
 
 ```
-tdd-core:correctness-reviewer  # 正確性
-tdd-core:performance-reviewer  # パフォーマンス
-tdd-core:security-reviewer     # セキュリティ
-tdd-core:guidelines-reviewer   # ガイドライン
-tdd-core:product-reviewer      # プロダクト観点（価値・コスト・優先度）
-tdd-core:usability-reviewer    # ユーザビリティ（UX・アクセシビリティ）
+Task(subagent_type: "tdd-core:correctness-reviewer", model: "sonnet", prompt: "...")
+Task(subagent_type: "tdd-core:performance-reviewer", model: "sonnet", prompt: "...")
+Task(subagent_type: "tdd-core:security-reviewer", model: "sonnet", prompt: "...")
+Task(subagent_type: "tdd-core:guidelines-reviewer", model: "sonnet", prompt: "...")
+Task(subagent_type: "tdd-core:product-reviewer", model: "sonnet", prompt: "...")
+Task(subagent_type: "tdd-core:usability-reviewer", model: "sonnet", prompt: "...")
 ```
 
 各エージェントに以下を渡す:
@@ -32,3 +32,7 @@ tdd-core:usability-reviewer    # ユーザビリティ（UX・アクセシビリ
 ```
 
 全エージェントの完了を待ち、Step 4（結果統合）へ進む。
+
+## エラー時
+
+並行起動失敗時は順次実行する。

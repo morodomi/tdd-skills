@@ -26,12 +26,8 @@ Task(subagent_type: "general-purpose", team_name: "tdd-cycle", name: "architect"
 
 ### plan-review
 
-5 reviewer teammate を起動し、設計レビューを実施:
-
 ```
-scope-reviewer, architecture-reviewer, risk-reviewer, product-reviewer, usability-reviewer
-→ 独立レビュー → 討論 → 合議判定
-→ SendMessage(type: "shutdown_request") → 全 reviewer
+Skill(tdd-core:plan-review)
 ```
 
 ### 自律判断
@@ -74,13 +70,8 @@ Task(subagent_type: "general-purpose", team_name: "tdd-cycle", name: "refactorer
 
 ### REVIEW (quality-gate)
 
-6 reviewer teammate を起動し、コードレビューを実施:
-
 ```
-correctness-reviewer, performance-reviewer, security-reviewer,
-guidelines-reviewer, product-reviewer, usability-reviewer
-→ 独立レビュー → 討論 → 合議判定
-→ SendMessage(type: "shutdown_request") → 全 reviewer
+Skill(tdd-core:quality-gate)
 ```
 
 ### 自律判断
