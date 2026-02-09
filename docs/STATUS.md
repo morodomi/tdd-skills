@@ -28,12 +28,13 @@ bash scripts/test-skills-structure.sh
 
 | # | タイトル | ラベル |
 |---|---------|--------|
-| #52 | proposal: PdM Delegation Model の命名見直し検討 | - |
+| (none) | - | - |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-09 | v51-release-docs | DONE |
 | 2026-02-09 | socrates-fallback | DONE |
 | 2026-02-09 | socrates-protocol-polish | DONE |
 | 2026-02-09 | free-text-input-refinement | DONE |
@@ -65,8 +66,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 72 | - |
-| Open Issues | 1 | 0 |
+| Cycle docs | 73 | - |
+| Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 
 ---
