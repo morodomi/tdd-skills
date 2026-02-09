@@ -13,7 +13,7 @@ description: コード変更を6観点で並行レビュー。信頼スコア80�
 quality-gate Progress:
 - [ ] 対象範囲決定（引数解釈）
 - [ ] スコープ/プラグイン確認
-- [ ] レビュー実行（モード自動選択）
+- [ ] レビュー実行（Subagent + Sonnet）
 - [ ] 結果統合・スコア判定
 - [ ] 分岐判定（PASS/WARN/BLOCK）
 ```
@@ -54,12 +54,7 @@ ls -t docs/cycles/*.md 2>/dev/null | head -1 | xargs grep -A2 "### Scope"
 
 ### Step 3: レビュー実行
 
-`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` 環境変数でモードを選択:
-
-| 環境変数 | モード | 手順 |
-|----------|--------|------|
-| 有効 (`1`) | 討論型 (Agent Teams) | [steps-teams.md](steps-teams.md) |
-| 無効 / 未設定 | 並行型 (Subagent) | [steps-subagent.md](steps-subagent.md) |
+Subagent + Sonnet で並行実行。手順: [steps-subagent.md](steps-subagent.md)
 
 ### Step 4: 結果統合
 
