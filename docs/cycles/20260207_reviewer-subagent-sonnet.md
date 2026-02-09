@@ -1,9 +1,9 @@
 ---
 feature: reviewer-subagent-sonnet
 cycle: 20260207_reviewer-subagent-sonnet
-phase: PLAN
+phase: DONE
 created: 2026-02-07 00:00
-updated: 2026-02-07 00:20
+updated: 2026-02-09
 ---
 
 # Reviewer Subagent + Sonnet 統一

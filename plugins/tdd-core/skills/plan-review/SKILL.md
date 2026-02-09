@@ -60,6 +60,12 @@ Subagent + Sonnet で並行実行。手順: [steps-subagent.md](steps-subagent.m
 ```
 重大な問題が検出されました。
 → PLANに戻って修正してください
+（Progress Logに記録済み）
+```
+
+Cycle docのProgress Logに以下の形式で追記する:
+```
+- YYYY-MM-DD HH:MM [PLAN] plan-review BLOCK (score NN): reviewer「指摘要約」
 ```
 
 ## Reference
