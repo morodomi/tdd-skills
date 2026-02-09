@@ -2,7 +2,7 @@
 
 Claude Code plugin for enforcing strict TDD workflows
 
-> **v5.0.0**: PdM Delegation Model - Claude acts as Product Manager, delegating implementation to specialist agents
+> **v5.1.0**: PdM + Socrates Advisor - Devil's Advocate for critical review decisions
 
 [Japanese](README.ja.md)
 
@@ -168,6 +168,42 @@ claude
 
 Without this variable, all v4.3 workflows continue unchanged. No migration or configuration changes are needed to stay on v4.3 behavior.
 
+### Socrates Advisor (v5.1)
+
+When plan-review or quality-gate produces a WARN or BLOCK score, Socrates Advisor activates as a Devil's Advocate teammate. Socrates challenges the PdM's proposal with objections and alternatives, improving decision quality before human judgment.
+
+```
+plan-review / quality-gate
+         |
+    Score 50+ (WARN/BLOCK)
+         |
+    Socrates (Devil's Advocate)
+         |
+    Objections & Alternatives
+         |
+    PdM merges merit/demerit
+         |
+    Human decides: proceed / fix / abort
+```
+
+#### Socrates Protocol
+
+| Score | Judgment | Action |
+|-------|----------|--------|
+| 0-49 | PASS | Auto-proceed (no Socrates) |
+| 50-79 | WARN | Socrates Protocol -> Human decision |
+| 80-100 | BLOCK | Socrates Protocol -> Human decision |
+
+After Socrates review, the user responds with free-text input:
+
+| Input | Meaning |
+|-------|---------|
+| proceed | Continue to next phase as-is |
+| fix | Revise and re-run the current phase |
+| abort | Cancel the cycle |
+
+If Socrates is unresponsive or returns unparseable responses, the system falls back to v5.0 logic automatically (WARN: auto-proceed, BLOCK: auto-retry).
+
 ## Parallel Execution (v3.3 & v4.0)
 
 ```
@@ -231,6 +267,16 @@ User input -> Risk assessment -> Question flow -> Improved design accuracy
 | Static analysis | 0 errors |
 
 ## Migration
+
+### v5.0 -> v5.1.0
+
+**New feature**: Socrates Devil's Advocate Advisor
+- Socrates Advisor: persistent Devil's Advocate teammate for Agent Teams
+- Activates during plan-review/quality-gate when score is WARN (50-79) or BLOCK (80-100)
+- Free-text human input: proceed/fix/abort (max 2 retries for unclear input)
+- Automatic v5.0 fallback when Socrates is unresponsive
+- No breaking changes: only activates with `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
+- Without Agent Teams: v5.0 behavior is fully preserved
 
 ### v4.3 -> v5.0.0
 
