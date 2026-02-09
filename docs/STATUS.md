@@ -30,13 +30,12 @@ bash scripts/test-skills-structure.sh
 |---|---------|--------|
 | #52 | proposal: PdM Delegation Model の命名見直し検討 | - |
 | #58 | [DISCOVERED] Socrates 障害時のフォールバック | discovered |
-| #59 | [DISCOVERED] Progress Log にタイムスタンプ追加 | discovered |
-| #60 | [DISCOVERED] Socrates 応答の長さ制約 | discovered |
 
 ## Recent Cycles
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-09 | socrates-protocol-polish | DONE |
 | 2026-02-09 | free-text-input-refinement | DONE |
 | 2026-02-09 | socrates-advisor | DONE |
 | 2026-02-09 | persist-review-feedback | DONE |
@@ -66,8 +65,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 70 | - |
-| Open Issues | 4 | 0 |
+| Cycle docs | 71 | - |
+| Open Issues | 2 | 0 |
 | Plugin数 | 10 | - |
 
 ---
