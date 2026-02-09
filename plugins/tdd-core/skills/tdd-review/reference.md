@@ -67,3 +67,64 @@ SKILL.mdの詳細情報。必要時のみ参照。
 2. 型ヒントの追加または修正
 3. 再度解析を実行
 ```
+
+## DISCOVERED issue 起票
+
+REVIEW の PASS/WARN 後、COMMIT の前に実行する。
+
+### データソース
+
+Cycle doc の `### DISCOVERED` セクションから読み取る。
+quality-gate JSON issues[] は直接の入力ソースではない（BLOCK/WARN 判定に使用済み）。
+
+### 判断基準
+
+| 条件 | アクション |
+|------|-----------|
+| DISCOVERED が空 or `(none)` | スキップ（issue起票なし） |
+| 全項目が起票済み（`→ #` 付き） | スキップ |
+| 未起票の項目あり | ユーザー確認後に起票 |
+
+### 事前チェック
+
+```bash
+gh auth status 2>/dev/null || echo "gh CLI未認証。issue起票をスキップします。"
+```
+
+### ユーザー確認ゲート
+
+GitHub issue 作成は外部副作用のため、ユーザー承認を求める:
+
+```
+DISCOVERED items found:
+1. [項目の要約]
+
+GitHub issue を作成しますか? (Y/n/skip)
+```
+
+### issue 起票コマンド
+
+```bash
+gh issue create --title "[DISCOVERED] <要約>" --body "$(cat <<'EOF'
+## 発見元
+- Cycle: docs/cycles/<cycle-doc>.md
+- Phase: REVIEW
+- Reviewer: <reviewer名 or 手動>
+
+## 内容
+<DISCOVERED セクションの記載内容>
+EOF
+)" --label "discovered"
+```
+
+### 重複防止
+
+起票済みの項目は Cycle doc で `→ #<issue番号>` マークが付く:
+
+```markdown
+### DISCOVERED
+- パフォーマンス問題 → #42
+- エラーハンドリング不足 → #43
+```
+
+`→ #` が付いている項目は起票をスキップする。

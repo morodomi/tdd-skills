@@ -12,7 +12,7 @@ TDDサイクル全体をPdM (Product Manager) として管理するオーケス�
 ```
 tdd-orchestrate Progress:
 - [ ] Block 1: INIT → PLAN → plan-review → 自律判断
-- [ ] Block 2: RED → GREEN → REFACTOR → REVIEW → 自律判断
+- [ ] Block 2: RED → GREEN → REFACTOR → REVIEW → 自律判断 → DISCOVERED
 - [ ] Block 3: COMMIT → 完了
 ```
 
@@ -37,7 +37,8 @@ tdd-orchestrate Progress:
 2. **GREEN**: green-worker に実装を委譲
 3. **REFACTOR**: refactorer にリファクタリングを委譲
 4. **REVIEW**: quality-gate で 6 reviewer レビュー
-5. **自律判断**: PASS/WARN → Block 3 へ、BLOCK → GREEN 再実行
+5. **自律判断**: PASS/WARN → DISCOVERED 判断 → Block 3 へ、BLOCK → GREEN 再実行
+6. **DISCOVERED**: スコープ外項目を GitHub issue に起票（ユーザー確認後）
 
 ### Block 3: Finalization
 

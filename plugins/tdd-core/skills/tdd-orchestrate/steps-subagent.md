@@ -22,9 +22,15 @@ Skill(tdd-core:tdd-red)
 → 自動的に tdd-green を実行
 → 自動的に tdd-refactor を実行
 → 自動的に tdd-review (quality-gate) を実行
-→ PASS/WARN → Block 3 へ
+→ PASS/WARN → DISCOVERED 判断へ
 → BLOCK → tdd-green を再実行
 ```
+
+### DISCOVERED 判断
+
+REVIEW が PASS/WARN の場合、Cycle doc の DISCOVERED セクションを確認し、
+スコープ外の未起票項目を GitHub issue に起票する。
+詳細は [reference.md](reference.md#discovered-issue-起票) を参照。
 
 ## Block 3: Finalization
 

@@ -14,6 +14,7 @@ PdM (Product Manager) オーケストレータの詳細ガイド。
 | Context 管理 | Cycle doc 読み書き、Phase 状態追跡 |
 | Verification Gate | テスト実行、成功/失敗確認 |
 | Git 操作 | commit, status, diff |
+| DISCOVERED issue 起票 | スコープ外の DISCOVERED 項目を GitHub issue に起票 |
 
 ### やらないこと
 
@@ -100,3 +101,51 @@ tdd-orchestrate Progress:
 ```
 
 これにより、ユーザーは長時間の自律実行中も進捗を把握できる。
+
+## DISCOVERED issue 起票
+
+REVIEW の PASS/WARN 後、COMMIT の前に実行する。
+
+### データソース
+
+Cycle doc の `### DISCOVERED` セクションから読み取る。
+
+### 判断基準
+
+| 条件 | アクション |
+|------|-----------|
+| DISCOVERED が空 or `(none)` | スキップ（issue起票なし） |
+| 全項目が起票済み（`→ #` 付き） | スキップ |
+| 未起票の項目あり | ユーザー確認後に起票 |
+
+### 事前チェック
+
+```bash
+gh auth status 2>/dev/null || echo "gh CLI未認証。issue起票をスキップします。"
+```
+
+`gh` が利用不可の場合、DISCOVERED 項目を Cycle doc に残したまま COMMIT へ進行する。
+
+### ユーザー確認ゲート
+
+GitHub issue 作成は外部副作用のため、PdM 自律判断ではなくユーザー承認を求める:
+
+```
+DISCOVERED items found:
+1. [項目1の要約]
+2. [項目2の要約]
+
+GitHub issue を作成しますか? (Y/n/skip)
+```
+
+### 重複防止
+
+起票済みの項目は Cycle doc で `→ #<issue番号>` マークが付く:
+
+```markdown
+### DISCOVERED
+- パフォーマンス問題 → #42
+- エラーハンドリング不足 → #43
+```
+
+`→ #` が付いている項目は起票をスキップする。
