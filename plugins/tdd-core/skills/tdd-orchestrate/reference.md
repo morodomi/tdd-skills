@@ -42,21 +42,22 @@ PdM (Product Manager) オーケストレータの詳細ガイド。
 
 ## 判断基準
 
-### スコアベース判定
+### スコアベース判定 (Agent Teams 有効時)
 
-| スコア | 判定 | PdM の自律判断 | ユーザーに聞く |
+| スコア | 判定 | PdM アクション | ユーザーに聞く |
 |--------|------|---------------|---------------|
 | 0-49 | PASS | 次 Phase へ自動進行 | - |
-| 50-79 | WARN | 次 Phase へ自動進行、警告ログ出力 | - |
-| 80-100 | BLOCK | 1回目: 自動再試行 | 2回目 BLOCK: ユーザーに報告 |
+| 50-79 | WARN | Socrates Protocol → 人間判断 | メリデメ提示後に自由入力 |
+| 80-100 | BLOCK | Socrates Protocol → 人間判断 | メリデメ提示後に自由入力 |
 
-### WARN 自動進行の設計理由
+Agent Teams 無効時は v5.0 互換: WARN 自動進行、BLOCK 自動再試行。
 
-PdM は自律性を重視する。WARN は品質基準内であり、Progress Checklist で
-警告数を可視化することでユーザーへの透明性を確保する。
-既存の quality-gate ではユーザーに選択肢を提示するが、
-PdM モードでは自律的に進行する。COMMIT は tdd-commit Skill 経由で実行され、
-既存の承認フローが適用される。
+### WARN/BLOCK 時の Socrates Protocol (v5.1 設計理由)
+
+WARN (50-79) は判断が分かれるゾーン。Socrates Protocol で人間の知見を入れることが
+最も ROI が高い。自律性 (v5.0) より判断精度 (v5.1) を優先する意図的な設計変更。
+BLOCK (80+) も同様に Socrates Protocol を経由し、自動再試行ではなく人間が
+「再試行/修正/中断」を判断する。
 
 ## 再試行ロジック
 
@@ -149,3 +150,58 @@ GitHub issue を作成しますか? (Y/n/skip)
 ```
 
 `→ #` が付いている項目は起票をスキップする。
+
+## Socrates Protocol
+
+Agent Teams 有効時、plan-review / quality-gate のスコアが WARN (50-79) または BLOCK (80+) の場合に発動する。
+Socrates は常駐 advisor teammate であり、reviewer とは異なる役割を持つ。
+
+### Protocol フロー
+
+1. **PdM → Socrates**: 判断提案を SendMessage で送信 (Phase名, スコア, reviewer サマリ, 提案)
+2. **Socrates → PdM**: 反論を返答 (Objections + Alternative 形式)
+3. **PdM → Human**: Socrates の反論を統合し、メリデメを構造化してテキスト出力
+4. **Human → PdM**: 自由入力で判断を返す
+
+### 人間の自由入力ハンドリング
+
+有効な入力例:
+
+| 入力 | 意味 |
+|------|------|
+| proceed | 現状のまま次 Phase へ進行 |
+| fix | 指摘事項を修正してから進行 (Phase 再実行) |
+| abort | サイクルを中断 |
+| skip | Socrates の反論を無視して進行 |
+| 1, 2, 3 | 提示された選択肢の番号で選択 |
+
+不明瞭な入力 (曖昧な文言、無関係な内容) を受けた場合は再確認する:
+
+```
+入力を解釈できません。以下から選択してください:
+1. proceed - 進行
+2. fix - 修正して再実行
+3. abort - サイクル中断
+```
+
+### Progress Log 記録フォーマット
+
+Socrates Protocol 発動時、Cycle doc の Progress Log に以下を追記:
+
+```markdown
+#### [Phase名] (Score: [N] [WARN/BLOCK])
+- PdM Proposal: [提案内容]
+- Socrates Objection: [反論の要約]
+- Human Decision: [人間の判断]
+- Action: [次のアクション]
+```
+
+### 初回発動時のユーザー案内
+
+サイクル内で初めて Socrates Protocol が発動する際、以下の案内を表示:
+
+```
+Socrates (Devil's Advocate advisor) が判断に反論します。
+reviewer とは異なり、スコアは付けず代替案を提示します。
+メリット・デメリットを確認し、自由入力で判断してください。
+```

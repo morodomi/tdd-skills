@@ -11,6 +11,16 @@ Teammate ツールでチームを作成（INIT 時に1回のみ）:
 Teammate(operation: "spawnTeam", team_name: "tdd-cycle")
 ```
 
+### socrates 起動（常駐 advisor）
+
+Team 作成直後に socrates を spawn する。全 Phase を通じて常駐し、PdM の判断に反論する:
+
+```
+Task(subagent_type: "general-purpose", team_name: "tdd-cycle", name: "socrates", mode: "plan")
+```
+
+socrates は read-only advisor であり、reviewer ではない。詳細: [../../agents/socrates.md](../../agents/socrates.md)
+
 ## Phase 2: Block 1 - Planning
 
 ### PLAN
@@ -32,8 +42,23 @@ Skill(tdd-core:plan-review)
 
 ### 自律判断
 
-- PASS/WARN → Block 2 (Phase 3) へ進行
-- BLOCK → architect を再起動して PLAN 再実行（max 1回再試行）
+スコアベース判定:
+
+- PASS (0-49) → Block 2 (Phase 3) へ自動進行
+- WARN (50-79) / BLOCK (80+) → Socrates Protocol 発動:
+
+#### Socrates Protocol (plan-review)
+
+1. PdM → socrates に判断提案を SendMessage（Phase名, スコア, reviewer サマリ, 提案）
+2. socrates → PdM に反論を返答（Objections + Alternative 形式）
+3. PdM → 人間にメリデメを構造化してテキスト出力（自由入力を求める）
+4. 人間 → 自由入力で判断（proceed / fix / abort / skip / 番号選択）
+
+初回発動時のみユーザー案内を表示（[reference.md](reference.md#初回発動時のユーザー案内) 参照）。
+
+- proceed → Block 2 へ進行
+- fix → architect を再起動して PLAN 再実行（max 1回再試行）
+- abort → サイクル中断
 
 ## Phase 3: Block 2 - Implementation
 
@@ -76,8 +101,21 @@ Skill(tdd-core:quality-gate)
 
 ### 自律判断
 
-- PASS/WARN → DISCOVERED 判断へ進行
-- BLOCK → green-worker を再起動して修正（max 1回再試行）
+スコアベース判定:
+
+- PASS (0-49) → DISCOVERED 判断へ自動進行
+- WARN (50-79) / BLOCK (80+) → Socrates Protocol 発動:
+
+#### Socrates Protocol (quality-gate)
+
+1. PdM → socrates に判断提案を SendMessage（Phase名, スコア, reviewer サマリ, 提案）
+2. socrates → PdM に反論を返答（Objections + Alternative 形式）
+3. PdM → 人間にメリデメを構造化してテキスト出力（自由入力を求める）
+4. 人間 → 自由入力で判断（proceed / fix / abort / skip / 番号選択）
+
+- proceed → DISCOVERED 判断へ進行
+- fix → green-worker を再起動して修正（max 1回再試行）
+- abort → サイクル中断
 
 ### DISCOVERED 判断
 
@@ -128,7 +166,10 @@ git commit -m "..."
 
 ### Team Cleanup
 
+socrates を shutdown してからチームを解散:
+
 ```
+SendMessage(type: "shutdown_request", recipient: "socrates")
 Teammate(operation: "cleanup")
 ```
 
