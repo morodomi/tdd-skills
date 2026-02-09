@@ -59,10 +59,11 @@ tdd-orchestrate Progress:
 | スコア | 判定 | PdM アクション |
 |--------|------|---------------|
 | 0-49 | PASS | 次 Block へ自動進行 |
-| 50-79 | WARN | 警告ログ、次 Block へ自動進行 |
-| 80-100 | BLOCK | 1回目: 自動再試行、2回目: ユーザーに報告 |
+| 50-79 | WARN | Socrates Protocol → 人間判断 (Agent Teams時) |
+| 80-100 | BLOCK | Socrates Protocol → 人間判断 (Agent Teams時) |
 
-詳細: [reference.md](reference.md)
+Agent Teams 無効時は WARN 自動進行、BLOCK 自動再試行 (v5.0 互換)。
+Socrates Protocol 詳細: [reference.md](reference.md)
 
 ## Reference
 
