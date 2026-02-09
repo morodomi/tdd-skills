@@ -29,8 +29,6 @@ bash scripts/test-skills-structure.sh
 | # | タイトル | ラベル |
 |---|---------|--------|
 | #52 | proposal: PdM Delegation Model の命名見直し検討 | - |
-| #56 | [DISCOVERED] free-text 再試行の上限定義 | discovered |
-| #57 | [DISCOVERED] skip と proceed の意味的重複整理 | discovered |
 | #58 | [DISCOVERED] Socrates 障害時のフォールバック | discovered |
 | #59 | [DISCOVERED] Progress Log にタイムスタンプ追加 | discovered |
 | #60 | [DISCOVERED] Socrates 応答の長さ制約 | discovered |
@@ -39,6 +37,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-09 | free-text-input-refinement | DONE |
 | 2026-02-09 | socrates-advisor | DONE |
 | 2026-02-09 | persist-review-feedback | DONE |
 | 2026-02-09 | reviewer-subagent-sonnet | DONE |
@@ -67,8 +66,8 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 69 | - |
-| Open Issues | 6 | 0 |
+| Cycle docs | 70 | - |
+| Open Issues | 4 | 0 |
 | Plugin数 | 10 | - |
 
 ---
