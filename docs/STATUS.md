@@ -34,6 +34,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-10 | recommended-hooks-onboard | DONE |
 | 2026-02-10 | agent-memory-frontmatter | DONE |
 | 2026-02-09 | v51-release-docs | DONE |
 | 2026-02-09 | socrates-fallback | DONE |
@@ -67,7 +68,7 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 74 | - |
+| Cycle docs | 75 | - |
 | Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 

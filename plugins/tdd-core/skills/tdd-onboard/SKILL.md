@@ -72,6 +72,8 @@ tests/, src/, docs/ に CLAUDE.md 配置を推奨（各30-50行）。
 
 存在しない場合に作成。rules/: git-safety, security, git-conventions。hooks/: recommended。推奨設定: `Skill(tdd-core:*)` をallowedToolsに追加。詳細は [reference.md](reference.md)。
 
+Hook設定の案内: `.claude/hooks/recommended.md` に推奨Hook設定が記載されている旨をユーザーに伝え、`~/.claude/settings.json` にコピーしてClaude Codeを再起動するよう案内する。
+
 ### Step 7: Pre-commit Hook確認（推奨）
 
 hookなし → セットアップ推奨。詳細は [reference.md](reference.md) を参照。

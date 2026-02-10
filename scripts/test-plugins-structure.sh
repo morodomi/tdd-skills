@@ -1273,6 +1273,43 @@ fi
 
 echo ""
 
+# ==========================================
+# Recommended Hooks + Onboard Guidance Tests
+# ==========================================
+echo "--- Recommended Hooks + Onboard Guidance ---"
+
+HOOKS_MD=".claude/hooks/recommended.md"
+
+# TC-HK-01: recommended.md has --no-verify block hook
+if grep -q "\-\-no-verify" "$HOOKS_MD" 2>/dev/null; then
+    test_pass "recommended.md has --no-verify block hook"
+else
+    test_fail "recommended.md missing --no-verify block hook"
+fi
+
+# TC-HK-02: recommended.md has rm -rf block hook
+if grep -q "rm.*-rf\|rm.*-r.*f" "$HOOKS_MD" 2>/dev/null; then
+    test_pass "recommended.md has rm -rf block hook"
+else
+    test_fail "recommended.md missing rm -rf block hook"
+fi
+
+# TC-HK-03: tdd-onboard SKILL.md Step 6 has settings.json guidance
+if grep -qi "settings.json" "$ONBOARD_SKILL" 2>/dev/null; then
+    test_pass "tdd-onboard SKILL.md has settings.json guidance"
+else
+    test_fail "tdd-onboard SKILL.md missing settings.json guidance"
+fi
+
+# TC-HK-04: tdd-onboard reference.md recommended.md template has rm -rf
+if grep -q "rm.*-rf\|rm.*-r.*f" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md template has rm -rf hook"
+else
+    test_fail "tdd-onboard reference.md template missing rm -rf hook"
+fi
+
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

@@ -12,6 +12,10 @@
           {
             "type": "command",
             "command": "if echo \"$TOOL_INPUT\" | grep -qF -- '--no-verify'; then echo 'BLOCK: --no-verify is prohibited' >&2; exit 2; fi"
+          },
+          {
+            "type": "command",
+            "command": "if echo \"$TOOL_INPUT\" | grep -qE 'rm\\s+-[a-zA-Z]*r[a-zA-Z]*f|rm\\s+-[a-zA-Z]*f[a-zA-Z]*r'; then echo 'BLOCK: rm -rf is prohibited. Delete specific files instead.' >&2; exit 2; fi"
           }
         ]
       }
