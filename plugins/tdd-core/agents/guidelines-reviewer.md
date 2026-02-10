@@ -1,6 +1,7 @@
 ---
 name: guidelines-reviewer
 description: ガイドライン準拠レビュー。コーディング規約、命名規則、ドキュメントをチェック。
+memory: project
 ---
 
 # Guidelines Reviewer
@@ -35,3 +36,9 @@ description: ガイドライン準拠レビュー。コーディング規約、�
 - 80-100: BLOCK（修正必須）
 - 50-79: WARN（警告）
 - 0-49: PASS（問題なし）
+
+## Memory
+
+レビューで発見したガイドライン違反のパターンを agent memory に記録せよ。
+記録対象: プロジェクト固有のコーディング規約、命名慣習、ドキュメント方針の傾向。
+記録しないもの: 一般的なコーディング規約知識（PSR-12, PEP8等）、個別の修正詳細。

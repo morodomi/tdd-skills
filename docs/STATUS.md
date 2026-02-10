@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-02-09 |
+| 最終更新 | 2026-02-10 |
 
 ## Tech Stack
 
@@ -34,6 +34,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-10 | agent-memory-frontmatter | DONE |
 | 2026-02-09 | v51-release-docs | DONE |
 | 2026-02-09 | socrates-fallback | DONE |
 | 2026-02-09 | socrates-protocol-polish | DONE |
@@ -66,7 +67,7 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 73 | - |
+| Cycle docs | 74 | - |
 | Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 

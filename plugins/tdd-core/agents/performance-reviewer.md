@@ -1,6 +1,7 @@
 ---
 name: performance-reviewer
 description: パフォーマンスレビュー。アルゴリズム効率、N+1問題、メモリ使用をチェック。
+memory: project
 ---
 
 # Performance Reviewer
@@ -35,3 +36,9 @@ description: パフォーマンスレビュー。アルゴリズム効率、N+1�
 - 80-100: BLOCK（修正必須）
 - 50-79: WARN（警告）
 - 0-49: PASS（問題なし）
+
+## Memory
+
+レビューで発見したパフォーマンス問題のパターンを agent memory に記録せよ。
+記録対象: N+1問題の発生箇所、ボトルネックパターン、プロジェクト固有のパフォーマンス特性。
+記録しないもの: 一般的なパフォーマンス知識、個別の最適化詳細。

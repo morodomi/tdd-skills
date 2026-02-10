@@ -1182,6 +1182,97 @@ fi
 
 echo ""
 
+# ==========================================
+# Agent Memory Frontmatter Tests
+# ==========================================
+echo "--- Agent Memory Frontmatter ---"
+
+# TC-MEM-01: security-reviewer.md has memory: project in frontmatter
+if grep -q "memory: project" "$AGENTS_DIR/security-reviewer.md" 2>/dev/null; then
+    test_pass "security-reviewer.md has memory: project"
+else
+    test_fail "security-reviewer.md missing memory: project"
+fi
+
+# TC-MEM-02: performance-reviewer.md has memory: project in frontmatter
+if grep -q "memory: project" "$AGENTS_DIR/performance-reviewer.md" 2>/dev/null; then
+    test_pass "performance-reviewer.md has memory: project"
+else
+    test_fail "performance-reviewer.md missing memory: project"
+fi
+
+# TC-MEM-03: correctness-reviewer.md has memory: project in frontmatter
+if grep -q "memory: project" "$AGENTS_DIR/correctness-reviewer.md" 2>/dev/null; then
+    test_pass "correctness-reviewer.md has memory: project"
+else
+    test_fail "correctness-reviewer.md missing memory: project"
+fi
+
+# TC-MEM-04: guidelines-reviewer.md has memory: project in frontmatter
+if grep -q "memory: project" "$AGENTS_DIR/guidelines-reviewer.md" 2>/dev/null; then
+    test_pass "guidelines-reviewer.md has memory: project"
+else
+    test_fail "guidelines-reviewer.md missing memory: project"
+fi
+
+# TC-MEM-05: socrates.md has memory: project in frontmatter
+if grep -q "memory: project" "$AGENTS_DIR/socrates.md" 2>/dev/null; then
+    test_pass "socrates.md has memory: project"
+else
+    test_fail "socrates.md missing memory: project"
+fi
+
+# TC-MEM-06: architect.md has memory: project in frontmatter
+if grep -q "memory: project" "$AGENTS_DIR/architect.md" 2>/dev/null; then
+    test_pass "architect.md has memory: project"
+else
+    test_fail "architect.md missing memory: project"
+fi
+
+# TC-MEM-07: All 6 memory agents have Memory section in body
+MEM_AGENTS="security-reviewer performance-reviewer correctness-reviewer guidelines-reviewer socrates architect"
+MEM_SECTION_COUNT=0
+for agent in $MEM_AGENTS; do
+    if grep -q "## Memory" "$AGENTS_DIR/$agent.md" 2>/dev/null; then
+        MEM_SECTION_COUNT=$((MEM_SECTION_COUNT + 1))
+    fi
+done
+if [ "$MEM_SECTION_COUNT" -eq 6 ]; then
+    test_pass "All 6 memory agents have ## Memory section"
+else
+    test_fail "Only ${MEM_SECTION_COUNT}/6 memory agents have ## Memory section"
+fi
+
+# TC-MEM-08: red-worker.md does NOT have memory frontmatter
+if ! grep -q "memory:" "$AGENTS_DIR/red-worker.md" 2>/dev/null; then
+    test_pass "red-worker.md does not have memory frontmatter"
+else
+    test_fail "red-worker.md should not have memory frontmatter"
+fi
+
+# TC-MEM-09: green-worker.md does NOT have memory frontmatter
+if ! grep -q "memory:" "$AGENTS_DIR/green-worker.md" 2>/dev/null; then
+    test_pass "green-worker.md does not have memory frontmatter"
+else
+    test_fail "green-worker.md should not have memory frontmatter"
+fi
+
+# TC-MEM-10: refactorer.md does NOT have memory frontmatter
+if ! grep -q "memory:" "$AGENTS_DIR/refactorer.md" 2>/dev/null; then
+    test_pass "refactorer.md does not have memory frontmatter"
+else
+    test_fail "refactorer.md should not have memory frontmatter"
+fi
+
+# TC-MEM-11: scope-reviewer.md does NOT have memory frontmatter
+if ! grep -q "memory:" "$AGENTS_DIR/scope-reviewer.md" 2>/dev/null; then
+    test_pass "scope-reviewer.md does not have memory frontmatter"
+else
+    test_fail "scope-reviewer.md should not have memory frontmatter"
+fi
+
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

@@ -1,6 +1,7 @@
 ---
 name: security-reviewer
 description: セキュリティレビュー。入力検証、認証・認可、SQLi/XSS、機密データをチェック。
+memory: project
 ---
 
 # Security Reviewer
@@ -36,3 +37,9 @@ description: セキュリティレビュー。入力検証、認証・認可、S
 - 80-100: BLOCK（修正必須）
 - 50-79: WARN（警告）
 - 0-49: PASS（問題なし）
+
+## Memory
+
+レビューで発見したセキュリティ脆弱性のパターンを agent memory に記録せよ。
+記録対象: プロジェクト固有の脆弱性傾向（SQLi, XSS, 認証不備等の出現頻度）、セキュリティ要件、信頼境界の特徴。
+記録しないもの: 一般的なセキュリティ知識、個別のバグ修正詳細。

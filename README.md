@@ -2,7 +2,7 @@
 
 Claude Code plugin for enforcing strict TDD workflows
 
-> **v5.1.0**: PdM + Socrates Advisor - Devil's Advocate for critical review decisions
+> **v5.1.1**: Agent Memory - Reviewers and advisors accumulate project-specific knowledge across sessions
 
 [Japanese](README.ja.md)
 
@@ -267,6 +267,15 @@ User input -> Risk assessment -> Question flow -> Improved design accuracy
 | Static analysis | 0 errors |
 
 ## Migration
+
+### v5.1.0 -> v5.1.1
+
+**New feature**: Agent Memory
+- 6 agents (security/performance/correctness/guidelines-reviewer + socrates + architect) now use `memory: project` frontmatter
+- Each agent accumulates project-specific domain knowledge across sessions (vulnerability patterns, performance bottlenecks, coding conventions, etc.)
+- Memory stored in `.claude/agent-memory/<name>/`, shareable via Git
+- Worker agents (red-worker, green-worker, refactorer) and scope-reviewer intentionally excluded to maintain clean-state execution
+- No breaking changes: agents function identically without accumulated memory
 
 ### v5.0 -> v5.1.0
 

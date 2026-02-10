@@ -2,7 +2,7 @@
 
 Claude Code で厳格な TDD ワークフローを実現するプラグイン
 
-> **v4.3.0**: Agent Teams Integration - 討論型 quality-gate、並列バグ調査 (tdd-diagnose)、クロスレイヤー並列開発 (tdd-parallel)
+> **v5.1.1**: Agent Memory - レビューエージェントがプロジェクト固有の知識をセッション跨ぎで蓄積
 
 [English](README.md)
 
@@ -75,6 +75,29 @@ claude
 ```
 
 ## Migration
+
+### v5.1.0 → v5.1.1
+
+**新機能**: Agent Memory
+- 6エージェント (security/performance/correctness/guidelines-reviewer + socrates + architect) に `memory: project` を追加
+- エージェントがプロジェクト固有のドメイン知識をセッション跨ぎで蓄積（脆弱性パターン、パフォーマンスボトルネック、コーディング規約等）
+- `.claude/agent-memory/<name>/` に保存、Git共有可能
+- ワーカーエージェント (red-worker, green-worker, refactorer) と scope-reviewer はクリーンな状態維持のため除外
+- 破壊的変更なし
+
+### v5.0 → v5.1.0
+
+**新機能**: Socrates Devil's Advocate Advisor
+- plan-review/quality-gate で WARN/BLOCK 時に Socrates Advisor が反論・代替案を提示
+- ユーザーは自由入力で判断（proceed/fix/abort）
+- Socrates 無応答時は v5.0 ロジックに自動フォールバック
+
+### v4.3 → v5.0.0
+
+**新機能**: PdM Delegation Model
+- Claude が PdM として振る舞い、設計・実装・レビューを専門エージェントに委譲
+- `tdd-orchestrate`: フルサイクル自律管理の内部スキル
+- Agent Teams 有効時に `tdd-init` から自動ルーティング
 
 ### v4.2 → v4.3.0
 
