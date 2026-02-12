@@ -1310,6 +1310,133 @@ fi
 
 echo ""
 
+# ==========================================
+# Token Compression: tdd-onboard reference.md
+# ==========================================
+echo "--- Token Compression: tdd-onboard reference.md ---"
+
+ONBOARD_REF="$PLUGINS_DIR/tdd-core/skills/tdd-onboard/reference.md"
+
+# TC-TC-01: reference.md byte count <= 4000
+ONBOARD_REF_BYTES=$(wc -c < "$ONBOARD_REF" 2>/dev/null | tr -d ' ')
+if [ -n "$ONBOARD_REF_BYTES" ] && [ "$ONBOARD_REF_BYTES" -le 4000 ]; then
+    test_pass "tdd-onboard reference.md is ${ONBOARD_REF_BYTES} bytes (<= 4000)"
+else
+    test_fail "tdd-onboard reference.md is ${ONBOARD_REF_BYTES} bytes (> 4000)"
+fi
+
+# TC-TC-02: reference.md contains reference paths to .claude/rules/ and .claude/hooks/
+TC_TC_02_REFS=0
+for ref_path in ".claude/rules/security.md" ".claude/rules/git-safety.md" ".claude/rules/git-conventions.md" ".claude/hooks/recommended.md"; do
+    if grep -q "$ref_path" "$ONBOARD_REF" 2>/dev/null; then
+        TC_TC_02_REFS=$((TC_TC_02_REFS + 1))
+    fi
+done
+if [ "$TC_TC_02_REFS" -eq 4 ]; then
+    test_pass "tdd-onboard reference.md has all 4 reference paths"
+else
+    test_fail "tdd-onboard reference.md has ${TC_TC_02_REFS}/4 reference paths"
+fi
+
+# TC-TC-03: reference.md does NOT contain full security.md embed
+if ! grep -q "ハードコードされた秘密鍵" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md no security.md full embed"
+else
+    test_fail "tdd-onboard reference.md still has security.md full embed"
+fi
+
+# TC-TC-04: reference.md does NOT contain full git-safety.md embed
+if ! grep -q "force-with-leaseは許可" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md no git-safety.md full embed"
+else
+    test_fail "tdd-onboard reference.md still has git-safety.md full embed"
+fi
+
+# TC-TC-05: reference.md does NOT contain full recommended.md embed (no JSON settings block)
+if ! grep -q '"PreToolUse"' "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md no recommended.md JSON embed"
+else
+    test_fail "tdd-onboard reference.md still has recommended.md JSON embed"
+fi
+
+# TC-TC-06: reference.md still has framework detection table
+if grep -q "artisan" "$ONBOARD_REF" 2>/dev/null && grep -q "app.py" "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md has framework detection table"
+else
+    test_fail "tdd-onboard reference.md missing framework detection table"
+fi
+
+# TC-TC-07: reference.md still has variable list
+if grep -q '${PROJECT_NAME}' "$ONBOARD_REF" 2>/dev/null && grep -q '${TEST_COMMAND}' "$ONBOARD_REF" 2>/dev/null; then
+    test_pass "tdd-onboard reference.md has variable list"
+else
+    test_fail "tdd-onboard reference.md missing variable list"
+fi
+
+echo ""
+
+# ==========================================
+# Hooks Integration Tests
+# ==========================================
+echo "--- Hooks Integration ---"
+
+HOOKS_MD=".claude/hooks/recommended.md"
+INIT_SKILL="$PLUGINS_DIR/tdd-core/skills/tdd-init/SKILL.md"
+INIT_REF="$PLUGINS_DIR/tdd-core/skills/tdd-init/reference.md"
+DEBUG_SCRIPT="scripts/check-debug-statements.sh"
+
+# TC-HI-01: check-debug-statements.sh exists and is executable
+if [ -x "$DEBUG_SCRIPT" ]; then
+    test_pass "check-debug-statements.sh exists and is executable"
+else
+    test_fail "check-debug-statements.sh missing or not executable"
+fi
+
+# TC-HI-02: recommended.md has PostToolUse hook
+if grep -q "PostToolUse" "$HOOKS_MD" 2>/dev/null; then
+    test_pass "recommended.md has PostToolUse hook"
+else
+    test_fail "recommended.md missing PostToolUse hook"
+fi
+
+# TC-HI-03: recommended.md has SessionStart hook
+if grep -q "SessionStart" "$HOOKS_MD" 2>/dev/null; then
+    test_pass "recommended.md has SessionStart hook"
+else
+    test_fail "recommended.md missing SessionStart hook"
+fi
+
+# TC-HI-04: recommended.md has Stop hook with git status warning
+if grep -q "git status" "$HOOKS_MD" 2>/dev/null; then
+    test_pass "recommended.md has Stop hook with git status"
+else
+    test_fail "recommended.md missing Stop hook with git status"
+fi
+
+# TC-HI-05: recommended.md has check-debug-statements.sh reference
+if grep -q "check-debug-statements" "$HOOKS_MD" 2>/dev/null; then
+    test_pass "recommended.md has check-debug-statements.sh reference"
+else
+    test_fail "recommended.md missing check-debug-statements.sh reference"
+fi
+
+# TC-HI-06: tdd-init has hooks check (SKILL.md or reference.md)
+if grep -qi "hooks" "$INIT_SKILL" "$INIT_REF" 2>/dev/null; then
+    test_pass "tdd-init has hooks check"
+else
+    test_fail "tdd-init missing hooks check"
+fi
+
+# TC-HI-07: tdd-init SKILL.md is 100 lines or less (post-edit)
+INIT_LINES=$(wc -l < "$INIT_SKILL" 2>/dev/null | tr -d ' ')
+if [ -n "$INIT_LINES" ] && [ "$INIT_LINES" -le 100 ]; then
+    test_pass "tdd-init SKILL.md is ${INIT_LINES} lines (<= 100)"
+else
+    test_fail "tdd-init SKILL.md is ${INIT_LINES} lines (> 100)"
+fi
+
+echo ""
+
 echo "=========================================="
 echo "Results: $PASS passed, $FAIL failed"
 echo "=========================================="

@@ -6,7 +6,7 @@
 |------|-----|
 | プロジェクト | tdd-skills |
 | タイプ | Claude Code Plugin Collection |
-| 最終更新 | 2026-02-10 |
+| 最終更新 | 2026-02-13 |
 
 ## Tech Stack
 
@@ -34,6 +34,8 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-13 | hooks-integration | DONE |
+| 2026-02-12 | onboard-reference-token-compression | DONE |
 | 2026-02-10 | recommended-hooks-onboard | DONE |
 | 2026-02-10 | agent-memory-frontmatter | DONE |
 | 2026-02-09 | v51-release-docs | DONE |
@@ -68,7 +70,7 @@ bash scripts/test-skills-structure.sh
 
 | 指標 | 現状 | 目標 |
 |------|------|------|
-| Cycle docs | 75 | - |
+| Cycle docs | 77 | - |
 | Open Issues | 0 | 0 |
 | Plugin数 | 10 | - |
 

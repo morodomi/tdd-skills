@@ -30,7 +30,7 @@ INIT Progress:
 cat docs/STATUS.md 2>/dev/null
 ```
 
-If not found, recommend `tdd-onboard`.
+If not found, recommend `tdd-onboard`. Also check hooks: [reference.md](reference.md#hooks-check)
 
 ### Step 2: Collect Environment Info
 

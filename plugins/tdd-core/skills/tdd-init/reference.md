@@ -239,6 +239,29 @@ questions:
 - External dependency: DB changes
 ```
 
+## Hooks Check
+
+In Step 1, after checking STATUS.md, verify hooks setup:
+
+```bash
+# Check if user has hooks configured
+grep -q '"hooks"' ~/.claude/settings.json 2>/dev/null
+```
+
+**If hooks are not configured**, show recommendation:
+
+```
+Recommended hooks are available at .claude/hooks/recommended.md.
+Copy the configuration to ~/.claude/settings.json for:
+- --no-verify / rm -rf block
+- Test file update reminders
+- CLAUDE.md existence check
+- Uncommitted changes warning
+- Debug statement detection
+```
+
+**Do not auto-write to settings.json** (user must opt-in manually).
+
 ## Detailed Workflow
 
 ### Checking Existing Cycles
