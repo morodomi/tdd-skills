@@ -41,6 +41,16 @@
         ]
       }
     ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -x scripts/save-tdd-state.sh ]; then scripts/save-tdd-state.sh; fi"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
@@ -76,6 +86,7 @@
 | PreToolUse (Bash) | `--no-verify` ブロック, `rm -rf` ブロック |
 | PostToolUse (Write) | テストファイル更新検出 → リマインダー |
 | SessionStart | CLAUDE.md 存在確認 → tdd-onboard 推奨 |
+| PreCompact | save-tdd-state.sh 実行 → TDD状態をユーザーに通知 |
 | Stop | テストリマインダー, git status 未コミット警告, check-debug-statements.sh 実行 |
 
 ## 注意

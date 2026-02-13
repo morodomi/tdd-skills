@@ -96,3 +96,4 @@ Test List作成後、`Skill(tdd-core:plan-review)` を実行。plan-reviewがRED
 ## Reference
 
 - 詳細: [reference.md](reference.md)
+- Phase Completion（圧縮ガイダンス）: [reference.md#phase-completion](reference.md#phase-completion)

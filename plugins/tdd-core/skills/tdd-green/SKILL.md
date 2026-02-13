@@ -89,3 +89,4 @@ REFACTORフェーズを開始します。
 
 - 詳細: [reference.md](reference.md)
 - green-worker: [../../agents/green-worker.md](../../agents/green-worker.md)
+- Phase Completion（圧縮ガイダンス）: [reference.md#phase-completion](reference.md#phase-completion)

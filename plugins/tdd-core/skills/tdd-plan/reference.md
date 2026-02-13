@@ -154,6 +154,18 @@ Scope Definitionを確認してください。
 ユーザーが承認 → Cycle doc に記録。plan-review 後、RED の代わりに `Skill(tdd-core:tdd-parallel)` を実行（tdd-parallel 内で RED→GREEN→REFACTOR→REVIEW を実行）。
 ユーザーが拒否 → 通常の tdd-red → tdd-green → tdd-refactor。
 
+## Phase Completion
+
+PLANフェーズ完了後の圧縮ガイダンス。
+
+### チェックリスト
+
+- [ ] Cycle doc の Design Approach が記録済み
+- [ ] Test List が Cycle doc に記録済み
+
+上記が確認できたら、コンテキスト圧縮が可能です。
+Cycle doc に全情報が記録されているため、圧縮後も安全に再開できます。
+
 ## エラーメッセージ設計
 
 異常系テストケース作成時に参照。ユーザーフレンドリーなエラーメッセージを設計する。

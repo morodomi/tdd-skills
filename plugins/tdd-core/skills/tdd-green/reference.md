@@ -112,6 +112,18 @@ GREEN Progress (Sequential):
 - [ ] Cycle doc更新（WIP→DONE）
 ```
 
+## Phase Completion
+
+GREENフェーズ完了後の圧縮ガイダンス。
+
+### チェックリスト
+
+- [ ] 全テストが成功（GREEN状態）
+- [ ] Cycle doc の WIP が DONE に移動済み
+
+上記が確認できたら、コンテキスト圧縮が可能です。
+テストコードと実装コードがファイルに保存済みのため、REFACTOR は差分ベースで再開できます。
+
 ## Error Handling
 
 ### テストが失敗し続ける場合
