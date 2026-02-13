@@ -34,6 +34,7 @@ bash scripts/test-skills-structure.sh
 
 | 日時 | 機能名 | フェーズ |
 |------|--------|---------|
+| 2026-02-13 | iterative-retrieval | DONE |
 | 2026-02-13 | strategic-compact | DONE |
 | 2026-02-13 | hooks-integration | DONE |
 | 2026-02-12 | onboard-reference-token-compression | DONE |
